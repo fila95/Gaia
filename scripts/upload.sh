@@ -14,7 +14,8 @@ ENDSSH
 scp ../scripts/cleanup.sh pi@raspberrypi.local:/var/srvcs/cleanup.sh
 ssh -tt pi@raspberrypi.local <<'ENDSSH'
 cd /var/srvcs/
-./cleanup.sh
+sudo chmod 777 cleanup.sh
+sudo ./cleanup.sh
 exit
 ENDSSH
 
@@ -26,6 +27,7 @@ scp ../scripts/deploy.sh pi@raspberrypi.local:/var/srvcs/deploy.sh
 # Start
 ssh -tt pi@raspberrypi.local <<'ENDSSH'
 cd /var/srvcs/
+sudo chmod 777 services/*
 sudo ./deploy.sh
 exit
 ENDSSH

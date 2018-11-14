@@ -10,6 +10,7 @@ for filename in *.service; do
 	sudo chmod 644 /lib/systemd/system/$filename
 
 	sudo systemctl start $filename
+	sudo systemctl enable $filename
 	# sudo systemctl status $filename
 done
 
