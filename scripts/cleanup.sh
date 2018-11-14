@@ -11,3 +11,5 @@ done
 cd ../
 sudo rm -rf definitions/*
 sudo rm -rf scripts/*
+
+systemctl daemon-reload
