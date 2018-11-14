@@ -1,0 +1,11 @@
+[Unit]
+Description=Geki
+After=multi-user.target
+ 
+[Service]
+Type=idle
+ExecStart=/usr/bin/python /var/srvcs/services/scripts/geki.py
+Restart=on-abort
+ 
+[Install]
+WantedBy=multi-user.target
