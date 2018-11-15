@@ -1,47 +1,67 @@
 import RPi.GPIO as GPIO
-import sched, time
+import time
+from utils.buttons import *
 from threading import Thread
 from pygame import mixer # Load the required library
 
-global hasBeenPressed
-hasBeenPressed = False
+
+global gameStarted
+
+def waitForChild():
+	global gameStarted
+	if (waitForInput() != -1):
+		print("gameStarted = True")
+		gameStarted = True
 
 def attractChild():
-    global hasBeenPressed
-    while (not hasBeenPressed):
-        GPIO.output(LIGHT,True)
+    global gameStarted
+    #select track to attract children
+    #TODO change path
+	m = mixer.music.load('../05. AC DC - T.N.T..mp3')
+	mixer.music.set_volume(1.0)
+    while (not gameStarted):
+        GPIO.output(LIGHT1,True)
+        GPIO.output(LIGHT2,True)
         mixer.music.play()
         time.sleep(10)
         mixer.music.stop()
-        GPIO.output(LIGHT, False)
+        GPIO.output(LIGHT1, False)
+        GPIO.output(LIGHT2,True)
         time.sleep(10)
 
-def waitForInput():
-    global hasBeenPressed
-    while (not hasBeenPressed):
-        input_state = GPIO.input(BUTTON)
-        if input_state == True:
-            print("pressed")
-            hasBeenPressed = True
-        time.sleep(0.3)
+print("Running")
 
-print("running")
-
+#PREPARE THE ENVIRONMENT
 GPIO.setmode (GPIO.BCM)
-LIGHT = 4
-BUTTON = 19
+LIGHT1 = 4
+LIGHT2 = 3
 
-GPIO.setup(BUTTON, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(LIGHT, GPIO.OUT)
+setup()
+GPIO.setup(LIGHT1, GPIO.OUT)
+GPIO.setup(LIGHT1, GPIO.OUT)
 
 mixer.init()
-#TODO change path
-m = mixer.music.load('../05. AC DC - T.N.T..mp3')
-mixer.music.set_volume(1.0)
 
-t1 = Thread(target=waitForInput, args=())
+#START GAME
+gameStarted = False
+
+#create threads that continously make sounds and music and wait for a child to start the game
+t1 = Thread(target=waitForChild, args=())
 t2 = Thread(target=attractChild, args=())
 t1.start()
 t2.start()
 t1.join()
 t2.join()
+
+#CHECK IF IT IS A NEW GAME
+m = mixer.music.load('../05. AC DC - T.N.T..mp3')
+GPIO.output(LIGHT1,True)
+GPIO.output(LIGHT2,True)
+
+i = waitForInput()
+
+if(i == 0)
+	#new game
+else if(i == 1)
+	#continuing already started game
+
