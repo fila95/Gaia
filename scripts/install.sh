@@ -17,8 +17,9 @@ sudo python3 setup.py install
 
 sudo apt-get install pigpio
 sudo pip3 install pigpio
-sudo pip3 install asyncio
 sudo systemctl enable pigpiod
+
+sudo pip3 install asyncio
 
 cd 
 sudo rm install.sh
@@ -30,3 +31,5 @@ sudo echo "dtoverlay=dwc2" >> config.txt
 sudo echo "# Speaker Config" >> config.txt
 sudo echo "dtoverlay=pwm,pin=13,func=4" >> config.txt
 sudo mv config.txt /boot/config.txt
+
+sudo sed '$ s/$/rootwait/ modules-load=dwc2,g_ether' /boot/cmdline.txt
