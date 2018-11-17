@@ -69,6 +69,7 @@ class DotManager:
 loop = None
 
 def callback(index, dot):
+	print("Tapped Dot #:")
 	print(index)
 	# dot.setBrightness(random.randrange(0, 255, 1))
 	dot.setColor(Colors.random())

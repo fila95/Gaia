@@ -3,36 +3,30 @@
 sudo apt-get update -y
 sudo apt-get upgrade -y
 sudo apt-get install gcc make build-essential python-dev git scons swig -y
+sudo apt-get install python-pip
+sudo apt-get install python3-pip
+
 git clone https://github.com/jgarff/rpi_ws281x
 cd rpi_ws281x/
 sudo scons
 cd python
 sudo python setup.py build
 sudo python setup.py install
-
-sudo apt-get install python-pip
-sudo apt-get install python3-pip
+sudo python3 setup.py build
+sudo python3 setup.py install
 
 sudo apt-get install pigpio
-
-# sudo pip install pigpio
 sudo pip3 install pigpio
-
-# sudo pip install asyncio
 sudo pip3 install asyncio
-
-# sudo pip install adafruit-ws2801
-# sudo pip3 install adafruit-ws2801
+sudo systemctl enable pigpiod
 
 cd 
 sudo rm install.sh
 
-sudo cat << EOF >> /boot/config.txt
-
-# Enable SSH via USB
-dtoverlay=dwc2
-
-# Speaker Config
-dtoverlay=pwm,pin=13,func=4
-
-EOF
+cd
+cp /boot/config.txt config.txt
+sudo echo "# Enable SSH via USB" >> config.txt
+sudo echo "dtoverlay=dwc2" >> config.txt
+sudo echo "# Speaker Config" >> config.txt
+sudo echo "dtoverlay=pwm,pin=13,func=4" >> config.txt
+sudo mv config.txt /boot/config.txt
