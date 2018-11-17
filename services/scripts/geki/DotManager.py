@@ -45,6 +45,10 @@ class DotManager:
 	def setColor(self, color):
 		for i in range(0, self.DOTS_COUNT):
 			self.dots[i].setColor(color)
+	
+	def setBrightness(self, brightness: int):
+		for i in range(0, self.DOTS_COUNT):
+			self.dots[i].setBrightness(brightness)
 
 	def tapped(self, index: int, dot: Dot):
 		if self.callback is not None:
@@ -66,17 +70,19 @@ loop = None
 
 def callback(index, dot):
 	print(index)
+	# dot.setBrightness(random.randrange(0, 255, 1))
 	dot.setColor(Colors.random())
 
 if __name__ == '__main__':
 	try:
 		manager = DotManager(callback=callback)
 		manager.setColor(Colors.random())
-		
+		manager.setBrightness(80)
 
         # run the event loop
 		loop = asyncio.get_event_loop()
 		loop.run_forever()
 		loop.close()
+
 	except:
 		print("Error:", sys.exc_info()[0])
