@@ -33,3 +33,7 @@ sudo echo "dtoverlay=pwm,pin=13,func=4" >> config.txt
 sudo mv config.txt /boot/config.txt
 
 sudo sed '$ s/$/rootwait/ modules-load=dwc2,g_ether' /boot/cmdline.txt
+
+cd
+sudo awk '{gsub(/rootwait/,"rootwait modules-load=dwc2,g_ether")}1' /boot/cmdline.txt > cmdline.txt
+sudo mv cmdline.txt /boot/cmdline.txt
