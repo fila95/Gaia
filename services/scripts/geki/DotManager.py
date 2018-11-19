@@ -37,10 +37,18 @@ class DotManager:
 		self.strip.begin()
 		
 		# Configure all dots
-		self.dots = []
+		self.__dots = []
 		self._configure()
-		
-			
+	
+	def _configure(self):
+		for i in range(0, self.DOTS_COUNT):
+			start_index = i*int(Dot.LED_COUNT)
+			dot = Dot(strip=self.strip, led_start_index=start_index, button_pin=self.dot_pins[i], cb=self.tapped)
+			self.__dots.append(dot)
+
+	
+	def getDots(self):
+		return self.__dots
 
 	def setColor(self, color):
 		for i in range(0, self.DOTS_COUNT):
@@ -54,13 +62,9 @@ class DotManager:
 		if self.callback is not None:
 			self.callback(index, dot)
 
-	def _configure(self):
-		for i in range(0, self.DOTS_COUNT):
-			start_index = i*int(Dot.LED_COUNT)
-			dot = Dot(strip=self.strip, led_start_index=start_index, button_pin=self.dot_pins[i], cb=self.tapped)
-			self.dots.append(dot)
+	
 		
-			
+	
 
 
 
