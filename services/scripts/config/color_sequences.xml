@@ -1,0 +1,23 @@
+<sequences>
+	<story id="0">
+		<sequence>
+			<color>red</color>
+			<color>blue</color>
+			<color>green</color>
+		</sequence>
+	</story>
+	<story id="1">
+		<sequence>
+			<color>blue</color>
+			<color>green</color>
+			<color>red</color>
+		</sequence>
+	</story>
+	<story id="2">
+		<sequence>
+			<color>green</color>
+			<color>red</color>
+			<color>blue</color>
+		</sequence>
+	</story>
+</sequences>

@@ -8,17 +8,17 @@ from pygame import mixer # Load the required library
 global gameStarted
 
 def waitForChild():
-	global gameStarted
-	if (waitForInput() != -1):
-		print("gameStarted = True")
-		gameStarted = True
+    global gameStarted
+    if (waitForInput() != -1):
+        print("gameStarted = True")
+        gameStarted = True
 
 def attractChild():
     global gameStarted
     #select track to attract children
     #TODO change path
-	m = mixer.music.load('../05. AC DC - T.N.T..mp3')
-	mixer.music.set_volume(1.0)
+    m = mixer.music.load('../05. AC DC - T.N.T..mp3')
+    mixer.music.set_volume(1.0)
     while (not gameStarted):
         GPIO.output(LIGHT1,True)
         GPIO.output(LIGHT2,True)
@@ -36,7 +36,7 @@ GPIO.setmode (GPIO.BCM)
 LIGHT1 = 4
 LIGHT2 = 3
 
-setup()
+buttons = Buttons();
 GPIO.setup(LIGHT1, GPIO.OUT)
 GPIO.setup(LIGHT1, GPIO.OUT)
 
@@ -61,7 +61,7 @@ GPIO.output(LIGHT2,True)
 i = waitForInput()
 
 if(i == 0)
-	#new game
+    #new game
 else if(i == 1)
-	#continuing already started game
+    #continuing already started game
 

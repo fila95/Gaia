@@ -1,10 +1,10 @@
 import glob
 import SpeakerManager
 
-storiesMatrix = []
-numberOfStories = 1
+class StoriesAudioManager():
 
-class StoriesManager():
+    storiesMatrix = []
+    numberOfStories = 1
 
     def __init__(self):
 
@@ -19,3 +19,6 @@ class StoriesManager():
                 # (stories*numberOfStories) is used to define the different value of list_of_file_audio
                 temporary_list.append(list_of_file_audio[part_of_story + (stories * self.numberOfStories)])
             self.storiesMatrix.append(temporary_list)
+
+    def get_path(self, story, part):
+        return self.storiesMatrix[story][part]
