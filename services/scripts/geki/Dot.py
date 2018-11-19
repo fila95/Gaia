@@ -13,24 +13,25 @@ class Dot:
 		self.cb = cb
 		self.led_start_index = int(led_start_index)
 		self.button_pin = int(button_pin)
-		self.originalColor = DotColor(255, 255, 255)
-		self.brightnessedColor = self.originalColor
-		self.brightness = 255
+		self.__originalColor = DotColor(255, 255, 255)
+		self.__brightnessedColor = self.__originalColor
+		self.__brightness = 255
 
 		cb = pigpio.pi()
-		cb.callback(self.button_pin, edge=0, func=self.callback)
+		cb.callback(self.button_pin, edge=0, func=self.__callback)
+		self.showColor(self.__originalColor)
 
 	def setColor(self, color: DotColor):
 		logging.info("Setting color of dot:{:d} to r: {:d}, g: {:d}, b: {:d}.".format(self.led_start_index, color.red, color.green, color.blue))
-		self.originalColor = color
+		self.__originalColor = color
 		self.showColor(color)
 
 
 	def setBrightness(self, brightness: int):
 		logging.info("Setting brightness of dot:{:d} to {:d}.".format(self.led_start_index, brightness))
-		self.brightness = max(0, min(brightness, 255))
-		if self.originalColor is not None:
-			self.setColor(self.originalColor)
+		self.__brightness = max(0, min(brightness, 255))
+		if self.__originalColor is not None:
+			self.setColor(self.__originalColor)
 
 
 	def showColor(self, color: DotColor):
@@ -39,18 +40,24 @@ class Dot:
 		if isinstance(col, Colors):
 			col = color.value
 
-		bright = float(self.brightness) / 255
+		bright = float(self.__brightness) / 255
 
 		red = int(float(col.red) * bright)
 		green = int(float(col.green) * bright)
 		blue = int(float(col.blue) * bright)
-		self.brightnessedColor = DotColor(red=red, green=green, blue=blue)
+		self.__brightnessedColor = DotColor(red=red, green=green, blue=blue)
 
 		for i in range(self.led_start_index, self.led_start_index+self.LED_COUNT):
-			self.strip.setPixelColor(i, Color(self.brightnessedColor.red, self.brightnessedColor.green, self.brightnessedColor.blue))
+			self.strip.setPixelColor(i, Color(self.__brightnessedColor.red, self.__brightnessedColor.green, self.__brightnessedColor.blue))
 		self.strip.show()
 
-	def callback(self, gpio, newLevel, tick):
+	def getColor(self):
+		return self.__originalColor
+
+	def getBrightnessedAppliedColor(self):
+		return self.__brightnessedColor
+
+	def __callback(self, gpio, newLevel, tick):
 		self.cb(int(self.led_start_index/self.LED_COUNT), self)
 
 	

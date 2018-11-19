@@ -26,16 +26,16 @@ class DotManager:
 	# set to '1' for GPIOs 13, 19, 41, 45 or 53
 	LED_CHANNEL = 0
 
-	def __init__(self, callback = None):
-		self.callback = callback
+	def __init__(self, tapHandler = None):
+		self.tapHandler = tapHandler
 		self.led_count = self.DOTS_COUNT * Dot.LED_COUNT
 		self.dot_pins = [23, 24, 25, 8, 7, 1]
 
 		# Create NeoPixel object with appropriate configuration.	
-		self.strip = Adafruit_NeoPixel(self.led_count, self.LED_PIN, self.LED_FREQ_HZ, self.LED_DMA, self.LED_INVERT, 255, self.LED_CHANNEL)
+		self.__strip = Adafruit_NeoPixel(self.led_count, self.LED_PIN, self.LED_FREQ_HZ, self.LED_DMA, self.LED_INVERT, 255, self.LED_CHANNEL)
 
     	# Intialize the library (must be called once before other functions).
-		self.strip.begin()
+		self.__strip.begin()
 		
 		# Configure all dots
 		self.__dots = []
@@ -44,7 +44,7 @@ class DotManager:
 	def _configure(self):
 		for i in range(0, self.DOTS_COUNT):
 			start_index = i*int(Dot.LED_COUNT)
-			dot = Dot(strip=self.strip, led_start_index=start_index, button_pin=self.dot_pins[i], cb=self.tapped)
+			dot = Dot(strip=self.__strip, led_start_index=start_index, button_pin=self.dot_pins[i], cb=self.tapped)
 			self.__dots.append(dot)
 		logging.info("DotManager initialized successfully")
 
@@ -62,8 +62,8 @@ class DotManager:
 
 	def tapped(self, index: int, dot: Dot):
 		logging.info("Dot at index:{:d} was tapped.".format(index))
-		if self.callback is not None:
-			self.callback(index, dot)
+		if self.tapHandler is not None:
+			self.tapHandler(index, dot)
 
 	def setColors(self, colors):
 		if len(colors) == self.DOTS_COUNT:
@@ -83,7 +83,7 @@ class DotManager:
 
 loop = None
 
-def callback(index, dot):
+def dotWasTapped(index, dot):
 	print("Tapped Dot at index: ", end="", flush=True)
 	print(index)
 	# dot.setBrightness(random.randrange(0, 255, 1))
@@ -91,7 +91,7 @@ def callback(index, dot):
 
 if __name__ == '__main__':
 	try:
-		manager = DotManager(callback=callback)
+		manager = DotManager(tapHandler=dotWasTapped)
 		manager.setColor(Colors.random())
 		manager.setBrightness(80)
 
