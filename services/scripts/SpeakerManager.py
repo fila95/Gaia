@@ -1,27 +1,35 @@
 from pygame import mixer
 
 
-class SpeakerManager():
+class SpeakerManager:
 
-    speaker = mixer
+    speaker = mixer()
+
 
     def __init__(self):
 
         # initialize the speaker
-        self.speaker.init()
-        self.speaker.music.set_volume(1.0)
+        self.__speaker.init()
+        self.__speaker.music.set_volume(1.0)
 
 
     def stop(self):
-        self.speaker.musis.stop()
+        self.__speaker.music.stop()
 
     def pause(self):
-        self.speaker.musis.pause()
+        self.__speaker.music.pause()
 
-    def playAudio(self, path = None):
-        if path is None:
-            self.speaker.musis.unpause()
-        else:
-            self.speaker.musis.load(path)
-            self.speaker.musis.play()
+    def playAudio(self, path=None):
+        if self.__speaker.music is not None:
+            if path is None:
+                self.__speaker.music.unpause()
+            else:
+                sound = self.__speaker.music.Sound(path)
+                self.__speaker.music.play(sound)
 
+    def setVolume(self, volume):
+        if type(volume) is float:
+            self.__speaker.music.set_volume(volume)
+
+    def isPlaying(self):
+        return self.__speaker.music.get_busy()
