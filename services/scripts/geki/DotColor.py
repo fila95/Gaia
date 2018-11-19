@@ -3,9 +3,9 @@ import random
 
 class DotColor:
 	def __init__(self, red: int, green: int, blue: int):
-		self.red = red
-		self.green = green
-		self.blue = blue
+		self.red = max(0, min(red, 255))
+		self.green = max(0, min(green, 255))
+		self.blue = max(0, min(blue, 255))
 
 class Colors(Enum):
 	WHITE = DotColor(red=255, green=255, blue=255)

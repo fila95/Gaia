@@ -28,7 +28,7 @@ class Dot:
 
 	def setBrightness(self, brightness: int):
 		logging.info("Setting brightness of dot:{:d} to {:d}.".format(self.led_start_index, brightness))
-		self.brightness = brightness
+		self.brightness = max(0, min(brightness, 255))
 		if self.originalColor is not None:
 			self.setColor(self.originalColor)
 
