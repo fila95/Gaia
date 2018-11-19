@@ -55,6 +55,15 @@ class DotManager:
 	def setColor(self, color):
 		for i in range(0, self.DOTS_COUNT):
 			self.__dots[i].setColor(color)
+
+	def setColorAtIndex(self, idx: int, color):
+		if idx<self.DOTS_COUNT or idx>0:
+			self.__dots[idx].setColor(color)
+	
+	def setBrightnessAtIndex(self, idx: int, brightness):
+		if idx<self.DOTS_COUNT or idx>0:
+			self.__dots[idx].setBrightness(brightness)
+		
 	
 	def setBrightness(self, brightness: int):
 		for i in range(0, self.DOTS_COUNT):
