@@ -3,6 +3,8 @@ from neopixel import *
 
 from DotColor import *
 
+import logging
+
 class Dot:
 	LED_COUNT = 4
 
@@ -19,11 +21,13 @@ class Dot:
 		cb.callback(self.button_pin, edge=0, func=self.callback)
 
 	def setColor(self, color: DotColor):
+		logging.info("Setting color of dot:{:d} to r: {:d}, g: {:d}, b: {:d}.".format(self.led_start_index, color.red, color.green, color.blue))
 		self.originalColor = color
 		self.showColor(color)
 
 
 	def setBrightness(self, brightness: int):
+		logging.info("Setting brightness of dot:{:d} to {:d}.".format(self.led_start_index, brightness))
 		self.brightness = brightness
 		if self.originalColor is not None:
 			self.setColor(self.originalColor)

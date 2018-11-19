@@ -6,6 +6,7 @@ import time
 import asyncio
 import sys
 import random
+import logging
 
 class DotManager:
 
@@ -45,6 +46,7 @@ class DotManager:
 			start_index = i*int(Dot.LED_COUNT)
 			dot = Dot(strip=self.strip, led_start_index=start_index, button_pin=self.dot_pins[i], cb=self.tapped)
 			self.__dots.append(dot)
+		logging.info("DotManager initialized successfully")
 
 	
 	def getDots(self):
@@ -52,16 +54,25 @@ class DotManager:
 
 	def setColor(self, color):
 		for i in range(0, self.DOTS_COUNT):
-			self.dots[i].setColor(color)
+			self.__dots[i].setColor(color)
 	
 	def setBrightness(self, brightness: int):
 		for i in range(0, self.DOTS_COUNT):
-			self.dots[i].setBrightness(brightness)
+			self.__dots[i].setBrightness(brightness)
 
 	def tapped(self, index: int, dot: Dot):
+		logging.info("Dot at index:{:d} was tapped.".format(index))
 		if self.callback is not None:
 			self.callback(index, dot)
 
+	def setColors(self, colors):
+		if len(colors) == self.DOTS_COUNT:
+			for i in range(0, self.DOTS_COUNT):
+				self.__dots[i].setColor(colors[i])
+		else:
+			logging.error("colors should be same length as dots")
+
+		pass
 	
 		
 	
@@ -73,7 +84,7 @@ class DotManager:
 loop = None
 
 def callback(index, dot):
-	print("Tapped Dot #:")
+	print("Tapped Dot at index: ", end="", flush=True)
 	print(index)
 	# dot.setBrightness(random.randrange(0, 255, 1))
 	dot.setColor(Colors.random())
