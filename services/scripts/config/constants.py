@@ -1,0 +1,3 @@
+STORIES_AUDIO_PATH = "resources/audio"
+CONFIG_PATH = "config"
+ATTRACT_WAIT_TIME = 10
