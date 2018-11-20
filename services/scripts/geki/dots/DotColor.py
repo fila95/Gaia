@@ -19,7 +19,3 @@ class Colors(Enum):
 		return DotColor(red=random.randrange(0, 255, 1), green=random.randrange(0, 255, 1), blue=random.randrange(0, 255, 1))
 		# return random.choice(list(Colors))
 
-
-
-	
-	

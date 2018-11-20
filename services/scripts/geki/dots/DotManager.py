@@ -1,4 +1,8 @@
-from neopixel import *
+try:
+	from neopixel import *
+except ImportError as e:
+	from neopixel_mock import Adafruit_NeoPixel, Color
+
 from Dot import Dot
 from DotColor import *
 
@@ -52,32 +56,31 @@ class DotManager:
 	def getDots(self):
 		return self.__dots
 
-	def setColor(self, color):
+	def setColor(self, color, fade=True):
 		for i in range(0, self.DOTS_COUNT):
-			self.__dots[i].setColor(color)
+			self.__dots[i].setColor(color, fade=fade)
 
-	def setColorAtIndex(self, idx: int, color):
+	def setColorAtIndex(self, idx: int, color, fade=True):
 		if idx<self.DOTS_COUNT and idx>0:
-			self.__dots[idx].setColor(color)
+			self.__dots[idx].setColor(color, fade=fade)
 	
-	def setBrightnessAtIndex(self, idx: int, brightness):
+	def setBrightnessAtIndex(self, idx: int, brightness, fade=True):
 		if idx<self.DOTS_COUNT and idx>0:
-			self.__dots[idx].setBrightness(brightness)
-		
+			self.__dots[idx].setBrightness(brightness, fade=fade)
 	
-	def setBrightness(self, brightness: int):
+	def setBrightness(self, brightness: int, fade=True):
 		for i in range(0, self.DOTS_COUNT):
-			self.__dots[i].setBrightness(brightness)
+			self.__dots[i].setBrightness(brightness, fade=fade)
 
 	def tapped(self, index: int, dot: Dot):
 		logging.info("Dot at index:{:d} was tapped.".format(index))
 		if self.tapHandler is not None:
 			self.tapHandler(index, dot)
 
-	def setColors(self, colors):
+	def setColors(self, colors, fade=True):
 		if len(colors) == self.DOTS_COUNT:
 			for i in range(0, self.DOTS_COUNT):
-				self.__dots[i].setColor(colors[i])
+				self.__dots[i].setColor(colors[i], fade=fade)
 		else:
 			logging.error("colors should be same length as dots")
 
@@ -101,8 +104,8 @@ def dotWasTapped(index, dot):
 if __name__ == '__main__':
 	try:
 		manager = DotManager(tapHandler=dotWasTapped)
-		manager.setColor(Colors.random())
-		manager.setBrightness(80)
+		manager.setColor(Colors.random(), fade=False)
+		manager.setBrightness(50, fade=False)
 
         # run the event loop
 		loop = asyncio.get_event_loop()
