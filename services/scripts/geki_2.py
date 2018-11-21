@@ -28,7 +28,7 @@ class Game():
         for i in dotManager.getDots().length:
             if i % 2 == 0:
                 dotManager.setColorAtIndex(i,Colors.GREEN,True)
-            else
+            else:
                 dotManager.setColorAtIndex(i,Colors.RED,True)
             i+=1
 
@@ -39,17 +39,17 @@ class Game():
         self.speakerManager.play(constants.STORIES_AUDIO_PATH + "/attractChild.ogg")
         self.dotManager.animate(animation=DotAnimation.RAINBOW)
 
-        while(speakerManager.isPlaying())
+        while(speakerManager.isPlaying()):
             sleep(0.1)
         self.dotManager.setColor(Colors.OFF) #TODO use specific funcion
         
         #While the child is not playing continuously try to attract the child
         #Stop when the child press the button and change the state from NOT_PLAYING to GAME_STARTED
-        while (gameState = NOT_PLAYING):
+        while (self.gameState == NOT_PLAYING):
             time.sleep(constants.ATTRACT_WAIT_TIME)
             self.dotManager.setColor(Colors.WHITE)
             self.speakerManager.play(constants.STORIES_AUDIO_PATH + "/attractChild.ogg")
-            while(speakerManager.isPlaying())
+            while(speakerManager.isPlaying()):
                 sleep(0.1)
             self.dotManager.setColor(Colors.OFF)
         __askNewGame()
@@ -57,12 +57,14 @@ class Game():
     def buttonPressed(self,index,dot):
         if self.gameState == NOT_PLAYING:
             self.gameState = GAME_STARTED
-        else if self.gameState == GAME_STARTED
-            if dot.color.equals(Color.GREEN)
-                self.gameState = NEW_GAME_STARTED
-                __startNewStory()
-            else if dot.color.equals(Colors.RED)
-                self.gameState = OLD_GAME_SEQUENCE_ASKED
+        else :
+            if self.gameState == GAME_STARTED:
+                if dot.color.equals(Color.GREEN):
+                    self.gameState = NEW_GAME_STARTED
+                    __startNewStory()
+                else:
+                    if dot.color.equals(Colors.RED):
+                        self.gameState = OLD_GAME_SEQUENCE_ASKED
 
     def startGame(self):
         __attractChild()
