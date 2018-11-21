@@ -127,18 +127,17 @@ class DotManager:
 		self.__queue.put(lfunc)
 
 	def __run_animation(self, animation=DotAnimation.RAINBOW, interrupt=False, kwargs=None):
-		anim = animation
-		if isinstance(anim, DotAnimation):
-			anim = animation.value
-		anim = str(anim)
-		if not anim in self.animations:
+		if not isinstance(animation, DotAnimation):
+			return
+		if not animation in self.animations:
 			raise ValueError("Unknown animation " +animation)
-		func = self.animations[anim]
+		func = self.animations[animation]
+		
 		if kwargs is not None and "color" in kwargs:
 			c = kwargs["color"]
 			kwargs["color"] = Color(c[0], c[1], c[2])
-		else:
-			kwargs["color"] = Color(100, 100, 100)
+		# else:
+			# kwargs["color"] = Color(100, 100, 100)
 
 		# logging.info("Running " + func.__name__ + " with args " + str(kwargs))
 		lfunc = (lambda: func()) if kwargs is None else (lambda: func(**kwargs))
@@ -180,6 +179,7 @@ class DotManager:
 			   self.__strip.setPixelColor(i, self._wheel((int(i * 256 / self.__strip.numPixels()) + j) & 255))
 			self.__strip.show()
 			time.sleep(wait_ms/1000.0)
+		
 		if keep_running:
 			self._rainbowCycle(keep_running=keep_running, wait_ms=wait_ms, iterations=iterations)
 
@@ -209,7 +209,7 @@ class DotManager:
 					self.__strip.setPixelColor(i+q, 0)
 
 		if keep_running:
-			self._theaterChaseRainbow(keep_running=keep_running, wait_ms=wait_ms, iterations=iterations)
+			self._theaterChaseRainbow(keep_running=keep_running, wait_ms=wait_ms)
 
 	def __close(self):
 		#interrupt running task
@@ -244,7 +244,7 @@ if __name__ == '__main__':
 		manager = DotManager(tapHandler=dotWasTapped)
 		# manager.setColor(Colors.random(), fade=False)
 		# manager.setBrightness(255, fade=False)
-		manager.animate(keep_running=True)
+		manager.animate(keep_running=False)
 
 		# run the event loop
 		loop = asyncio.get_event_loop()
