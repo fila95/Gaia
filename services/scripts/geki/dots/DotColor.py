@@ -8,7 +8,7 @@ class DotColor:
 		self.blue = max(0, min(blue, 255))
 
 	def equals(self, color: DotColor):
-		return self.red == color.red && self.green == color.green && self.blue == color.blue
+		return self.red == color.red and self.green == color.green and self.blue == color.blue
 
 class Colors(Enum):
 	WARM_WHITE = DotColor(red=255, green=172, blue=68)

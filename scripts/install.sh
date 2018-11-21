@@ -3,8 +3,8 @@
 sudo apt-get update -y
 sudo apt-get upgrade -y
 sudo apt-get install gcc make build-essential python-dev git scons swig -y
-sudo apt-get install python-pip
-sudo apt-get install python3-pip
+sudo apt-get install python-pip -y
+sudo apt-get install python3-pip -y
 
 git clone https://github.com/jgarff/rpi_ws281x
 cd rpi_ws281x/
@@ -15,7 +15,7 @@ sudo python setup.py install
 sudo python3 setup.py build
 sudo python3 setup.py install
 
-sudo apt-get install pigpio
+sudo apt-get install pigpio -y
 sudo pip3 install pigpio
 sudo systemctl enable pigpiod
 
