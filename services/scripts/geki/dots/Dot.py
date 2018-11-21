@@ -125,7 +125,7 @@ class Dot:
 		self.interrupt_event.set()
 		#stop loop and end-thread
 		self.stop_event.set()
-		self.strip.__del__()
+		# self.strip.__del__()
 
 	def clearQueue(self, interrupt=False):
 		#consume items first
