@@ -53,6 +53,8 @@ class DotManager:
 			DotAnimation.THEATER_CHASE_RAINBOW: self._theaterChaseRainbow
 		}
 
+		self.animating = False
+
 		self.__queue = Queue()
 		self.__interrupt_event = threading.Event()
 		self.__stop_event = threading.Event()
@@ -75,27 +77,27 @@ class DotManager:
 		return self.__dots
 
 	def setColor(self, color, fade=True):
-		self.__clearQueue(interrupt=True)
+		self.__stopAnimationIfNeeded()
 		for i in range(0, self._DOTS_COUNT):
 			self.__dots[i].setColor(color, fade=fade)
 
 	def setColorAtIndex(self, idx: int, color, fade=True):
-		self.__clearQueue(interrupt=True)
+		self.__stopAnimationIfNeeded()
 		if idx<self._DOTS_COUNT and idx>0:
 			self.__dots[idx].setColor(color, fade=fade)
 	
 	def setBrightnessAtIndex(self, idx: int, brightness, fade=True):
-		self.__clearQueue(interrupt=True)
+		self.__stopAnimationIfNeeded()
 		if idx<self._DOTS_COUNT and idx>0:
 			self.__dots[idx].setBrightness(brightness, fade=fade)
 	
 	def setBrightness(self, brightness: int, fade=True):
-		self.__clearQueue(interrupt=True)
+		self.__stopAnimationIfNeeded()
 		for i in range(0, self._DOTS_COUNT):
 			self.__dots[i].setBrightness(brightness, fade=fade)
 
 	def setColors(self, colors, fade=True):
-		self.__clearQueue(interrupt=True)
+		self.__stopAnimationIfNeeded()
 		if len(colors) == self._DOTS_COUNT:
 			for i in range(0, self._DOTS_COUNT):
 				self.__dots[i].setColor(colors[i], fade=fade)
@@ -103,13 +105,19 @@ class DotManager:
 			logging.error("colors should be same length as dots")
 
 	def turnAllOff(self):
-		self.__clearQueue(interrupt=True)
+		self.__stopAnimationIfNeeded()
 		for i in range(self.led_count):
 			self.__strip.setPixelColorRGB(i,0,0,0)
 		self.__strip.show()
 
+
+	def __stopAnimationIfNeeded(self):
+		if self.animating:
+			self.animating = False
+			self.__clearQueue(interrupt=True)
 	def animate(self, animation=DotAnimation.RAINBOW, keep_running=False):
-		self.__clearQueue(interrupt=True)
+		self.__stopAnimationIfNeeded()
+		self.animating = True
 		self.__run_animation(animation=animation, kwargs={"keep_running": keep_running})
 		
 
@@ -244,7 +252,7 @@ if __name__ == '__main__':
 		manager = DotManager(tapHandler=dotWasTapped)
 		# manager.setColor(Colors.random(), fade=False)
 		# manager.setBrightness(255, fade=False)
-		manager.animate(keep_running=False)
+		manager.animate(keep_running=True)
 
 		# run the event loop
 		loop = asyncio.get_event_loop()
