@@ -261,7 +261,7 @@ if __name__ == '__main__':
 		manager = DotManager(tapHandler=dotWasTapped)
 		# manager.setColor(Colors.random(), fade=False)
 		# manager.setBrightness(255, fade=False)
-		manager.animate(animation=DotAnimation.THEATER_CHASE_RAINBOW, keep_running=True)
+		manager.animate(animation=DotAnimation.RAINBOW_CYCLE, keep_running=True)
 
 		# run the event loop
 		loop = asyncio.get_event_loop()
