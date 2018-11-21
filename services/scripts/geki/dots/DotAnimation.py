@@ -4,7 +4,7 @@ import random
 class DotAnimation(Enum):
 	RAINBOW="rainbow"
 	RAINBOW_CYCLE="rainbowCycle"
-	THEATER_CHASE="theaterChase"
+	# THEATER_CHASE="theaterChase"
 	THEATER_CHASE_RAINBOW="theaterCaseRainbow"
 
 	@staticmethod
