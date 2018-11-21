@@ -7,7 +7,9 @@ class DotColor:
 		self.green = max(0, min(green, 255))
 		self.blue = max(0, min(blue, 255))
 
-	def equals(self, color: DotColor):
+	def equals(self, color):
+		if color is not DotColor:
+			return False
 		return self.red == color.red and self.green == color.green and self.blue == color.blue
 
 class Colors(Enum):
