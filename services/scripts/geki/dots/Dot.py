@@ -14,9 +14,10 @@ except ImportError as e:
 class Dot:
 	LED_COUNT = 4
 
-	def __init__(self, strip, led_start_index, button_pin, cb):
+	def __init__(self, strip, led_start_index, button_pin, cb, stopAnimationTrigger):
 		self.strip = strip
 		self.cb = cb
+		self.stopAnimationTrigger = stopAnimationTrigger
 		self.led_start_index = int(led_start_index)
 		self.button_pin = int(button_pin)
 		self.__targetColor = DotColor(255, 255, 255)
@@ -47,6 +48,7 @@ class Dot:
 		self.__handle_async(lfunc, True)
 
 	def setColor(self, color: DotColor, fade=True):
+		self.stopAnimationTrigger()
 		if fade:
 			self.clearQueue(interrupt=False)
 		
@@ -56,6 +58,7 @@ class Dot:
 
 
 	def setBrightness(self, brightness: int, fade=True):
+		self.stopAnimationTrigger()
 		if fade:
 			self.clearQueue(interrupt=False)
 		
