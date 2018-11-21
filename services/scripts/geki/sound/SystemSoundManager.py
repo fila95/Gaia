@@ -2,8 +2,8 @@ from pygame import mixer
 
 class SystemSoundManager:
 
-    sound = mixer()
-    channel = None
+    __sound = mixer
+    __channel = None
 
     def __init__(self):
         self.__sound.init()

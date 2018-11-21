@@ -3,7 +3,7 @@ from pygame import mixer
 
 class SpeakerManager:
 
-    speaker = mixer()
+    __speaker = mixer
 
 
     def __init__(self):
