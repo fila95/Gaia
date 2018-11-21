@@ -1,4 +1,5 @@
 from DotColor import DotColor, Colors
+from DotWorker import DotWorker
 
 import pigpio
 import logging
@@ -27,7 +28,7 @@ class Dot:
 		self.interrupt_event = threading.Event()
 		self.stop_event = threading.Event()
 
-		self._worker = Worker(logging, self.strip, self.queue, self.stop_event, self.interrupt_event)
+		self._worker = DotWorker(logging, self.strip, self.queue, self.stop_event, self.interrupt_event)
 		self._worker.start()
 
 		cb = pigpio.pi()
@@ -138,31 +139,3 @@ class Dot:
 	def __callback(self, gpio, newLevel, tick):
 		self.cb(int(self.led_start_index/self.LED_COUNT), self)
 
-	
-class Worker(threading.Thread):
-	"""
-	Simple Worker that can execute any lambda function via a Queue
-	If the function has the same "interrupt-event" it can be interrupted by setting the flag
-	"""
-	def __init__(self, logger, strip, queue, stop_event, interrupt_event):
-		threading.Thread.__init__(self)
-		self.daemon = True
-		self.queue = queue
-		self.stop_event = stop_event
-		self.interrupt_event = interrupt_event
-		self._logger = logger
-
-	def run(self):
-		self._logger.info("Running worker")
-		while True and not self.stop_event.isSet():
-			try:
-				func = self.queue.get(block=True, timeout=2)
-				self._logger.info("Worker got work!")
-				func()
-				self.queue.task_done()
-				self.interrupt_event.clear()
-			except Empty:
-				pass
-			except TypeError as e:
-				self._logger.info(str(e))
-		self._logger.info("Neopixel worker DONE")

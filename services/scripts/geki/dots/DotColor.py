@@ -8,6 +8,7 @@ class DotColor:
 		self.blue = max(0, min(blue, 255))
 
 class Colors(Enum):
+	WARM_WHITE = DotColor(red=255, green=172, blue=68)
 	WHITE = DotColor(red=255, green=255, blue=255)
 	RED = DotColor(red=255, green=0, blue=0)
 	GREEN = DotColor(red=0, green=255, blue=0)
