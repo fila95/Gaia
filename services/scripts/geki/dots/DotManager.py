@@ -49,7 +49,7 @@ class DotManager:
 		self.animations = {
 			DotAnimation.RAINBOW: self._rainbow, 
 			DotAnimation.RAINBOW_CYCLE: self._rainbowCycle, 
-			DotAnimation.THEATER_CHASE: self._theaterChase,
+			# DotAnimation.THEATER_CHASE: self._theaterChase,
 			DotAnimation.THEATER_CHASE_RAINBOW: self._theaterChaseRainbow
 		}
 
@@ -142,7 +142,6 @@ class DotManager:
 		if not animation in self.animations:
 			raise ValueError("Unknown animation " +animation)
 		func = self.animations[animation]
-		
 		if kwargs is not None and "color" in kwargs:
 			c = kwargs["color"]
 			kwargs["color"] = Color(c[0], c[1], c[2])
