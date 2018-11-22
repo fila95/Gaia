@@ -34,6 +34,7 @@ class Dot:
 
 		cb = pigpio.pi()
 		cb.callback(self.__button_pin, edge=0, func=self.__callback)
+		cb.set_glitch_filter(self.__button_pin, steady=50)
 		# self.__showColor(self.__targetColor)
 
 	def getColor(self):
@@ -139,5 +140,6 @@ class Dot:
 			self.interrupt_event.set()
 
 	def __callback(self, gpio, newLevel, tick):
-		self.__cb(int(self.__led_start_index/self.LED_COUNT), self)
+		if gpio == self.__button_pin:
+			self.__cb(int(self.__led_start_index/self.LED_COUNT), self)
 

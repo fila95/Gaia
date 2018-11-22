@@ -19,7 +19,7 @@ import asyncio
 class DotManager:
 
 	# Number of light disks
-	_DOTS_COUNT = 1
+	_DOTS_COUNT = 2
 
 	# GPIO pin connected to the pixels (18 uses PWM!).
 	_LED_PIN = 18
