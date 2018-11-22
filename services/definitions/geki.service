@@ -4,7 +4,7 @@ After=multi-user.target
  
 [Service]
 Type=idle
-ExecStart=/usr/bin/python /var/srvcs/services/scripts/geki.py
+ExecStart=/usr/bin/python /var/srvcs/services/scripts/geki_2.py
 Restart=on-abort
  
 [Install]

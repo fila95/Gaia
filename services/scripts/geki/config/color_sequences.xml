@@ -1,23 +1,53 @@
 <sequences>
 	<story id="0">
-		<sequence>
+		<chapter id=0>
 			<color>red</color>
+			<tree>0</tree>
+			<audio path="geki/resources/audio/stories/1_1.ogg"/>
+		</chapter>
+		<chapter id=1>
 			<color>blue</color>
+			<tree>1</tree>
+			<audio path="geki/resources/audio/stories/1_2.ogg"/>
+		</chapter>
+		<chapter id=2>
 			<color>green</color>
-		</sequence>
+			<tree>2</tree>
+			<audio path="geki/resources/audio/stories/1_3.ogg"/>
+		</chapter>
 	</story>
 	<story id="1">
-		<sequence>
+		<chapter id=0>
 			<color>blue</color>
+			<tree>1</tree>
+			<audio path="geki/resources/audio/stories/2_1.ogg"/>
+		</chapter>
+		<chapter id=1>
 			<color>green</color>
+			<tree>2</tree>
+			<audio path="geki/resources/audio/stories/2_2.ogg"/>
+		</chapter>
+		<chapter id=2>
 			<color>red</color>
-		</sequence>
+			<tree>0</tree>
+			<audio path="geki/resources/audio/stories/2_3.ogg"/>
+		</chapter>
 	</story>
 	<story id="2">
-		<sequence>
+		<chapter id=0>
 			<color>green</color>
+			<tree>2</tree>
+			<audio path="geki/resources/audio/stories/3_1.ogg"/>
+		</chapter>
+		<chapter id=1>
 			<color>red</color>
+			<tree>0</tree>
+			<audio path="geki/resources/audio/stories/3_2.ogg"/>
+		</chapter>
+		<chapter id=2>
 			<color>blue</color>
-		</sequence>
+			<tree>1</tree>
+			<audio path="geki/resources/audio/stories/3_3.ogg"/>
+		</chapter>
 	</story>
 </sequences>
