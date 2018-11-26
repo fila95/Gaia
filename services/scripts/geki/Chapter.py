@@ -1,5 +1,6 @@
-class Chapter():
 
+
+class Chapter():
     def __init__(self, storyId, chapterId, tree:int, color, audioPath):
         self.__storyId = storyId
         self.__chapterId = chapterId
