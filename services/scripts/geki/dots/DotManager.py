@@ -5,14 +5,14 @@ except ImportError as e:
 
 from . import Dot
 from . import DotColor, Colors
-from . import DotWorker
+from .DotWorker import DotWorker
 from . import DotAnimation
 
 import sys
 import random
 import logging
-import threading
 import time
+import threading
 from queue import Queue, Empty
 import asyncio
 
