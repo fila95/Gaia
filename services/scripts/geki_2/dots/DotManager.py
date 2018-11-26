@@ -1,7 +1,7 @@
 try:
 	from neopixel import *
 except ImportError as e:
-	from neopixel_mock import Adafruit_NeoPixel, Color
+	from . neopixel_mock import Adafruit_NeoPixel, Color
 
 from .Dot import Dot
 from .DotColor import DotColor

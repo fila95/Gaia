@@ -10,7 +10,7 @@ from queue import Queue, Empty
 try:
 	from neopixel import *
 except ImportError as e:
-	from neopixel_mock import Adafruit_NeoPixel, Color
+	from . neopixel_mock import Adafruit_NeoPixel, Color
 
 class Dot:
 	LED_COUNT = 4
