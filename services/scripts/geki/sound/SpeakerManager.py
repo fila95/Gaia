@@ -1,9 +1,10 @@
 import pygame
+from pygame import mixer
 
 
 class SpeakerManager:
 
-    __speaker = pygame.mixer
+    __speaker = mixer
 
     def __init__(self):
 
@@ -11,7 +12,7 @@ class SpeakerManager:
         self.__speaker.pre_init(frequency=44100, channels=1)
         pygame.init()
         pygame.mixer.init()
-        self.__speaker.music.set_volume(0.3)
+        self.__speaker.music.set_volume(0.1)
 
     def quit(self):
         print(self.__speaker.get_num_channels())

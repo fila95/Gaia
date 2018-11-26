@@ -6,9 +6,7 @@ import time
 from geki.GameStates import GameStates
 from geki.StoriesManager import StoriesManager
 from geki.TreeAttributesManager import TreeAttributesManager
-from geki.dots.DotAnimation import *
-from geki.dots.DotColor import *
-from geki.dots.DotManager import DotManager
+from geki.dots import *
 from geki.sound.SpeakerManager import SpeakerManager
 
 
@@ -90,11 +88,13 @@ class Game():
     def __attractChild(self):
         path = Constants.AUDIO_PATH + "/attractChild.ogg"
         self.__speakerManager.playAudio(path)
-        self.__dotManager.animate(animation=DotAnimation.RAINBOW)
+        self.__dotManager.animate(animation=DotAnimation.RAINBOW_CYCLE)
 
         while (self.__speakerManager.get_init() and self.__speakerManager.isPlaying()):
-            continue
-        self.__dotManager.turnAllOff()  # TODO use specific funcion
+            time.sleep(0.1)
+
+        print("ciao")
+        # self.__dotManager.turnAllOff()  # TODO use specific funcion
 
         # While the child is not playing continuously try to attract the child
         # Stop when the child press the button and change
@@ -102,11 +102,12 @@ class Game():
         while (self.__gameState.equals(GameStates.ATTRACTING_CHILD)):
             time.sleep(Constants.ATTRACT_WAIT_TIME)
             if (self.__gameState.equals(GameStates.ATTRACTING_CHILD)):
-                self.__dotManager.animate(animation=DotAnimation.RAINBOW)
+                self.__dotManager.animate(animation=DotAnimation.RAINBOW_CYCLE)
                 self.__speakerManager.playAudio(path)
                 while (self.__speakerManager.get_init() and self.__speakerManager.isPlaying()):
                     time.sleep(0.1)
-                self.__dotManager.setColor(Colors.OFF)
+                print("ciao1")
+                # self.__dotManager.turnAllOff()
 
     def dotHasBeenPressed(self, index, dot):
         if self.__gameState.equals(GameStates.ATTRACTING_CHILD):

@@ -5,6 +5,10 @@ sudo apt-get upgrade -y
 sudo apt-get install gcc make build-essential python-dev git scons swig -y
 sudo apt-get install python-pip -y
 sudo apt-get install python3-pip -y
+sudo apt-get install python3-dev python3-numpy -y
+
+sudo apt-get install python3-pygame -y
+sudo pip3 install pygame
 
 git clone https://github.com/jgarff/rpi_ws281x
 cd rpi_ws281x/
