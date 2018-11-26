@@ -3,23 +3,21 @@ try:
 except ImportError as e:
 	from neopixel_mock import Adafruit_NeoPixel, Color
 
-from Dot import Dot
-from DotColor import *
-from DotWorker import DotWorker
-from DotAnimation import DotAnimation
+from .Dot import Dot
+from .DotColor import DotColor
+from .DotColor import Colors
+from .DotWorker import DotWorker
+from .DotAnimation import DotAnimation
 
 import sys
 import random
 import logging
-import threading
 import time
+import threading
 from queue import Queue, Empty
 import asyncio
 
 class DotManager:
-
-	# Number of light disks
-	_DOTS_COUNT = 2
 
 	# GPIO pin connected to the pixels (18 uses PWM!).
 	_LED_PIN = 18
@@ -36,8 +34,10 @@ class DotManager:
 
 	def __init__(self, tapHandler = None):
 		self.__tapHandler = tapHandler
-		self.__led_count = self._DOTS_COUNT * Dot.LED_COUNT
+		self.__dots_count = 2
+		self.__led_count = self.__dots_count * Dot.LED_COUNT
 		self.__dot_pins = [23, 24, 25, 8, 7, 1]
+		
 
 		# Create NeoPixel object with appropriate configuration.	
 		self.__strip = Adafruit_NeoPixel(self.__led_count, self._LED_PIN, self._LED_FREQ_HZ, self._LED_DMA, self._LED_INVERT, 255, self._LED_CHANNEL)
@@ -66,7 +66,7 @@ class DotManager:
 		self.__configure()
 	
 	def __configure(self):
-		for i in range(0, self._DOTS_COUNT):
+		for i in range(0, self.__dots_count):
 			start_index = i*int(Dot.LED_COUNT)
 			dot = Dot(strip=self.__strip, led_start_index=start_index, button_pin=self.__dot_pins[i], cb=self.__tapped, stopAnimationTrigger=self.stopAnimation)
 			self.__dots.append(dot)
@@ -75,31 +75,33 @@ class DotManager:
 	
 	def getDots(self):
 		return self.__dots
+	def getDotsCount(self):
+		return self.__dots_count
 
 	def setColor(self, color, fade=True):
 		self.__stopAnimationIfNeeded()
-		for i in range(0, self._DOTS_COUNT):
+		for i in range(0, self.__dots_count):
 			self.__dots[i].setColor(color, fade=fade)
 
 	def setColorAtIndex(self, idx: int, color, fade=True):
 		self.__stopAnimationIfNeeded()
-		if idx<self._DOTS_COUNT and idx>0:
+		if idx<self.__dots_count and idx>0:
 			self.__dots[idx].setColor(color, fade=fade)
 	
 	def setBrightnessAtIndex(self, idx: int, brightness, fade=True):
 		self.__stopAnimationIfNeeded()
-		if idx<self._DOTS_COUNT and idx>0:
+		if idx<self.__dots_count and idx>0:
 			self.__dots[idx].setBrightness(brightness, fade=fade)
 	
 	def setBrightness(self, brightness: int, fade=True):
 		self.__stopAnimationIfNeeded()
-		for i in range(0, self._DOTS_COUNT):
+		for i in range(0, self.__dots_count):
 			self.__dots[i].setBrightness(brightness, fade=fade)
 
 	def setColors(self, colors, fade=True):
 		self.__stopAnimationIfNeeded()
-		if len(colors) == self._DOTS_COUNT:
-			for i in range(0, self._DOTS_COUNT):
+		if len(colors) == self.__dots_count:
+			for i in range(0, self.__dots_count):
 				self.__dots[i].setColor(colors[i], fade=fade)
 		else:
 			logging.error("colors should be same length as dots")
@@ -196,7 +198,7 @@ class DotManager:
 					self.__strip.setPixelColor(i, self.__wheel((i+j) & 255))
 				self.__strip.show()
 			else:
-				for i in range(self._DOTS_COUNT):
+				for i in range(self.__dots_count):
 					self.__dots[i].setColor(self.__dot_wheel((i+j) & 255), fade=False, stopGlobalAnimation=False)
 			
 			time.sleep(wait_ms/1000.0)
@@ -215,8 +217,8 @@ class DotManager:
 					self.__strip.setPixelColor(i, self.__wheel((int(i * 256 / self.__strip.numPixels()) + j) & 255))
 				self.__strip.show()
 			else:
-				for i in range(self._DOTS_COUNT):
-					self.__dots[i].setColor(self.__dot_wheel((int(i * 256 / self._DOTS_COUNT) + j) & 255), fade=False, stopGlobalAnimation=False)
+				for i in range(self.__dots_count):
+					self.__dots[i].setColor(self.__dot_wheel((int(i * 256 / self.__dots_count) + j) & 255), fade=False, stopGlobalAnimation=False)
 			
 			time.sleep(wait_ms/1000.0)
 		
@@ -235,8 +237,8 @@ class DotManager:
 						self.__strip.setPixelColor(i+q, self.__wheel((i+j) % 255))
 					self.__strip.show()
 				else:
-					for i in range(self._DOTS_COUNT):
-						if i+q < self._DOTS_COUNT:
+					for i in range(self.__dots_count):
+						if i+q < self.__dots_count:
 							self.__dots[i+q].setColor(self.__dot_wheel((i+j) % 255), fade=False, stopGlobalAnimation=False)
 						
 				time.sleep(wait_ms/1000.0)
@@ -245,8 +247,8 @@ class DotManager:
 						self.__strip.setPixelColor(i+q, 0)
 					self.__strip.show()
 				else:
-					for i in range(self._DOTS_COUNT):
-						if i+q < self._DOTS_COUNT:
+					for i in range(self.__dots_count):
+						if i+q < self.__dots_count:
 							self.__dots[i+q].setColor(DotColor(0, 0, 0), fade=False, stopGlobalAnimation=False)
 
 		if keep_running and not self.__interrupt_event.isSet():
@@ -267,30 +269,3 @@ class DotManager:
 		if(interrupt == True):
 			self.__interrupt_event.set()
 	
-
-
-
-
-
-loop = None
-
-def dotWasTapped(index, dot):
-	print("Tapped Dot at index: ", end="", flush=True)
-	print(index)
-	# dot.setBrightness(random.randrange(0, 255, 1))
-	dot.setColor(Colors.random())
-
-if __name__ == '__main__':
-	try:
-		manager = DotManager(tapHandler=dotWasTapped)
-		# manager.setColor(Colors.random(), fade=False)
-		# manager.setBrightness(255, fade=False)
-		manager.animate(animation=DotAnimation.RAINBOW_CYCLE, keep_running=True)
-
-		# run the event loop
-		loop = asyncio.get_event_loop()
-		loop.run_forever()
-		loop.close()
-
-	except:
-		print("Error:", sys.exc_info()[0])

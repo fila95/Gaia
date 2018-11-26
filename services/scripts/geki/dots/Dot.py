@@ -1,5 +1,6 @@
-from DotColor import DotColor, Colors
-from DotWorker import DotWorker
+from .DotColor import DotColor
+from .DotColor import Colors
+from .DotWorker import DotWorker
 
 import pigpio
 import logging
