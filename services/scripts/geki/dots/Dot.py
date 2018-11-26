@@ -43,8 +43,10 @@ class Dot:
 	def getBrightnessAppliedColor(self):
 		return self.__targetBrightnessedColor
 
-	def setColor(self, color: DotColor, fade=True):
-		self.__stopAnimationTrigger()
+	def setColor(self, color: DotColor, fade=True, stopGlobalAnimation=True):
+		if stopGlobalAnimation:
+			self.__stopAnimationTrigger()
+
 		if fade:
 			self.__clearQueue(interrupt=False)
 		
@@ -53,8 +55,10 @@ class Dot:
 		self.__showColor(color, fade=fade)
 
 
-	def setBrightness(self, brightness: int, fade=True):
-		self.__stopAnimationTrigger()
+	def setBrightness(self, brightness: int, fade=True, stopGlobalAnimation=True):
+		if stopGlobalAnimation:
+			self.__stopAnimationTrigger()
+		
 		if fade:
 			self.__clearQueue(interrupt=False)
 		

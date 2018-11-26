@@ -49,10 +49,10 @@ class DotManager:
 		self.animations = {
 			DotAnimation.RAINBOW: self.__rainbow, 
 			DotAnimation.RAINBOW_CYCLE: self.__rainbowCycle, 
-			# DotAnimation.THEATER_CHASE: self.__theaterChase,
 			DotAnimation.THEATER_CHASE_RAINBOW: self.__theaterChaseRainbow
 		}
 
+		self.__animationAffectsLeds = False
 		self.__animating = False
 
 		self.__queue = Queue()
@@ -122,6 +122,13 @@ class DotManager:
 		logging.info("Dot at index:{:d} was tapped.".format(index))
 		if self.__tapHandler is not None:
 			self.__tapHandler(index, dot)
+
+	def setAnimationAffectDots(self, affectsDots=True):
+		self.__animationAffectsLeds = not affectsDots
+	
+	def setAnimationAffectLeds(self, affectsLeds=True):
+		self.__animationAffectsLeds = affectsLeds
+
 	
 	
 	## Color Animation Part
@@ -168,14 +175,30 @@ class DotManager:
 			pos -= 170
 			return Color(0, pos * 3, 255 - pos * 3)
 
+	def __dot_wheel(self, pos):
+		"""Generate rainbow colors across 0-255 positions."""
+		if pos < 85:
+			return DotColor(red=pos*3, green=255-pos*3, blue=0)
+		elif pos < 170:
+			pos -= 85
+			return DotColor(red=255-pos*3, green=0, blue=pos*3)
+		else:
+			pos -= 170
+			return DotColor(red=0, green=pos*3, blue=255-pos*3)
+
 	def __rainbow(self, keep_running=False, wait_ms=20, iterations=1):
 		"""Draw rainbow that fades across all pixels at once."""
 		for j in range(256*iterations):
 			if self.__interrupt_event.isSet():
 				break
-			for i in range(self.__strip.numPixels()):
-				self.__strip.setPixelColor(i, self.__wheel((i+j) & 255))
-			self.__strip.show()
+			if self.__animationAffectsLeds:
+				for i in range(self.__strip.numPixels()):
+					self.__strip.setPixelColor(i, self.__wheel((i+j) & 255))
+				self.__strip.show()
+			else:
+				for i in range(self._DOTS_COUNT):
+					self.__dots[i].setColor(self.__dot_wheel((i+j) & 255), fade=False, stopGlobalAnimation=False)
+			
 			time.sleep(wait_ms/1000.0)
 
 		if keep_running and not self.__interrupt_event.isSet():
@@ -187,29 +210,18 @@ class DotManager:
 			if self.__interrupt_event.isSet():
 				break
 			
-			for i in range(self.__strip.numPixels()):
-			   self.__strip.setPixelColor(i, self.__wheel((int(i * 256 / self.__strip.numPixels()) + j) & 255))
-			self.__strip.show()
+			if self.__animationAffectsLeds:
+				for i in range(self.__strip.numPixels()):
+					self.__strip.setPixelColor(i, self.__wheel((int(i * 256 / self.__strip.numPixels()) + j) & 255))
+				self.__strip.show()
+			else:
+				for i in range(self._DOTS_COUNT):
+					self.__dots[i].setColor(self.__dot_wheel((int(i * 256 / self._DOTS_COUNT) + j) & 255), fade=False, stopGlobalAnimation=False)
+			
 			time.sleep(wait_ms/1000.0)
 		
 		if keep_running and not self.__interrupt_event.isSet():
 			self.__rainbowCycle(keep_running=keep_running, wait_ms=wait_ms, iterations=iterations)
-
-	def __theaterChase(self, color, keep_running=False, wait_ms=50, iterations=10):
-		"""Movie theater light style chaser animation."""
-		for j in range(iterations):
-			if self.__interrupt_event.isSet():
-				break
-			for q in range(3):
-				for i in range(0,self.__strip.numPixels(), 3):
-					self.__strip.setPixelColor(i+q, color)
-				self.__strip.show()
-				time.sleep(wait_ms/1000.0)
-				for i in range(0, self.__strip.numPixels(), 3):
-					self.__strip.setPixelColor(i+q, 0)
-		
-		if keep_running and not self.__interrupt_event.isSet():
-			self.__theaterChase(color=color, keep_running=keep_running, wait_ms=wait_ms, iterations=iterations)
 
 	def __theaterChaseRainbow(self, keep_running=False, wait_ms=50):
 		"""Rainbow movie theater light style chaser animation."""
@@ -217,12 +229,25 @@ class DotManager:
 			if self.__interrupt_event.isSet():
 				break
 			for q in range(3):
-				for i in range(0, self.__strip.numPixels(), 3):
-				   self.__strip.setPixelColor(i+q, self.__wheel((i+j) % 255))
-				self.__strip.show()
+
+				if self.__animationAffectsLeds:
+					for i in range(self.__strip.numPixels()):
+						self.__strip.setPixelColor(i+q, self.__wheel((i+j) % 255))
+					self.__strip.show()
+				else:
+					for i in range(self._DOTS_COUNT):
+						if i+q < self._DOTS_COUNT:
+							self.__dots[i+q].setColor(self.__dot_wheel((i+j) % 255), fade=False, stopGlobalAnimation=False)
+						
 				time.sleep(wait_ms/1000.0)
-				for i in range(0, self.__strip.numPixels(), 3):
-					self.__strip.setPixelColor(i+q, 0)
+				if self.__animationAffectsLeds:
+					for i in range(self.__strip.numPixels()):
+						self.__strip.setPixelColor(i+q, 0)
+					self.__strip.show()
+				else:
+					for i in range(self._DOTS_COUNT):
+						if i+q < self._DOTS_COUNT:
+							self.__dots[i+q].setColor(DotColor(0, 0, 0), fade=False, stopGlobalAnimation=False)
 
 		if keep_running and not self.__interrupt_event.isSet():
 			self.__theaterChaseRainbow(keep_running=keep_running, wait_ms=wait_ms)
