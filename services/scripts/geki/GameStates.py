@@ -1,8 +1,15 @@
 from enum import Enum
 
+
 class GameStates(Enum):
-    NOT_PLAYING = 1
-    GAME_STARTED = 2
-    ASKED_IF_NEW_GAME = 3
-    NEW_GAME_STARTED = 4
-    OLD_GAME_SEQUENCE_ASKED = 5
+    ATTRACTING_CHILD = 1
+    ASKING_IF_NEW_GAME = 2
+    STARTING_NEW_STORY = 3
+    ASKING_SEQUENCE = 4
+    GETTING_SEQUENCE = 5
+    TELLING_NEXT_CHAPTER = 6
+    SHOWING_SEQUENCE = 7
+    GAME_ENDED = 0
+
+    def equals(self, gameState):
+        return self.value == gameState.value

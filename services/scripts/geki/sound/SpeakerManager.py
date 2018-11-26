@@ -1,17 +1,28 @@
-from pygame import mixer
+import pygame
 
 
 class SpeakerManager:
 
-    __speaker = mixer
-
+    __speaker = pygame.mixer
 
     def __init__(self):
 
         # initialize the speaker
-        self.__speaker.init()
-        self.__speaker.music.set_volume(1.0)
+        self.__speaker.pre_init(frequency=44100, channels=1)
+        pygame.init()
+        pygame.mixer.init()
+        self.__speaker.music.set_volume(0.3)
 
+    def quit(self):
+        print(self.__speaker.get_num_channels())
+        print(self.__speaker.get_busy())
+        pygame.mixer.set_num_channels(0)
+        print(self.__speaker.get_num_channels())
+        pygame.mixer.quit()
+        pygame.quit()
+
+    def get_init(self):
+        self.__speaker.get_init()
 
     def stop(self):
         self.__speaker.music.stop()
@@ -24,8 +35,8 @@ class SpeakerManager:
             if path is None:
                 self.__speaker.music.unpause()
             else:
-                sound = self.__speaker.music.Sound(path)
-                self.__speaker.music.play(sound)
+                self.__speaker.music.load(path)
+                self.__speaker.music.play()
 
     def setVolume(self, volume):
         if type(volume) is float:

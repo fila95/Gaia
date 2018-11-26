@@ -1,7 +1,8 @@
 
 import xml.etree.ElementTree
-from DotColor import Colors
-from Chapter import Chapter
+from geki.dots.DotColor import Colors
+from geki.Chapter import Chapter
+
 
 class StoriesManager():
 
@@ -23,16 +24,27 @@ class StoriesManager():
 
     def getColor(self, story, part):
         return self.__chapterMatrix[story][part].getColor()
-    
+
     def getAudioPath(self, story, part):
         return self.__chapterMatrix[story][part].getAudioPath()
 
     def getTree(self, story, part):
         return self.__chapterMatrix[story][part].getTree()
-    
-    def getStoriesStartingAtTree(self, treeId):
+
+    def getStoriesStartingFromTree(self, treeId):
         stories = []
         for story in self.__chapterMatrix:
             if(story[0].getTree() == treeId):
                 stories.append(story[0].getStoryId())
         return stories
+
+    def getStoryId(self, colorList):
+        for story in self.__chapterMatrix:
+            i = 0
+            found = True
+            for chapter in story:
+                if not chapter.getColor.equals(colorList[i]):
+                    found = False
+            if found:
+                return chapter.getStoryId()
+        return -1
