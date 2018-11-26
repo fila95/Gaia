@@ -3,10 +3,11 @@ try:
 except ImportError as e:
 	from neopixel_mock import Adafruit_NeoPixel, Color
 
-from . import Dot
-from . import DotColor, Colors
+from .Dot import Dot
+from .DotColor import DotColor
+from .DotColor import Colors
 from .DotWorker import DotWorker
-from . import DotAnimation
+from .DotAnimation import DotAnimation
 
 import sys
 import random

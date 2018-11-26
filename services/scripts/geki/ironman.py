@@ -6,9 +6,6 @@ from dots import Dot
 import asyncio
 import sys
 
-loop = None
-manager = DotManager(tapHandler=dotWasTapped)
-
 def dotWasTapped(index, dot):
 	print("Tapped Dot at index: ", end="", flush=True)
 	print(index)
@@ -18,6 +15,10 @@ def dotWasTapped(index, dot):
 		for i in range(0, manager.getDotsCount()):
 			manager.setColorAtIndex(i, Colors.random(), fade=True)
 		
+
+loop = None
+manager = DotManager(tapHandler=dotWasTapped)
+
 if __name__ == '__main__':
 	try:
 		# manager.setColor(Colors.random(), fade=False)
