@@ -35,7 +35,7 @@ class Game():
             self.__gameState = GameStates.GAME_ENDED
 
     def __tellChapter(self, storyId):
-        chapterId = self.__sequence.length
+        chapterId = len(self.__sequence)
         sm = self.__storiesManager
         audioPath = sm.getAudioPath(storyId, chapterId)
         color = sm.getColor(storyId, chapterId)
@@ -54,11 +54,11 @@ class Game():
         sm = self.__storiesManager
         possibleStories = sm.getStoriesStartingFromTree(self.__treeId)
 
-        storyId = possibleStories[random.randInt(0, possibleStories.length)]
+        storyId = possibleStories[random.randint(0, len(possibleStories))]
 
         self.__tellChapter(storyId)
 
-    def __tellNextChapter():
+    def __tellNextChapter(self):
         storyId = self.__storiesManager.getStoryId(self.__sequence)
         if storyId == -1:
             self.__gameState = GameStates.ASKING_SEQUENCE
@@ -66,7 +66,7 @@ class Game():
         else:
             self.__tellChapter(storyId)
 
-    def __askSequence():
+    def __askSequence(self):
         path = Constants.AUDIO_PATH + "/askSequence.ogg"
         self.__speakerManager.playAudio(path)
 
@@ -77,11 +77,11 @@ class Game():
         # and switch on the lights: red for no (odd buttons),
         # green for yes (even buttons)
         i = 0
-        for i in dotManager.getDots().length:
+        for i in range(0, len(self.__dotManager.getDots())):
             if i % 2 == 0:
-                dotManager.setColorAtIndex(i, Colors.GREEN, True)
+                self.__dotManager.setColorAtIndex(i, Colors.GREEN, True)
             else:
-                dotManager.setColorAtIndex(i, Colors.RED, True)
+                self.__dotManager.setColorAtIndex(i, Colors.RED, True)
             i += 1
 
         path = Constants.AUDIO_PATH + "/askNewGame.ogg"
@@ -114,7 +114,7 @@ class Game():
             self.__gameState = GameStates.ASKING_IF_NEW_GAME
             self.__askNewGame()
         elif self.__gameState.equals(GameStates.ASKING_IF_NEW_GAME):
-            if dot.color.equals(Color.GREEN):
+            if dot.color.equals(Colors.GREEN):
                 self.__gameState = GameStates.STARTING_NEW_STORY
                 self.__startNewStory()
             elif dot.color.equals(Colors.RED):
@@ -127,7 +127,7 @@ class Game():
             color = self.__sequence[0]
             if (color.equals(dot.getColor())):
                 self.__sequence.pop()
-                self.__dotManager.setColorAtIndex(idx=index, color=Color.OFF)
+                self.__dotManager.setColorAtIndex(idx=index, color=Colors.OFF)
                 self.__showSequence()
         elif self.__gameState.equals(GameStates.GETTING_SEQUENCE):
             color = dot.getColor()
