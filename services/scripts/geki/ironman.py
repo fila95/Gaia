@@ -7,14 +7,19 @@ import asyncio
 import sys
 
 def dotWasTapped(index, dot):
+	
 	print("Tapped Dot at index: ", end="", flush=True)
 	print(index)
 	if (index == 0):
-		manager.animate(animation=DotAnimation.random())
+		manager.setAnimationAffectDots(dotWasTapped.animationAffectDots)
+		dotWasTapped.animationAffectDots = not dotWasTapped.animationAffectDots
+		manager.animate(animation=DotAnimation.RAINBOW_CYCLE)
 	else:
-		for i in range(0, manager.getDotsCount()):
+		for i in range(manager.getDotsCount()):
+			print(i)
 			manager.setColorAtIndex(i, Colors.random(), fade=True)
-		
+
+dotWasTapped.animationAffectDots = True
 
 loop = None
 manager = DotManager(tapHandler=dotWasTapped)

@@ -13,4 +13,4 @@ cd ../
 sudo rm -rf definitions/*
 sudo rm -rf scripts/*
 
-sudo systemctl daemon-reload
+# sudo systemctl daemon-reload

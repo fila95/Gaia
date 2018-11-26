@@ -4,8 +4,9 @@ After=multi-user.target
  
 [Service]
 Type=idle
-ExecStart=/usr/bin/python /var/srvcs/services/scripts/geki/ironman.py
-Restart=always
+ExecStart=/usr/bin/python3 /var/srvcs/services/scripts/geki/ironman.py
+Restart=on-failure
+
  
 [Install]
 WantedBy=multi-user.target
