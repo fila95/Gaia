@@ -16,9 +16,8 @@ def dotWasTapped(index, dot):
 		manager.animate(animation=DotAnimation.RAINBOW_CYCLE)
 	else:
 		for i in range(manager.getDotsCount()):
-			print(i)
 			manager.setColorAtIndex(i, Colors.random(), fade=True)
-
+			
 dotWasTapped.animationAffectDots = True
 
 loop = None

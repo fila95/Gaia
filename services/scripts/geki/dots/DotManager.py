@@ -85,12 +85,12 @@ class DotManager:
 
 	def setColorAtIndex(self, idx: int, color, fade=True):
 		self.__stopAnimationIfNeeded()
-		if idx<self.__dots_count and idx>0:
+		if idx<self.__dots_count and idx>=0:
 			self.__dots[idx].setColor(color, fade=fade)
 	
 	def setBrightnessAtIndex(self, idx: int, brightness, fade=True):
 		self.__stopAnimationIfNeeded()
-		if idx<self.__dots_count and idx>0:
+		if idx<self.__dots_count and idx>=0:
 			self.__dots[idx].setBrightness(brightness, fade=fade)
 	
 	def setBrightness(self, brightness: int, fade=True):
