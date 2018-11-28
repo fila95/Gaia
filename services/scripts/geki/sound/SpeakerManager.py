@@ -12,6 +12,9 @@ class SpeakerManager:
         self.__speaker.init()
         self.setVolume(1.0)
 
+    def get_init(self):
+        return self.get_init()
+
     def deinit(self):
         self.__speaker.quit()
 

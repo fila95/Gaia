@@ -1,5 +1,4 @@
 import geki.config.Constants as Constants
-import random
 import signal
 import time
 
@@ -8,7 +7,7 @@ from geki.StoriesManager import StoriesManager
 from geki.TreeAttributesManager import TreeAttributesManager
 from geki.dots import *
 from geki.sound.SpeakerManager import SpeakerManager
-
+from geki.ChapterPlayer import *
 
 class Game():
 
@@ -16,54 +15,27 @@ class Game():
 
         self.__treeId = treeId
 
-        # Assign color to a story
+        
+        #Initialization
         path = Constants.CONFIG_PATH + "/color_sequences.xml"
         self.__storiesManager = StoriesManager(path)
         self.__dotManager = DotManager(self.dotHasBeenPressed)
         self.__speakerManager = SpeakerManager()  # TODO check parameters
+        self.__chapterPlayer = ChapterPlayer(self.__storiesManager,self.__speakerManager)
 
+    #Show sequence of colors at the end of chapter (The one that the child has to reproduce)
     def __showSequence(self):
         self.__dotManager.turnAllOff()
         self.__gameState = GameStates.SHOWING_SEQUENCE
-
+        self.__sequence.append(Colors.WHITE)
         if self.__sequence:
             color = self.__sequence[0]
             self.__dotManager.setColorAtIndex(idx=0, color=color)
         else:
             self.__gameState = GameStates.GAME_ENDED
 
-    def __tellChapter(self, storyId):
-        chapterId = len(self.__sequence)
-        sm = self.__storiesManager
-        audioPath = sm.getAudioPath(storyId, chapterId)
-        color = sm.getColor(storyId, chapterId)
 
-        self.__sequence.append(color)
-
-        self.__speakerManager.playAudio(audioPath)
-
-        while(self.__speakerManager.get_init() and self.__speakerManager.isPlaying()):
-            time.sleep(0.1)
-        # When the story is finished, the sequence is showed
-        self.__showSequence()
-
-    def __startNewStory(self):
-        self.__sequence = []
-        sm = self.__storiesManager
-        possibleStories = sm.getStoriesStartingFromTree(self.__treeId)
-
-        storyId = possibleStories[random.randint(0, len(possibleStories))]
-
-        self.__tellChapter(storyId)
-
-    def __tellNextChapter(self):
-        storyId = self.__storiesManager.getStoryId(self.__sequence)
-        if storyId == -1:
-            self.__gameState = GameStates.ASKING_SEQUENCE
-            self.__askSequence()
-        else:
-            self.__tellChapter(storyId)
-
+    
     def __askSequence(self):
         path = Constants.AUDIO_PATH + "/askSequence.ogg"
         self.__speakerManager.playAudio(path)
@@ -84,6 +56,9 @@ class Game():
 
         path = Constants.AUDIO_PATH + "/askNewGame.ogg"
         self.__speakerManager.playAudio(path)
+
+
+
 
     def __attractChild(self):
         path = Constants.AUDIO_PATH + "/attractChild.ogg"
@@ -109,34 +84,47 @@ class Game():
                 print("ciao1")
                 # self.__dotManager.turnAllOff()
 
+
+
+
     def dotHasBeenPressed(self, index, dot):
+        #Game=not started
         if self.__gameState.equals(GameStates.ATTRACTING_CHILD):
             self.__speakerManager.stop()
             self.__gameState = GameStates.ASKING_IF_NEW_GAME
             self.__askNewGame()
+        #Game=started or not?
         elif self.__gameState.equals(GameStates.ASKING_IF_NEW_GAME):
+            #Game=new game
             if dot.color.equals(Colors.GREEN):
                 self.__gameState = GameStates.STARTING_NEW_STORY
-                self.__startNewStory()
+                self.__sequence = self.__chapterPlayer.startNewStory(self.__treeId)
+            #Game=not new game
             elif dot.color.equals(Colors.RED):
                 self.__gameState = GameStates.ASKING_SEQUENCE
                 self.__askSequence()
             else:
                 # TODO handle unexpected color
                 pass
+        #Game=end of the telling
         elif self.__gameState.equals(GameStates.SHOWING_SEQUENCE):
             color = self.__sequence[0]
             if (color.equals(dot.getColor())):
                 self.__sequence.pop()
                 self.__dotManager.setColorAtIndex(idx=index, color=Colors.OFF)
                 self.__showSequence()
+        #Game=new chapter of a not new game
         elif self.__gameState.equals(GameStates.GETTING_SEQUENCE):
             color = dot.getColor()
+            #Game=end of sequence
             if color.equals(Colors.WHITE):
                 self.__gameState = GameStates.TELLING_NEXT_CHAPTER
-                self.__tellNextChapter()
+                self.__sequence = self.__chapterPlayer.tellNextChapter(self.__sequence)
             else:
                 self.__sequence.append(dot.getColor())
+
+
+
 
     def playGame(self):
         # At the start of the game the state is "ATTRACTING_CHILD"
@@ -148,12 +136,14 @@ class Game():
         while (not self.__gameState.equals(GameStates.GAME_ENDED)):
             time.sleep(0.1)
 
+
+
     def exit(self):
         if(self.__speakerManager.get_init()):
             self.__speakerManager.stop()
             while(self.__speakerManager.isPlaying()):
                 continue
-        self.__speakerManager.quit()
+        self.__speakerManager.deinit()
         self.__gameState = GameStates.GAME_ENDED
         self.__dotManager.turnAllOff()
 
