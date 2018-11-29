@@ -19,11 +19,8 @@ class Story:
     def getName(self):
         return self.__name
 
-    def chaptrColor(self, index=-1):
-        if index == -1:
-            return None
-        else:
-            return self.__colorSequence[index]
+    def initialColor(self):
+        return self.__colorSequence[0]
 
     def chapterPath(self, index=0):
 

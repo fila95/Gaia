@@ -1,12 +1,12 @@
 import json
 
 from services.scripts.geki_2.Story import Story
-from services.scripts.geki_2.dots import DotColor, Colors
-
+from services.scripts.geki_2.dots import DotColor
 
 class StoryManager:
 
     __stories = []
+    __Colors = []
 
     def __init__(self, json1="Stories.json"):
 
@@ -24,6 +24,8 @@ class StoryManager:
                 path.append(path['path'])
 
             self.__stories.append(Story(name, colorSequence, path))
+        for color in data['AvailableColors']:
+            self.__Colors.append(DotColor(color['red'], color['blu'], color['green']))
 
     def returnStory(self, color=[]):
         for story in self.__stories:
@@ -31,30 +33,5 @@ class StoryManager:
                 return story
         return None
 
-    def returnPossibleColor(self, index=-1):
-        if index == -1:
-            return None
-        else:
-            sequenceOfColor = []
-            for story in self.__stories:
-                sequenceOfColor.append(story.chaptrColor(index))
-            if len(sequenceOfColor) < 6:
-                sequenceOfColor = self.generateNewColor(sequenceOfColor, 6-len(sequenceOfColor))
-            return sequenceOfColor
-
-    def generateNewColor(self, sequenceOfColor, numberOfNewColor):
-
-        count = 0
-
-        while count < numberOfNewColor:
-            newColor = Colors.random()
-            check = True
-            for color in sequenceOfColor:
-                if color.equals(newColor):
-                    check = False
-            if check:
-                sequenceOfColor.append(newColor)
-                count = count + 1
-
-        return sequenceOfColor
-
+    def availableColors(self):
+        return self.__Colors
