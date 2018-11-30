@@ -17,6 +17,7 @@ class Game():
 		logging.info("SpeakerManager Loaded!")
 
 		self.stories = StoryManager()
+		self.current_story = None
 		logging.info("StoryManager Loaded!")
 
 		## Used to ignore touches (still not implemented)
@@ -29,6 +30,7 @@ class Game():
 		
 
 	def start(self):
+		self.current_story = None
 		self.touchedColors = []
 		self.userInteractionEnabled = True
 		self.state = GameStates.IDLE
@@ -40,7 +42,6 @@ class Game():
 		logging.info("Stopping Geki Game...")
 		self.leds.turnAllOff()
 		self.speakers.deinit()
-
 
 	## Private
 	def __triggerWaitingFirstContactSubroutine(self):
@@ -56,9 +57,11 @@ class Game():
 		if len(self.touchedColors) == len(self.stories.availableColors()):
 			self.__checkColorSequence
 
-	def startTellingStory(self, story):
+	def startTellingStory(self):
+		if self.current_story is None:
+			return
 		self.state = GameStates.TELLING_STORY
-		self.speakers.playAudio(path=story.chapterPath(colorSequence=self.touchedColors))
+		self.speakers.playAudio(path=self.current_story.chapterPath(colorSequence=self.touchedColors))
 
 		self.leds.setAnimationAffectLeds()
 		self.leds.animate(animation=DotAnimation.RAINBOW_CYCLE, keep_running=True)
@@ -69,21 +72,24 @@ class Game():
 		# check if this was the last chapter
 		##	if yes then audio send hooray and start again
 		##	if not then show the next sequence then restart
-		
+		if self.current_story.isLastChapter(self.touchedColors):
+			self.speakers.playAudio(path=self.stories.gameCompletedPath())
+			self.start()
+		else:
+			nextSequence = self.current_story.nextSequence(self.touchedColors)
+			self.leds.setColors(nextSequence, fade=True)
 
 		self.__resetTimer(duration=self.state.waitTime())
-
-		pass
 		
 	def __checkColorSequence(self):
 		self.__stopTimer()
 
-		story = self.stories.storyForColors(self.touchedColors)
-		if story is None:
-			# TODO: Play wrong story sound and restart game...
-			pass
+		self.current_story = self.stories.storyForColors(self.touchedColors)
+		if self.current_story is None:
+			self.speakers.playAudio(self.stories.wrongChoicePath())
+			self.start()
 		else:
-			self.startTellingStory(story)
+			self.startTellingStory()
 		
 	
 	## Interaction Processing

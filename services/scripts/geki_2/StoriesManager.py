@@ -38,8 +38,8 @@ class StoryManager:
     def availableColors(self):
         return self.__Colors
 
-    def wrongChoice(self):
+    def wrongChoicePath(self):
         return self.__wrongChoice
 
-    def gameCompleted(self):
+    def gameCompletedPath(self):
         return self.__gameCompleted

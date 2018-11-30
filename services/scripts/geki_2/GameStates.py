@@ -13,7 +13,7 @@ class GameStates(Enum):
 
     def waitTime(self):
         if self == GameStates.WAITING_FIRST_CONTACT:
-            return 5
+            return 10
         elif self == GameStates.WAITING_SEQUENCE:
             return 1
         elif self == GameStates.ENDING:
