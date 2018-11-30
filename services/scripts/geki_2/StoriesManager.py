@@ -1,7 +1,7 @@
 import json
 
-from services.scripts.geki_2.Story import Story
-from services.scripts.geki_2.dots import DotColor
+from Story import Story
+from dots import DotColor
 
 class StoryManager:
 
@@ -27,7 +27,7 @@ class StoryManager:
         for color in data['AvailableColors']:
             self.__Colors.append(DotColor(color['red'], color['blu'], color['green']))
 
-    def returnStory(self, color=[]):
+    def storyForColors(self, color=[]):
         for story in self.__stories:
             if story.initialColor().equals(color):
                 return story

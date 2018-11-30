@@ -33,7 +33,7 @@ cp /boot/config.txt config.txt
 sudo echo "# Enable SSH via USB" >> config.txt
 sudo echo "dtoverlay=dwc2" >> config.txt
 sudo echo "# Speaker Config" >> config.txt
-sudo echo "dtoverlay=pwm,pin=13,func=4" >> config.txt
+sudo echo "dtoverlay=pwm,pin=19,func=4" >> config.txt
 sudo mv config.txt /boot/config.txt
 
 sudo sed '$ s/$/rootwait/ modules-load=dwc2,g_ether' /boot/cmdline.txt

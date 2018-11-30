@@ -13,7 +13,7 @@ def dotWasTapped(index, dot):
 	if (index == 0):
 		manager.setAnimationAffectDots(dotWasTapped.animationAffectDots)
 		dotWasTapped.animationAffectDots = not dotWasTapped.animationAffectDots
-		manager.animate(animation=DotAnimation.RAINBOW_CYCLE)
+		manager.animate(animation=DotAnimation.RAINBOW_CYCLE, keep_running=True)
 	else:
 		for i in range(manager.getDotsCount()):
 			manager.setColorAtIndex(i, Colors.random(), fade=True)

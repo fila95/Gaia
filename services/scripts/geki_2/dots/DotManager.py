@@ -21,6 +21,7 @@ class DotManager:
 
 	# GPIO pin connected to the pixels (18 uses PWM!).
 	_LED_PIN = 18
+	# _LED_PIN = 18
 	# GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
 	#_LED_PIN = 10
 	# LED signal frequency in hertz (usually 800khz)
