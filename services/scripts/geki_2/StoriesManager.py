@@ -26,6 +26,8 @@ class StoryManager:
             self.__stories.append(Story(name, colorSequence, path))
         for color in data['AvailableColors']:
             self.__Colors.append(DotColor(color['red'], color['blu'], color['green']))
+        self.__wrongChoice = data["WrongChoice"]
+        self.__gameCompleted = data["GameCompleted"]
 
     def storyForColors(self, color=[]):
         for story in self.__stories:
@@ -35,3 +37,9 @@ class StoryManager:
 
     def availableColors(self):
         return self.__Colors
+
+    def wrongChoice(self):
+        return self.__wrongChoice
+
+    def gameCompleted(self):
+        return self.__gameCompleted

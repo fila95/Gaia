@@ -31,5 +31,7 @@
       "blu":4,
       "green":3
     }
-  ]
+  ],
+  "WrongChoice":"wrong",
+  "GameCompleted":"game"
 }
