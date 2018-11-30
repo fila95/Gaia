@@ -13,13 +13,13 @@ class Game():
 		self.leds = DotManager(tapHandler=self.__dotWasTapped)
 		logging.info("DotManager Loaded!")
 
-		self.speakers = SpeakerManager()
+		self.speakers = SpeakerManager(finishPlayingCallback=self.__musicDidFinishPlaying)
 		logging.info("SpeakerManager Loaded!")
 
 		self.stories = StoryManager()
 		logging.info("StoryManager Loaded!")
 
-		## Used to ignore touches
+		## Used to ignore touches (still not implemented)
 		self.userInteractionEnabled = True
 		self.touchedColors = []
 
@@ -32,6 +32,7 @@ class Game():
 		self.touchedColors = []
 		self.userInteractionEnabled = True
 		self.state = GameStates.IDLE
+		self.leds.setAnimationAffectDots()
 		self.leds.animate(animation=DotAnimation.RAINBOW_CYCLE, keep_running=True)
 
 
@@ -45,6 +46,7 @@ class Game():
 	def __triggerWaitingFirstContactSubroutine(self):
 		## Wait the first real contact, start timeout timer
 		self.state = GameStates.WAITING_FIRST_CONTACT
+		self.leds.setColors(self.stories.availableColors(), fade=True)
 		self.__resetTimer(duration=self.state.waitTime())
 		
 	def __triggerWaitingRestOfSequenceSubroutine(self):
@@ -53,40 +55,64 @@ class Game():
 
 		if len(self.touchedColors) == len(self.stories.availableColors()):
 			self.__checkColorSequence
+
+	def startTellingStory(self, story):
+		self.state = GameStates.TELLING_STORY
+		self.speakers.playAudio(path=story.chapterPath(colorSequence=self.touchedColors))
+
+		self.leds.setAnimationAffectLeds()
+		self.leds.animate(animation=DotAnimation.RAINBOW_CYCLE, keep_running=True)
+		# After this we'll wait the speakermanager callback
+
+	def __endGame(self):
+		self.state = GameStates.ENDING
+		# check if this was the last chapter
+		##	if yes then audio send hooray and start again
+		##	if not then show the next sequence then restart
+		
+
+		self.__resetTimer(duration=self.state.waitTime())
+
+		pass
 		
 	def __checkColorSequence(self):
 		self.__stopTimer()
 
-		story = self.stories.storyForColors()
-		## TODO: Check Sequence, if wrong send wrong story voice, then restart game
-		pass
-
+		story = self.stories.storyForColors(self.touchedColors)
+		if story is None:
+			# TODO: Play wrong story sound and restart game...
+			pass
+		else:
+			self.startTellingStory(story)
+		
+	
+	## Interaction Processing
 	def __processNextInteractionBasedOnColor(self, color):
+		# Tapped Dot
 		if self.state == GameStates.IDLE:
 			self.__triggerWaitingFirstContactSubroutine()
-		if self.state == GameStates.WAITING_FIRST_CONTACT:
+		elif self.state == GameStates.WAITING_FIRST_CONTACT:
 			self.__triggerWaitingRestOfSequenceSubroutine()
-
 		elif self.state == GameStates.WAITING_SEQUENCE:
 			self.touchedColors.append(color)
-
-		elif self.state == GameStates.TELLING_STORY:
-			## Should never come here, callback from audio should manage it
-			pass
-		elif self.start == GameStates.ENDING:
-			## Should never come here, callback from audio should manage it
-			pass
 			
 	
 	def __processNextInteractionBasedOnTimerFired(self):
-		logging.info("Timer was Fired..")
-
+		# Timer Fired
 		if self.state == GameStates.WAITING_FIRST_CONTACT:
 			self.start()
 		elif self.state == GameStates.WAITING_SEQUENCE:
 			self.__checkColorSequence()
-			
+		elif self.state == GameStates.ENDING:
+			self.start()
 
+	def __processNextInteractionBasedOnMusicFinishedPlaying(self):
+		# Music finished
+		if self.state == GameStates.TELLING_STORY:
+			self.__endGame()
+				
+
+	# Dots:
 	def __dotWasTapped(self, index, dot):
 		if not self.userInteractionEnabled:
 			logging.info("Ignoring Touch..")
@@ -113,4 +139,9 @@ class Game():
 
 	def __timerFired(self):
 		self.__processNextInteractionBasedOnTimerFired()
+		pass
+
+	# Music Playback:
+	def __musicDidFinishPlaying(self):
+		self.__processNextInteractionBasedOnMusicFinishedPlaying()
 		pass

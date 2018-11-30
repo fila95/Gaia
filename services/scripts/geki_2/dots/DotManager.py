@@ -101,11 +101,15 @@ class DotManager:
 
 	def setColors(self, colors, fade=True):
 		self.__stopAnimationIfNeeded()
-		if len(colors) == self.__dots_count:
-			for i in range(0, self.__dots_count):
-				self.__dots[i].setColor(colors[i], fade=fade)
-		else:
-			logging.error("colors should be same length as dots")
+
+		clrs = colors
+		diff = len(clrs) - self.__dots_count
+		if diff < 0:
+			for i in range(0, abs(diff)):
+				clrs.append(Colors.OFF)
+
+		for i in range(0, self.__dots_count):
+			self.__dots[i].setColor(clrs[i], fade=fade)
 
 	def turnAllOff(self):
 		self.__stopAnimationIfNeeded()
