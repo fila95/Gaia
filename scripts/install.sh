@@ -26,20 +26,20 @@ sudo systemctl enable pigpiod
 sudo pip3 install asyncio
 
 cd 
-sudo rm install.sh
+# sudo rm install.sh
 
-cd
-cp /boot/config.txt config.txt
-sudo echo "# Enable SSH via USB" >> config.txt
-sudo echo "dtoverlay=dwc2" >> config.txt
-sudo echo "# Speaker Config" >> config.txt
-sudo echo "dtoverlay=pwm,pin=19,func=4" >> config.txt
-sudo mv config.txt /boot/config.txt
+# cd
+# cp /boot/config.txt config.txt
+# sudo echo "# Enable SSH via USB" >> config.txt
+# sudo echo "dtoverlay=dwc2" >> config.txt
+# sudo echo "# Speaker Config" >> config.txt
+# sudo echo "dtoverlay=pwm,pin=19,func=4" >> config.txt
+# sudo mv config.txt /boot/config.txt
 
-sudo sed '$ s/$/rootwait/ modules-load=dwc2,g_ether' /boot/cmdline.txt
+# sudo sed '$ s/$/rootwait/ modules-load=dwc2,g_ether' /boot/cmdline.txt
 
-cd
-sudo awk '{gsub(/rootwait/,"rootwait modules-load=dwc2,g_ether")}1' /boot/cmdline.txt > cmdline.txt
-sudo mv cmdline.txt /boot/cmdline.txt
+# cd
+# sudo awk '{gsub(/rootwait/,"rootwait modules-load=dwc2,g_ether")}1' /boot/cmdline.txt > cmdline.txt
+# sudo mv cmdline.txt /boot/cmdline.txt
 
 sudo reboot

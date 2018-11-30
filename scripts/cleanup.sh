@@ -1,10 +1,10 @@
 #!/bin/bash
 
-FOLDER = /var/srvcs/services/definitions
+FOLDER=/var/srvcs/services/definitions
 
 if [ -d $FOLDER ]
 then
-    cd $FOLDER
+	cd $FOLDER
 
 	for filename in *.service; do
 		noext=${filename%%.*}
