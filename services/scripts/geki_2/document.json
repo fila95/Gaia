@@ -1,25 +1,26 @@
 { "Stories":[
-  {
-  "Name": "BiancaNeve",
-  "Colors": [
-    {
-      "red":0,
-      "blu":1,
-      "green":2
-      },
-    {
-      "red":5,
-      "blu":4,
-      "green":3
-    }
-  ],
-  "Paths": [
-    {"path": "chap1"},
-    {"path": "chap2"},
-    {"path": "chap3"}
-    ]
-  }
+	{
+	"Name": "BiancaNeve",
+	"Colors": [
+		{
+			"red":0,
+			"blu":1,
+			"green":2
+			},
+		{
+			"red":5,
+			"blu":4,
+			"green":3
+		}
+	],
+	"Paths": [
+		{"path": "chap1"},
+		{"path": "chap2"},
+		{"path": "chap3"}
+		]
+	}
 ], 
+<<<<<<< HEAD
   "AvailableColors":[
      {
       "red":0,
@@ -34,4 +35,18 @@
   ],
   "WrongChoice":"wrong",
   "GameCompleted":"game"
+=======
+	"AvailableColors":[
+		 {
+			"red":0,
+			"blu":1,
+			"green":2
+			},
+		{
+			"red":5,
+			"blu":4,
+			"green":3
+		}
+	],
+>>>>>>> 37993ebecbdf81bbc2d84ee6ea0aa73cf3a8831d
 }
