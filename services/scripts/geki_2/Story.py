@@ -1,6 +1,6 @@
 import json
 
-from services.scripts.geki_2.dots import DotColor
+from dots import DotColor
 
 
 class Story:
@@ -19,13 +19,11 @@ class Story:
     def getName(self):
         return self.__name
 
-    def chapterPath(self, index=0):
-
-            if index >= len(self.__path):
-                return self.__path[index]
+    def chapterPath(self, colorSequence=[]):
+            if len(colorSequence) <= len(self.__path):
+                return self.__path[len(colorSequence)-1]
 
     def checkSequence(self, sequence=[]):
-
         if len(sequence) <= len(self.__colorSequence):
             for i in range(0, len(sequence)):
                 if not self.__colorSequence[i].equals(sequence[i]):

@@ -31,16 +31,17 @@ class SpeakerManager:
         self.__speaker.music.pause()
         self.interrupt_event.set()
 
-    def playAudio(self, path=None):
-        if self.__speaker.music is not None:
-            if path is None:
-                self.__speaker.music.unpause()
-            else:
-                self.__speaker.music.load(path)
-                self.__speaker.music.play()
-            self.__handle_async(self.__checkPlaying, False)
+    def resume(self):
+        self.__speaker.music.unpause()
+        self.__handle_async(self.__checkPlaying, False)
 
+    def playAudio(self, path):
+        if self.isPlaying:
+            self.stop()
 
+        self.__speaker.music.load(path)
+        self.__speaker.music.play()
+        self.__handle_async(self.__checkPlaying, False)
 
     def setVolume(self, volume):
         if type(volume) is float:
