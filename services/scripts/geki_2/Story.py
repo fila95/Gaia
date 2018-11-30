@@ -8,7 +8,7 @@ class Story:
     __name = ''
     __colorSequence = []
     __path = []
-    __color = []
+    __lastElement = False
 
     def __init__(self, name, colors=[], paths=[]):
 
@@ -30,5 +30,17 @@ class Story:
             for i in range(0, len(sequence)):
                 if not self.__colorSequence[i].equals(sequence[i]):
                     return False
+
+            return True
+        return False
+
+    def nextSequence(self, sequence=[]):
+        if len(sequence) < len(self.__colorSequence):
+            sequence.append(self.__colorSequence[len(sequence)])
+            return sequence
+        return None
+
+    def isLastChapter(self, sequence=[]):
+        if len(sequence) == len(self.__colorSequence):
             return True
         return False
