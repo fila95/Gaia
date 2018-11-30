@@ -19,9 +19,6 @@ class Story:
     def getName(self):
         return self.__name
 
-    def initialColor(self):
-        return self.__colorSequence[0]
-
     def chapterPath(self, index=0):
 
             if index >= len(self.__path):
@@ -29,11 +26,9 @@ class Story:
 
     def checkSequence(self, sequence=[]):
 
-        check = True
         if len(sequence) <= len(self.__colorSequence):
             for i in range(0, len(sequence)):
                 if not self.__colorSequence[i].equals(sequence[i]):
-                    check = False
-            if check:
-                return self.chapterPath(len(sequence)-1)
-        return None
+                    return False
+            return True
+        return False

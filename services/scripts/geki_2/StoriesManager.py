@@ -13,7 +13,7 @@ class StoryManager:
         with open(json1) as json_file:
             data = json.load(json_file)
 
-        for story in data['Story']:
+        for story in data['Stories']:
             name = story['Name']
             colorSequence = []
             path = []
@@ -29,7 +29,7 @@ class StoryManager:
 
     def storyForColors(self, color=[]):
         for story in self.__stories:
-            if story.initialColor().equals(color):
+            if story.checkSequence(color):
                 return story
         return None
 
