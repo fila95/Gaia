@@ -9,16 +9,16 @@ from sound.SpeakerManager import SpeakerManager
 class Game():
 
 	def __init__(self):
-		logging.info("Initializing Geki Game...")
+		print("Initializing Geki Game...")
 		self.leds = DotManager(tapHandler=self.__dotWasTapped)
-		logging.info("DotManager Loaded!")
+		print("DotManager Loaded!")
 
 		self.speakers = SpeakerManager(finishPlayingCallback=self.__musicDidFinishPlaying)
-		logging.info("SpeakerManager Loaded!")
+		print("SpeakerManager Loaded!")
 
 		self.stories = StoryManager()
 		self.current_story = None
-		logging.info("StoryManager Loaded!")
+		print("StoryManager Loaded!")
 
 		## Used to ignore touches (still not implemented)
 		self.userInteractionEnabled = True
@@ -26,7 +26,7 @@ class Game():
 
 		## Timer Management
 		self.timer = None
-		logging.info("Done!")
+		print("Done!")
 		
 
 	def start(self):
@@ -39,18 +39,20 @@ class Game():
 
 
 	def stop(self):
-		logging.info("Stopping Geki Game...")
+		print("Stopping Geki Game...")
 		self.leds.turnAllOff()
 		self.speakers.deinit()
 
 	## Private
 	def __triggerWaitingFirstContactSubroutine(self):
+		print("WaitingFirstContact")
 		## Wait the first real contact, start timeout timer
 		self.state = GameStates.WAITING_FIRST_CONTACT
 		self.leds.setColors(self.stories.availableColors(), fade=True)
 		self.__resetTimer(duration=self.state.waitTime())
 		
 	def __triggerWaitingRestOfSequenceSubroutine(self):
+		print("WaitingRestOfSequence")
 		self.state = GameStates.WAITING_SEQUENCE
 		self.__resetTimer(duration=self.state.waitTime())
 
@@ -58,6 +60,7 @@ class Game():
 			self.__checkColorSequence
 
 	def startTellingStory(self):
+		print("startTellingStory")
 		if self.current_story is None:
 			return
 		self.state = GameStates.TELLING_STORY
@@ -68,6 +71,7 @@ class Game():
 		# After this we'll wait the speakermanager callback
 
 	def __endGame(self):
+		print("endGame")
 		self.state = GameStates.ENDING
 		# check if this was the last chapter
 		##	if yes then audio send hooray and start again
@@ -94,6 +98,7 @@ class Game():
 	
 	## Interaction Processing
 	def __processNextInteractionBasedOnColor(self, color):
+		print("Dot Tapped")
 		# Tapped Dot
 		if self.state == GameStates.IDLE:
 			self.__triggerWaitingFirstContactSubroutine()
@@ -104,6 +109,7 @@ class Game():
 			
 	
 	def __processNextInteractionBasedOnTimerFired(self):
+		print("Timer fired")
 		# Timer Fired
 		if self.state == GameStates.WAITING_FIRST_CONTACT:
 			self.start()
@@ -113,6 +119,7 @@ class Game():
 			self.start()
 
 	def __processNextInteractionBasedOnMusicFinishedPlaying(self):
+		print("Music finished Playing")
 		# Music finished
 		if self.state == GameStates.TELLING_STORY:
 			self.__endGame()
@@ -121,10 +128,10 @@ class Game():
 	# Dots:
 	def __dotWasTapped(self, index, dot):
 		if not self.userInteractionEnabled:
-			logging.info("Ignoring Touch..")
+			print("Ignoring Touch..")
 			return
 		color = dot.getColor()
-		logging.info("Tapped Dot at index: {} and color: r={}, g={}, b={}".format(index, color.red, color.green, color.blue))
+		print("Tapped Dot at index: {} and color: r={}, g={}, b={}".format(index, color.red, color.green, color.blue))
 		self.__processNextInteractionBasedOnColor(color)
 		pass
 	
@@ -144,6 +151,7 @@ class Game():
 		self.__setupTimer(duration=duration)
 
 	def __timerFired(self):
+		self.timer.cancel()
 		self.__processNextInteractionBasedOnTimerFired()
 		pass
 

@@ -16,14 +16,14 @@ class StoryManager:
         for story in data['Stories']:
             name = story['Name']
             colorSequence = []
-            path = []
+            paths = []
 
             for color in story['Colors']:
                 colorSequence.append(DotColor(color['red'], color['blu'], color['green']))
-            for path in story['Paths']:
-                path.append(path['path'])
+            for pt in story['Paths']:
+                paths.append(pt['path'])
 
-            self.__stories.append(Story(name, colorSequence, path))
+            self.__stories.append(Story(name, colorSequence, paths))
         for color in data['AvailableColors']:
             self.__Colors.append(DotColor(color['red'], color['blu'], color['green']))
         self.__wrongChoice = data["WrongChoice"]
