@@ -36,6 +36,7 @@ sudo pip3 install asyncio
 # sudo echo "dtoverlay=pwm,pin=19,func=4" >> config.txt
 # sudo echo "# Adjust SPI" >> config.txt
 # sudo echo "core_freq=250" >> config.txt
+# sudo echo "dtparam=spi=on" >> config.txt
 # sudo mv config.txt /boot/config.txt
 
 # sudo sed '$ s/$/rootwait/ modules-load=dwc2,g_ether' /boot/cmdline.txt
