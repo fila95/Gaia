@@ -8,7 +8,7 @@ class Action(ABC):
 		self.dotManager = None
 		self.speakerManager = None
 		self._game = None
-		self.parser = Action.actionParser()
+		self.__parser = Action.actionParser()
 		self.identifier = str(uuid.uuid1())
 
 	@staticmethod
@@ -61,9 +61,12 @@ class Action(ABC):
 		self.dotManager = None
 
 	### Conveniences
+	def parseActions(self, filename):
+		return self.__parser.parse(filename)
+
 	def nextAction(self, optionalParams=None):
-		if self._game is not None:
-			self._game.nextAction(optionalParams=optionalParams)
+			if self._game is not None:
+				self._game.nextAction(optionalParams=optionalParams)
 
 	def produceActions(self, actions):
 		if self._game is not None:

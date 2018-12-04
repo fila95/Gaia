@@ -1,18 +1,22 @@
-[
-	{
-		"parseIdentifier": "STORIES_PICKER",
-		"attributes": {
-			"availableStories": [
+{
+	"chapters": [
+		{
+			"name": "Chapter 1",
+			"combination": [
 				{
-					"name": "Biancaneve",
-					"initialColor": {
-						"red": 255,
-						"green": 255,
-						"blue": 255
-					},
-					"definitionPath": "config/biancaneve.story.json"
+					"red": 255,
+					"green": 255,
+					"blue": 255
+				},
+				{
+					"red": 255,
+					"green": 255,
+					"blue": 255
 				}
+			],
+			"actions": [
+				
 			]
 		}
-	}
-]
+	]
+}
