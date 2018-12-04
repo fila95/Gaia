@@ -1,0 +1,26 @@
+[
+	{
+		"parseIdentifier": "START",
+		"attributes": {}
+	},
+	{
+		"parseIdentifier": "STORIES_PICKER",
+		"attributes": {
+			"availableStories": [
+				{
+					"name": "Biancaneve",
+					"initialColor": {
+						"red": 255,
+						"green": 255,
+						"blue": 255
+					},
+					"definitionPath": "config/biancaneve.story.json"
+				}
+			]
+		}
+	},
+	{
+		"parseIdentifier": "END",
+		"attributes": {}
+	}
+]

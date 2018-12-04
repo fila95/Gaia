@@ -1,50 +1,45 @@
+import json
 
-import xml.etree.ElementTree
-from geki.dots.DotColor import Colors
-from geki.Chapter import Chapter
+from Story import Story
+from dots import DotColor
 
+class StoryManager:
 
-class StoriesManager():
+    __stories = []
+    __Colors = []
 
-    __chapterMatrix = []
+    def __init__(self, json1="Stories.json"):
 
-    def __init__(self, path):
-        xmlTree = xml.etree.ElementTree.parse(path)
-        for story in xmlTree.getroot():
-            temporary_list = []
-            storyId = story.attrib["id"]
-            for chapter in story:
-                chapterId = chapter.attrib["id"]
-                tree = chapter.find("tree").text
-                color = Colors[chapter.find("color").text.upper()]
-                path = chapter.find("audio").attrib["path"]
-                chapter_obj = Chapter(storyId, chapterId, tree, color, path)
-                temporary_list.append(chapter_obj)
-            self.__chapterMatrix.append(temporary_list)
+        with open(json1) as json_file:
+            data = json.load(json_file)
 
-    def getColor(self, story, part):
-        return self.__chapterMatrix[story][part].getColor()
+        for story in data['Stories']:
+            name = story['Name']
+            colorSequence = []
+            paths = []
 
-    def getAudioPath(self, story, part):
-        return self.__chapterMatrix[story][part].getAudioPath()
+            for color in story['Colors']:
+                colorSequence.append(DotColor(color['red'], color['blu'], color['green']))
+            for pt in story['Paths']:
+                paths.append(pt['path'])
 
-    def getTree(self, story, part):
-        return self.__chapterMatrix[story][part].getTree()
+            self.__stories.append(Story(name, colorSequence, paths))
+        for color in data['AvailableColors']:
+            self.__Colors.append(DotColor(color['red'], color['blu'], color['green']))
+        self.__wrongChoice = data["WrongChoice"]
+        self.__gameCompleted = data["GameCompleted"]
 
-    def getStoriesStartingFromTree(self, treeId):
-        stories = []
-        for story in self.__chapterMatrix:
-            if(story[0].getTree() == treeId):
-                stories.append(story[0].getStoryId())
-        return stories
+    def storyForColors(self, color=[]):
+        for story in self.__stories:
+            if story.checkSequence(color):
+                return story
+        return None
 
-    def getStoryId(self, colorList):
-        for story in self.__chapterMatrix:
-            i = 0
-            found = True
-            for chapter in story:
-                if not chapter.getColor.equals(colorList[i]):
-                    found = False
-            if found:
-                return chapter.getStoryId()
-        return -1
+    def availableColors(self):
+        return self.__Colors
+
+    def wrongChoicePath(self):
+        return self.__wrongChoice
+
+    def gameCompletedPath(self):
+        return self.__gameCompleted
