@@ -21,7 +21,8 @@ Advanced User Interfaces Course Repository
       - [Wait Input Action](#wait-input-action)
           + [Available Attributes](#available-attributes-6)
       - [Delay](#delay)
-      - [Concurrent Action](#concurrent-action)
+      - [Combined Action](#combined-action)
+          + [Available Attributes](#available-attributes-7)
 
 ## Configuration
 
