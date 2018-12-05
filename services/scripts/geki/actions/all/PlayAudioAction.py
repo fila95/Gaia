@@ -11,16 +11,22 @@ class StoriesPickerAction(Action):
     def __init__(self, data):
         super().__init__(data)
         ## Parse attributes
-        self.path = data["path"]
+        if "path" in data:
+            self.path = data["path"]
 
     def startAction(self, optionalParams=None):
-        pass
+        if optionalParams is not None:
+            if "path" in  optionalParams:
+                self.path = optionalParams["path"]
+
+        if self.path is not None:
+            self.speakerManager.playAudio(self.path)
 
     def deactivate(self):
         pass
 
     def audioDidFinishPlaying(self):
-        pass
+        self.nextAction()
 
     def dotWasTapped(self, index, dot):
         pass

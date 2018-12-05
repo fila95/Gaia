@@ -11,11 +11,17 @@ class ActionParser():
 	def _actions(self):
 		return { cls.parseIdentifier(): cls for cls in Action.__subclasses__() }
 
-	def parse(self, filename="config/Actions.json"):
-		available = self._actions()
-
+	def parse(self, filename):
 		with open(filename) as json_file:
 			data = json.load(json_file)
+		return self.__parse(data)
+
+
+	def parseFromJson(self, json):
+		return self.__parse(json)
+
+	def __parse(self, data):
+		available = self._actions()
 
 		exports = []
 		for actn in data:
@@ -24,8 +30,8 @@ class ActionParser():
 			if "identifier" in actn:
 				newAction.identifier = actn["identifier"]
 			exports.append(newAction)
-			
+
 		return exports
-		
+
 
 	

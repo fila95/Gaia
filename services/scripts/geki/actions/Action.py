@@ -61,8 +61,10 @@ class Action(ABC):
 		self.dotManager = None
 
 	### Conveniences
-	def parseActions(self, filename):
+	def parseActionsFromFile(self, filename):
 		return self.__parser.parse(filename)
+	def parseActionsFromJson(self, json):
+		return self.__parser.parseFromJson(json)
 
 	def nextAction(self, optionalParams=None):
 			if self._game is not None:
