@@ -212,3 +212,50 @@ if `available_dot_indexes` is not specified than it waits for one input to proce
 |-----------	|------------	|-------------	|
 | available_dot_indexes | `optional` 	| array of integers identifying dots that are allowed to be tapped|
 
+---
+
+#### Delay 
+A delay between 2 action.
+``` json
+{
+	"parseIdentifier": "DELAY",
+	"attributes": {
+		"timeout": 1
+	}
+}
+```
+| Parameter 	| Type       	| Description 	|
+|-----------	|------------	|-------------	|
+| timeout | `required` 	| delay in seconds between 2 actions |
+---
+
+PER FILAAAAAAAAAAAA
+#### Concurrent Action 
+Defines multiple action to be executed concurrently.
+``` json
+{
+	"parseIdentifier": "CONCURRENT",
+	"attributes": {
+		"actions":[
+			{
+				"parserIdentifier": "WAIT_INPUT",
+				"attributes":{
+					"available_dot_indexes":[
+						0,
+						1
+					]
+				},
+				"path":"config/blabla.action.json"
+			}
+		],
+		"policy" : "WAIT_ALL",
+		"timeout": 1
+	}
+}
+```
+| Parameter 	| Type       	| Description 	|
+|-----------	|------------	|-------------	|
+| actions | `required` 	| actions to be executed concurrently,  `path` defines the configuration file for one action |
+| policy | `required` 	| two types of policies: `WAIT_ALL` ,  `WAIT_FIRST`  |
+| timeout | `required` 	| delay in seconds between 2 actions |
+---

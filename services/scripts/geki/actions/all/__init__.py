@@ -16,5 +16,6 @@ __all__ = [
 	"DynamicLoadActions",
 	"WaitInputAction",
 	"ShowColorAction",
+	"DelayAction",
 ]
 
