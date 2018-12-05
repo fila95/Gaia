@@ -12,6 +12,8 @@ from .ShowColorAction import ShowColorAction
 from .DelayAction import DelayAction
 from .CombinedAction import CombinedAction
 
+from .SingleChoiceMenuAction import SingleChoiceMenuAction
+
 __all__ = [
 	"StartAction",
 	"EndAction",
@@ -21,6 +23,7 @@ __all__ = [
 	"WaitInputAction",
 	"ShowColorAction",
 	"DelayAction",
-	"CombinedAction"
+	"CombinedAction",
+	"SingleChoiceMenuAction"
 ]
 

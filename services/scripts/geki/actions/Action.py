@@ -84,6 +84,8 @@ class Action(ABC):
 		return self.__parser.parse(filename)
 	def parseActionsFromJson(self, json):
 		return self.__parser.parseFromJson(json)
+	def parseSingleAction(self, json):
+		return self.__parser.parseSingleAction(json)
 
 	def nextAction(self, optionalParams=None):
 		if self._game is not None:

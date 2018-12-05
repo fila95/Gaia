@@ -20,6 +20,15 @@ class ActionParser():
 	def parseFromJson(self, json):
 		return self.__parse(json)
 
+	def parseSingleAction(self, json):
+		available = self._actions()
+		initializableAction = available[json['parseIdentifier']]
+		newAction = initializableAction(data=json['attributes'])
+		if "identifier" in json:
+			newAction.identifier = json["identifier"]
+		if "timeout" in json:
+			newAction.timeout = json["timeout"]
+
 	def __parse(self, data):
 		available = self._actions()
 

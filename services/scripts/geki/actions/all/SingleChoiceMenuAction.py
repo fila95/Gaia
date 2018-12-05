@@ -28,7 +28,7 @@ class SingleChoiceMenuAction(Action):
         self.rightColor = DotColor(option["red"], option["green"], option["blue"])
         self.allColor.append(self.rightColor)
 
-        self.actionToExecute = option["action"]
+        self.actionToExecute = self.parseSingleAction(option["action"])
 
         if "additional_colors" in data:
             additionalColor = data["additional_colors"]
@@ -36,7 +36,7 @@ class SingleChoiceMenuAction(Action):
                 self.allColor.append(DotColor(color["red"], color["green"], color["blue"]))
 
 
-        self.wrongChoice = data["wrong_choice"]
+        self.wrongChoice = self.parseSingleAction(data["wrong_choice"])
 
 
     def startAction(self, optionalParams=None):
