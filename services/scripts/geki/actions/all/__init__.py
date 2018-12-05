@@ -13,6 +13,7 @@ from .DelayAction import DelayAction
 from .CombinedAction import CombinedAction
 
 from .SingleChoiceMenuAction import SingleChoiceMenuAction
+from .MultipleChoiceMenuAction import MultipleChoiceMenuAction
 
 __all__ = [
 	"StartAction",
@@ -24,6 +25,7 @@ __all__ = [
 	"ShowColorAction",
 	"DelayAction",
 	"CombinedAction",
-	"SingleChoiceMenuAction"
+	"SingleChoiceMenuAction",
+	"MultipleChoiceMenuAction"
 ]
 
