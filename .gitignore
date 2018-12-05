@@ -1,9 +1,11 @@
 __pycache__/
 
-.idea
-.idea/*
+
 services/scripts/geki/.idea/**
 services/scripts/geki/.idea/workspace.xml
+
+.idea
+.idea/*
 
 # Environments
 .env
