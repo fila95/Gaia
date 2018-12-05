@@ -1,6 +1,21 @@
 # Advanced-User-Interfaces
 Advanced User Interfaces Course Repository
 
+- [Advanced-User-Interfaces](#advanced-user-interfaces)
+  * [Configuration](#configuration)
+    + [Actions:](#actions-)
+      - [StartAction](#startaction)
+          + [Available Attributes](#available-attributes)
+      - [End Action](#end-action)
+          + [Available Attributes](#available-attributes-1)
+      - [Restart Action](#restart-action)
+          + [Available Attributes](#available-attributes-2)
+      - [Play Animation Action](#play-animation-action)
+          + [Available Attributes](#available-attributes-3)
+      - [Dynamic Load Action](#dynamic-load-action)
+          + [Available Attributes](#available-attributes-4)
+
+
 ## Configuration
 
 ### Actions:
