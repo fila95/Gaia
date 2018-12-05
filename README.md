@@ -169,7 +169,6 @@ An action that loads other actions from file and appends them after itself. Then
 |-----------	|------------	|-------------	|
 | paths | `required` 	| array of strings identifying one file each|
 
-
 ---
 
 #### Jump Action
@@ -187,5 +186,29 @@ An action that jumps to another action given its identifier. Notice that the ide
 
 | Parameter 	| Type       	| Description 	|
 |-----------	|------------	|-------------	|
-| actionIdentifier | `required` 	| string that identifies another action
+| actionIdentifier | `required` 	| string that identifies another action|
+
+
+---
+
+#### Wait Input Action
+An action that waits for a specified input (all of the specified are tapped) to proceed to the next action.
+if `available_dot_indexes` is not specified than it waits for one input to proceed.
+``` json
+{
+	"parseIdentifier": "WAIT_INPUT",
+	"attributes": {
+		"available_dot_indexes": [
+			0,
+			1
+		]
+	}
+}
+```
+
+###### Available Attributes
+
+| Parameter 	| Type       	| Description 	|
+|-----------	|------------	|-------------	|
+| available_dot_indexes | `optional` 	| array of integers identifying dots that are allowed to be tapped|
 
