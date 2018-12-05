@@ -12,6 +12,7 @@ class DynamicLoadActions(Action):
 		## Parse attributes
 
 		self.paths = data["paths"]
+		self._excludedInCombinedActions = True
 
 
 	def startAction(self, optionalParams=None):

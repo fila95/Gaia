@@ -11,6 +11,7 @@ class JumpAction(Action):
 		super().__init__(data)
 		## Parse attributes
 		self.jumpID = data["actionIdentifier"]
+		self._excludedInCombinedActions = True
 
 
 	def startAction(self, optionalParams=None):

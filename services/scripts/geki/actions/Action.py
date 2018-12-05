@@ -1,6 +1,14 @@
 from abc import ABC, abstractmethod
 import logging
 import uuid
+import enum
+import threading
+
+
+class ActionState(enum):
+	IDLE="idle"
+	STARTED = "started"
+	ENDED = "ended"
 
 class Action(ABC):
 
@@ -11,6 +19,14 @@ class Action(ABC):
 		self.__parser = Action.actionParser()
 		self.identifier = str(uuid.uuid1())
 		self.timeout = None
+		self.state = ActionState.IDLE
+		self._excludedInCombinedActions = False
+
+		## Timer Management
+		self.timer = None
+		print("Done!")
+
+
 
 	@staticmethod
 	def actionParser():
@@ -53,9 +69,11 @@ class Action(ABC):
 		self._game = game
 		self.dotManager = game.dotManager
 		self.speakerManager = game.speakerManager
+		self.state = ActionState.STARTED
 		self.startAction(optionalParams=optionalParams)
 
 	def _deactivate(self):
+		self.state = ActionState.ENDED
 		self._game = None
 		self.deactivate()
 		self.speakerManager = None
@@ -68,8 +86,8 @@ class Action(ABC):
 		return self.__parser.parseFromJson(json)
 
 	def nextAction(self, optionalParams=None):
-			if self._game is not None:
-				self._game.nextAction(optionalParams=optionalParams)
+		if self._game is not None:
+			self._game.nextAction(optionalParams=optionalParams)
 
 	def produceActions(self, actions):
 		if self._game is not None:
@@ -84,9 +102,27 @@ class Action(ABC):
 			self._game.restart()
 	
 	def scheduleTimer(self, duration=10):
-		if self._game is not None:
-			self._game._resetTimer(duration)
+		self._resetTimer(duration)
 	
-	def stopTimer(self, duration=10):
-		if self._game is not None:
-			self._game._stopTimer(duration)
+	def stopTimer(self):
+		self._stopTimer()
+
+	## Timer
+	# Timers:
+	def _setupTimer(self, duration=10):
+		if self.timer is None:
+			self.timer = threading.Timer(int(duration), self.__timerFired)
+			self.timer.start()
+
+	def _stopTimer(self):
+		if self.timer is not None:
+			self.timer.cancel()
+			self.timer = None
+
+	def _resetTimer(self, duration=10):
+		self._stopTimer()
+		self._setupTimer(duration=duration)
+
+	def __timerFired(self):
+		self.timer.cancel()
+		self.timerFired()

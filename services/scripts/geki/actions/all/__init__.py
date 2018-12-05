@@ -10,6 +10,7 @@ from .WaitInputAction import WaitInputAction
 
 from .ShowColorAction import ShowColorAction
 from .DelayAction import DelayAction
+from .CombinedAction import CombinedAction
 
 __all__ = [
 	"StartAction",
@@ -20,5 +21,6 @@ __all__ = [
 	"WaitInputAction",
 	"ShowColorAction",
 	"DelayAction",
+	"CombinedAction"
 ]
 

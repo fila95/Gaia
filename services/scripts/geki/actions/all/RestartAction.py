@@ -9,6 +9,7 @@ class RestartAction(Action):
 
 	def __init__(self, data):
 		super().__init__(data)
+		self._excludedInCombinedActions = True
 
 	def startAction(self, optionalParams=None):
 		self._game.restart()

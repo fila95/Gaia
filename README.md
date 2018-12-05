@@ -254,35 +254,39 @@ Timeout should be in **seconds**.
 | Parameter 	| Type       	| Description 	|
 |-----------	|------------	|-------------	|
 | timeout | `required` 	| delay in seconds between 2 actions |
+
 ---
 
-PER FILAAAAAAAAAAAA
-#### Concurrent Action 
-Defines multiple action to be executed concurrently.
+#### Combined Action 
+Defines multiple action to be executed together.
 ``` json
 {
-	"parseIdentifier": "CONCURRENT",
+	"parseIdentifier": "COMBINED",
+	"timeout": 10,
 	"attributes": {
-		"actions":[
+		"actions": [
 			{
-				"parserIdentifier": "WAIT_INPUT",
-				"attributes":{
-					"available_dot_indexes":[
-						0,
-						1
-					]
-				},
-				"path":"config/blabla.action.json"
+				"parseIdentifier": "PLAY_ANIMATION",
+				"attributes": {
+					"animation": "RAINBOW_CYCLE",
+					"animation_affect_dots": true,
+					"stops_at_end": true
+				}
+			},
+			{
+				"parseIdentifier": "PLAY_AUDIO",
+				"attributes": {
+					"path": "\root\audio_folder\audio.ogg"
+				}
 			}
 		],
-		"policy" : "WAIT_ALL",
-		"timeout": 1
+		"policy" : "EXIT_TIMEOUT"
 	}
 }
 ```
+
+###### Available Attributes
 | Parameter 	| Type       	| Description 	|
 |-----------	|------------	|-------------	|
-| actions | `required` 	| actions to be executed concurrently,  `path` defines the configuration file for one action |
-| policy | `required` 	| two types of policies: `WAIT_ALL` ,  `WAIT_FIRST`  |
-| timeout | `required` 	| delay in seconds between 2 actions |
----
+| actions | `required` 	| actions to be executed together. Actions such as `DYNAMIC_LOAD`, `END`, `START`, `RESTART`, `JUMP` are automatically ignored if added! |
+| policy | `required` 	| two types of policies: `WAIT_ALL` (waits all actions to be terminated before continuing) ,  `WAIT_FIRST` (when first is completed go to the next action), `EXIT_TIMEOUT` (kills this entire group when timeout occurs)|

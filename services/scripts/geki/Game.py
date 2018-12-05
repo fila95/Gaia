@@ -16,10 +16,6 @@ class Game():
 		self.speakers = SpeakerManager(finishPlayingCallback=self.__musicDidFinishPlaying)
 		print("SpeakerManager Loaded!")
 
-		## Timer Management
-		self.timer = None
-		print("Done!")
-
 		self.currentAction: Action = None
 		self.currentActionIndex = 0
 		self.availableActions = Action.actionParser().parse()
@@ -80,26 +76,6 @@ class Game():
 		if self.currentAction is not None:
 			self.currentAction.dotWasTapped(index, dot)
 		pass
-	
-	# Timers:
-	def _setupTimer(self, duration=10):
-		if self.timer is None:
-			self.timer = threading.Timer(int(duration), self.__timerFired)
-			self.timer.start()
-
-	def _stopTimer(self):
-		if self.timer is not None:
-			self.timer.cancel()
-			self.timer = None
-
-	def _resetTimer(self, duration=10):
-		self._stopTimer()
-		self._setupTimer(duration=duration)
-
-	def __timerFired(self):
-		self.timer.cancel()
-		if self.currentAction is not None:
-			self.currentAction.timerFired()
 
 	# Music Playback:
 	def __musicDidFinishPlaying(self):
