@@ -2,7 +2,7 @@ from ..Action import Action
 from ..utils.Story import Story
 
 
-class StoriesPickerAction(Action):
+class PlayAudioAction(Action):
 
     @staticmethod
     def parseIdentifier():
