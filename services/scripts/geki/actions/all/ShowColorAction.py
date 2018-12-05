@@ -13,21 +13,35 @@ class ShowColorAction(Action):
 		super().__init__(data)
 		## Parse attributes
 
-		self.color = []
-		self.index = []
-		self.fade = []
+		self.colors = []
+		self.indexes = []
+		self.color = None
+
+		self.fade = True
+
+
+		if "fade" in data:
+			self.fade = data["fade"]
+
 		from dots.DotColor import DotColor
-		for colors in data["colors"]:
-			self.color.append(DotColor(colors["red"], colors["green"], colors["blu"]))
-			self.index.append(colors["index"])
-			self.fade.append(colors["fade"])
+
+		if "colors" in data:
+			for colors in data["colors"]:
+				self.colors.append(DotColor(colors["red"], colors["green"], colors["blue"]))
+				self.indexes.append(colors["index"])
+
+		else:
+			self.color = DotColor(data["color"]["red"], data["color"]["green"], data["color"]["blue"])
 
 
 	def startAction(self, optionalParams=None):
 
-		for ind in range(0,len(self.index)):
-			dot = self.dotManager.getDots(self.index[ind])
-			dot.setColor(color=self.color[ind],fade=self.fade[ind])
+		if self.color is not None:
+			self.dotManager.setColor(color=self.color, fade=self.fade)
+		else:
+			for ind in range(0, len(self.indexes)):
+				self.dotManager.setColorAtIndex(idx=self.indexes[ind], color=self.colors[ind], fade=self.fade)
+
 
 		if self.timeout is not None:
 			self.scheduleTimer(duration=self.timeout)

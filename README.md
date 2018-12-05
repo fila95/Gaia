@@ -10,11 +10,18 @@ Advanced User Interfaces Course Repository
           + [Available Attributes](#available-attributes-1)
       - [Restart Action](#restart-action)
           + [Available Attributes](#available-attributes-2)
+      - [Play Audio](#play-audio)
+      - [Show Color](#show-color)
       - [Play Animation Action](#play-animation-action)
           + [Available Attributes](#available-attributes-3)
       - [Dynamic Load Action](#dynamic-load-action)
           + [Available Attributes](#available-attributes-4)
-
+      - [Jump Action](#jump-action)
+          + [Available Attributes](#available-attributes-5)
+      - [Wait Input Action](#wait-input-action)
+          + [Available Attributes](#available-attributes-6)
+      - [Delay](#delay)
+      - [Concurrent Action](#concurrent-action)
 
 ## Configuration
 
@@ -102,27 +109,46 @@ An action that plays an audio.
 
 #### Show Color
 An action that shows a color on a dot.
+Colors should be specified if different colors should be applied to different dots.
+Color should be specified wether it is needed to update all colors at once.
+One of those properties **MUST** be specified!
 ``` json
 {
 	"parseIdentifier": "SHOW_COLOR",
 	"attributes": {
-		"colors": [{
-			"index" : 0,
-			"color" : {
-				"red":255,
-				"green":255,
-				"blu":255
+		"fade": true,
+		"colors": [
+			{
+				"index" : 0,
+				"color" : {
+					"red":255,
+					"green":255,
+					"blue":255
+				}
+			},
+			{
+				"index" : 1,
+				"color" : {
+					"red":128,
+					"green":128,
+					"blue":128
+				}
 			}
-		}],
-		"fade": true
+		],
+		"color": {
+			"red":255,
+			"green":255,
+			"blue":255
+		}
 	}
 }
 ```
 
 | Parameter 	| Type       	| Description 	|
 |-----------	|------------	|-------------	|
-| colors | `required` 	| `color` defines the next color to show, `index` defines the dot that will show the color  |
-| fade | `required` 	| fade animates the transation between the previous color and the taget ones|
+| colors | `required` *one* 	| `color` defines the next color to show, `index` defines the dot that will show the color  |
+| color | `required` *one* 	| color sets all the dots to the same color |
+| fade | `optional` 	| fade animates the transation between the previous color and the taget ones|
 
 ---
 
@@ -216,11 +242,12 @@ if `available_dot_indexes` is not specified than it waits for one input to proce
 
 #### Delay 
 A delay between 2 action.
+Timeout should be in **seconds**.
 ``` json
 {
 	"parseIdentifier": "DELAY",
 	"attributes": {
-		"timeout": 1
+		"timeout": 10
 	}
 }
 ```

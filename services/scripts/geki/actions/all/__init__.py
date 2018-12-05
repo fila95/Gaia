@@ -8,6 +8,9 @@ from .PlayAudioAction import PlayAudioAction
 from .DynamicLoadActions import DynamicLoadActions
 from .WaitInputAction import WaitInputAction
 
+from .ShowColorAction import ShowColorAction
+from .DelayAction import DelayAction
+
 __all__ = [
 	"StartAction",
 	"EndAction",

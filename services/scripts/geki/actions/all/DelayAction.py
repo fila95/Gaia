@@ -11,7 +11,7 @@ class DelayAction(Action):
 		super().__init__(data)
 		## Parse attributes
 
-		self.timeout = data["timeOut"]
+		self.timeout = data["timeout"]
 
 	def startAction(self, optionalParams=None):
 		self.scheduleTimer(duration=self.timeout)
