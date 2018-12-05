@@ -2,7 +2,13 @@ from .StartAction import StartAction
 from .EndAction import EndAction
 from .RestartAction import RestartAction
 
-from .StoriesPickerAction import StoriesPickerAction
+from .PlayAnimationAction import PlayAnimationAction
+from .PlayAudioAction import PlayAudioAction
 
-__all__ = ["StartAction", "EndAction", "RestartAction", "StoriesPickerAction"]
+__all__ = [
+	"StartAction",
+	"EndAction",
+	"PlayAnimationAction",
+	"PlayAudioAction",
+]
 

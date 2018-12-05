@@ -29,6 +29,8 @@ class ActionParser():
 			newAction = initializableAction(data=actn['attributes'])
 			if "identifier" in actn:
 				newAction.identifier = actn["identifier"]
+			if "timeout" in actn:
+				newAction.timeout = actn["timeout"]
 			exports.append(newAction)
 
 		return exports

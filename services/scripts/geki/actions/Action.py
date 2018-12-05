@@ -10,6 +10,7 @@ class Action(ABC):
 		self._game = None
 		self.__parser = Action.actionParser()
 		self.identifier = str(uuid.uuid1())
+		self.timeout = None
 
 	@staticmethod
 	def actionParser():

@@ -72,11 +72,13 @@ No attributes are needed.
 
 #### Play Animation Action
 An action that plays an animation on the dots!
+If no timeout is specified in the action's definition the action starts and ends immediately so make sure to set the `stops_at_end` key accordingly to your needs!
 ``` json
 {
 	"parseIdentifier": "PLAY_ANIMATION",
 	"attributes": {
 		"animation": "RAINBOW_CYCLE",
+		"animation_affect_dots": true,
 		"stops_at_end": true
 	}
 }
@@ -87,4 +89,5 @@ An action that plays an animation on the dots!
 | Parameter 	| Type       	| Description 	|
 |-----------	|------------	|-------------	|
 | animation | `required` 	| animation should be one of: `RAINBOW`, `RAINBOW_CYCLE`, `THEATER_CHASE_RAINBOW`|
+| animation_affect_dots | `optional` 	| wether animation animates the single leds or the entire dot |
 | stops_at_end | `required` 	| when action finishes set `true` if the animation should stop, otherwise set `false`|
