@@ -1,26 +1,20 @@
 from ..Action import Action
 
 
-class DynamicLoadActions(Action):
+class JumpAction(Action):
 
 	@staticmethod
 	def parseIdentifier():
-		return 'DYNAMIC_LOAD'
+		return 'JUMP'
 
 	def __init__(self, data):
 		super().__init__(data)
 		## Parse attributes
-
-		self.paths = data["paths"]
+		self.jumpID = data["actionIdentifier"]
 
 
 	def startAction(self, optionalParams=None):
-		actions = []
-		for actn in self.paths:
-			actions.append(self.parseActionsFromFile(filename=actn))
-
-		self.produceActions(actions)
-		self.nextAction()
+		self.jumpToAction(id=self.jumpID)
 
 	def deactivate(self):
 		pass

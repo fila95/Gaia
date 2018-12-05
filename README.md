@@ -127,3 +127,23 @@ An action that loads other actions from file and appends them after itself. Then
 |-----------	|------------	|-------------	|
 | paths | `required` 	| array of strings identifying one file each|
 
+
+---
+
+#### Jump Action
+An action that jumps to another action given its identifier. Notice that the identifier of the other action **MUST** exist and be present in the current loaded actions hierarchy. Just specify it as you can see [here](#actions-)!
+``` json
+{
+	"parseIdentifier": "JUMP",
+	"attributes": {
+		"actionIdentifier": "__ID__"
+	}
+}
+```
+
+###### Available Attributes
+
+| Parameter 	| Type       	| Description 	|
+|-----------	|------------	|-------------	|
+| actionIdentifier | `required` 	| string that identifies another action
+
