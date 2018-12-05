@@ -10,5 +10,6 @@ __all__ = [
 	"EndAction",
 	"PlayAnimationAction",
 	"PlayAudioAction",
+	"ShowColorAction",
 ]
 
