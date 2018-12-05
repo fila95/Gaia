@@ -84,6 +84,48 @@ No attributes are needed.
 
 ---
 
+#### Play Audio
+An action that plays an audio. 
+``` json
+{
+	"parseIdentifier": "PLAY_AUDIO",
+	"attributes": {
+		"path": "\root\audio_folder\audio.ogg"
+	}
+}
+```
+| Parameter 	| Type       	| Description 	|
+|-----------	|------------	|-------------	|
+| path | `required` 	| path should be a path for a useful audio: `\root\audio_folder\audio.ogg`|
+
+---
+
+#### Show Color
+An action that shows a color on a dot.
+``` json
+{
+	"parseIdentifier": "SHOW_COLOR",
+	"attributes": {
+		"colors": [{
+			"index" : 0,
+			"color" : {
+				"red":255,
+				"green":255,
+				"blu":255
+			}
+		}],
+		"fade": true
+	}
+}
+```
+
+| Parameter 	| Type       	| Description 	|
+|-----------	|------------	|-------------	|
+| colors | `required` 	| `color` defines the next color to show, `index` defines the dot that will show the color  |
+| fade | `required` 	| fade animates the transation between the previous color and the taget ones|
+
+---
+
 #### Play Animation Action
 An action that plays an animation on the dots!
 If no timeout is specified in the action's definition the action starts and ends immediately so make sure to set the `stops_at_end` key accordingly to your needs!
