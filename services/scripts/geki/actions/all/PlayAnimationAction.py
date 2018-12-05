@@ -37,7 +37,7 @@ class PlayAnimationAction(Action):
 			self.dotManager.stopAnimation()
 
 	def audioDidFinishPlaying(self):
-		self.nextAction()
+		pass
 
 	def dotWasTapped(self, index, dot):
 		pass

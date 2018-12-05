@@ -1,7 +1,6 @@
 # Advanced-User-Interfaces
 Advanced User Interfaces Course Repository
 
-
 ## Configuration
 
 ### Actions:
@@ -36,7 +35,7 @@ Start and End actions should be used ONLY in the mail loadable action file!
 }
 ```
 
-###### Available Attributes:
+###### Available Attributes
 No attributes are needed.
 
 ---
@@ -51,7 +50,7 @@ Start and End actions should be used ONLY in the mail loadable action file!
 }
 ```
 
-###### Available Attributes:
+###### Available Attributes
 No attributes are needed.
 
 ---
@@ -65,7 +64,7 @@ An action that restarts the entire action hierarchy!
 }
 ```
 
-###### Available Attributes:
+###### Available Attributes
 No attributes are needed.
 
 ---
@@ -84,10 +83,32 @@ If no timeout is specified in the action's definition the action starts and ends
 }
 ```
 
-###### Available Attributes:
+###### Available Attributes
 
 | Parameter 	| Type       	| Description 	|
 |-----------	|------------	|-------------	|
 | animation | `required` 	| animation should be one of: `RAINBOW`, `RAINBOW_CYCLE`, `THEATER_CHASE_RAINBOW`|
 | animation_affect_dots | `optional` 	| wether animation animates the single leds or the entire dot |
 | stops_at_end | `required` 	| when action finishes set `true` if the animation should stop, otherwise set `false`|
+
+---
+
+#### Dynamic Load Action
+An action that loads other actions from file and appends them after itself. Then goes directly to the next one.
+``` json
+{
+	"parseIdentifier": "DYNAMIC_LOAD",
+	"attributes": {
+		"paths": [
+			"config/blabla.action.json"
+		]
+	}
+}
+```
+
+###### Available Attributes
+
+| Parameter 	| Type       	| Description 	|
+|-----------	|------------	|-------------	|
+| paths | `required` 	| array of strings identifying one file each|
+
