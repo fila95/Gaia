@@ -21,8 +21,7 @@ Advanced User Interfaces Course Repository
       - [Wait Input Action](#wait-input-action)
           + [Available Attributes](#available-attributes-6)
       - [Delay](#delay)
-      - [Combined Action](#combined-action)
-          + [Available Attributes](#available-attributes-7)
+      - [Concurrent Action](#concurrent-action)
 
 ## Configuration
 
@@ -255,42 +254,85 @@ Timeout should be in **seconds**.
 | Parameter 	| Type       	| Description 	|
 |-----------	|------------	|-------------	|
 | timeout | `required` 	| delay in seconds between 2 actions |
+---
+
+PER FILAAAAAAAAAAAA
+#### Concurrent Action 
+Defines multiple action to be executed concurrently.
+``` json
+{
+	"parseIdentifier": "CONCURRENT",
+	"attributes": {
+		"actions":[
+			{
+				"parserIdentifier": "WAIT_INPUT",
+				"attributes":{
+					"available_dot_indexes":[
+						0,
+						1
+					]
+				},
+				"path":"config/blabla.action.json"
+			}
+		],
+		"policy" : "WAIT_ALL",
+		"timeout": 1
+	}
+}
+```
+| Parameter 	| Type       	| Description 	|
+|-----------	|------------	|-------------	|
+| actions | `required` 	| actions to be executed concurrently,  `path` defines the configuration file for one action |
+| policy | `required` 	| two types of policies: `WAIT_ALL` ,  `WAIT_FIRST`  |
+| timeout | `required` 	| delay in seconds between 2 actions |
+
 
 ---
 
-#### Combined Action 
-Defines multiple action to be executed together.
+### Single Selection Menu Action
+Defines the next action.
+One between `additional_colors` and `repeat_colors_if_needed` has to been defined, the second one is optional (on default is setted on **false**).
+`wrong_choice` is the action to do when a wrong button is pushed.
+
 ``` json
 {
-	"parseIdentifier": "COMBINED",
-	"timeout": 10,
+	"parseIdentifier": "SINGLE_CHOICE_MENU",
 	"attributes": {
-		"actions": [
-			{
-				"parseIdentifier": "PLAY_ANIMATION",
-				"attributes": {
-					"animation": "RAINBOW_CYCLE",
-					"animation_affect_dots": true,
-					"stops_at_end": true
+		"option": {
+				"action" : {},
+
+				"color" : {
+					"red" : "25",
+					"green" : "25",
+					"blue" : "25"
 				}
 			},
+		"additional_colors" : [
 			{
-				"parseIdentifier": "PLAY_AUDIO",
-				"attributes": {
-					"path": "\root\audio_folder\audio.ogg"
+					"red" : "100",
+					"green" : "100",
+					"blue" : "100"
+				},
+				{
+					"red" : "44",
+					"green" : "44",
+					"blue" : "44"
 				}
-			}
 		],
-		"policy" : "EXIT_TIMEOUT"
+		"repeat_colors_if_needed" : false,
+		"wrong_choice_action" : {}
 	}
 }
 ```
 
-###### Available Attributes
 | Parameter 	| Type       	| Description 	|
 |-----------	|------------	|-------------	|
 | actions | `required` 	| actions to be executed together. Actions such as `DYNAMIC_LOAD`, `END`, `START`, `RESTART`, `JUMP` are automatically ignored if added! |
 | policy | `required` 	| two types of policies: `WAIT_ALL` (waits all actions to be terminated before continuing) ,  `WAIT_FIRST` (when first is completed go to the next action), `EXIT_TIMEOUT` (kills this entire group when timeout occurs)|
+| option | `required` 	| actions to be executed  |
+| additional_colors | `required` *one*	| extra colors to be used on other dot  |
+| repeat_colors_if_needed | `optional` *one* 	| if `true` the colors of the dot can be repeated if there are not enough color  |
+| wrong_choice | `required`	| action used when the selected color is not the correct one   |
 
 
 ---
