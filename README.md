@@ -1,4 +1,4 @@
-# Advanced-User-Interfaces
+# GEKI
 Advanced User Interfaces Course Repository
 
 - [Advanced-User-Interfaces](#advanced-user-interfaces)
