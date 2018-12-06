@@ -11,10 +11,10 @@ class DelayAction(Action):
 		super().__init__(data)
 		## Parse attributes
 
-		self.timeout = data["timeout"]
+		self.delay = data["delay"]
 
 	def startAction(self, optionalParams=None):
-		self.scheduleTimer(duration=self.timeout)
+		self.scheduleTimer(duration=self.delay)
 
 	def deactivate(self):
 		pass

@@ -11,48 +11,20 @@ class SingleChoiceMenuAction(Action):
         super().__init__(data)
         ## Parse attributes
 
-        self.actionToExecute = None
-        self.rightColor = None
-        self.allColor = []
-        self.repeatColor = False
-        self.wrongChoice = None
-
-
-        if "repeat_colors_if_needed" in data:
-            self.repeatColor = data["repeat_colors_if_needed"]
+        self.colors = []
+        self.actions = []
 
         from dots.DotColor import DotColor
-        option = data["option"]
+        for opt in data["options"]:
+            self.colors.append(DotColor(red=opt["color"]["red"], green=opt["color"]["green"], blue=opt["color"]["blue"]))
+            self.actions.append(opt["actions"])
 
+        self.timeoutActions = self.parseActionsFromJson(data["timeout_actions"])
 
-        self.rightColor = DotColor(option["red"], option["green"], option["blue"])
-        self.allColor.append(self.rightColor)
-
-        self.actionToExecute = self.parseSingleAction(option["action"])
-
-        if "additional_colors" in data:
-            additionalColor = data["additional_colors"]
-            for color in additionalColor:
-                self.allColor.append(DotColor(color["red"], color["green"], color["blue"]))
-
-
-        self.wrongChoice = self.parseSingleAction(data["wrong_choice_action"])
 
 
     def startAction(self, optionalParams=None):
-        if len(self.allColor) == self.dotManager.getDotsCount():
-            self.dotManager.setColors(self.allColor, fade=True)
-        elif self.repeatColor:
-            for count in range(0, (len(self.allColor) - self.dotManager.getDotsCount())):
-                color = self.allColor[count]
-                self.allColor.append(color)
-            self.dotManager.setColors(self.allColor, fade=True)
-        else:
-            from dots.DotColor import Colors
-            for count in range(0, (len(self.allColor) - self.dotManager.getDotsCount())):
-                color = Colors.random()
-                self.allColor.append(color)
-            self.dotManager.setColors(self.allColor, fade=True)
+        self.dotManager.setColors(colors=self.colors, fade=True)
 
         if self.timeout is not None:
             self.scheduleTimer(duration=self.timeout)
@@ -64,13 +36,9 @@ class SingleChoiceMenuAction(Action):
         pass
 
     def dotWasTapped(self, index, dot):
-        if self.rightColor.equals(dot.getColor()):
-            self.produceActions([self.actionToExecute])
-            self.nextAction()
-        else:
-            pass
-            self.produceActions([self.wrongChoice])
-            self.nextAction()
+        self.produceActions(self.actions[index])
+        self.nextAction()
 
     def timerFired(self):
+        self.produceActions(self.timeoutActions)
         self.nextAction()

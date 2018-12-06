@@ -21,7 +21,11 @@ Advanced User Interfaces Course Repository
       - [Wait Input Action](#wait-input-action)
           + [Available Attributes](#available-attributes-6)
       - [Delay](#delay)
-      - [Concurrent Action](#concurrent-action)
+      - [Combined Action](#combined-action)
+          + [Available Attributes](#available-attributes-7)
+    + [Single Selection Menu Action](#single-selection-menu-action)
+      - [Multiple Choice Menu Action](#multiple-choice-menu-action)
+          + [Available Attributes](#available-attributes-8)
 
 ## Configuration
 
@@ -247,93 +251,106 @@ Timeout should be in **seconds**.
 {
 	"parseIdentifier": "DELAY",
 	"attributes": {
-		"timeout": 10
+		"delay": 10
 	}
 }
 ```
 | Parameter 	| Type       	| Description 	|
 |-----------	|------------	|-------------	|
-| timeout | `required` 	| delay in seconds between 2 actions |
+| delay | `required` 	| delay in seconds between 2 actions |
+
 ---
 
-PER FILAAAAAAAAAAAA
-#### Concurrent Action 
-Defines multiple action to be executed concurrently.
+#### Combined Action 
+Defines multiple action to be executed together.
 ``` json
 {
-	"parseIdentifier": "CONCURRENT",
+	"parseIdentifier": "COMBINED",
+	"timeout": 10,
 	"attributes": {
-		"actions":[
+		"actions": [
 			{
-				"parserIdentifier": "WAIT_INPUT",
-				"attributes":{
-					"available_dot_indexes":[
-						0,
-						1
-					]
-				},
-				"path":"config/blabla.action.json"
+				"parseIdentifier": "PLAY_ANIMATION",
+				"attributes": {
+					"animation": "RAINBOW_CYCLE",
+					"animation_affect_dots": true,
+					"stops_at_end": true
+				}
+			},
+			{
+				"parseIdentifier": "PLAY_AUDIO",
+				"attributes": {
+					"path": "\root\audio_folder\audio.ogg"
+				}
 			}
 		],
-		"policy" : "WAIT_ALL",
-		"timeout": 1
+		"policy" : "EXIT_TIMEOUT"
 	}
 }
 ```
+
+###### Available Attributes
 | Parameter 	| Type       	| Description 	|
 |-----------	|------------	|-------------	|
-| actions | `required` 	| actions to be executed concurrently,  `path` defines the configuration file for one action |
-| policy | `required` 	| two types of policies: `WAIT_ALL` ,  `WAIT_FIRST`  |
-| timeout | `required` 	| delay in seconds between 2 actions |
-
+| actions | `required` 	| actions to be executed together. Actions such as `DYNAMIC_LOAD`, `END`, `START`, `RESTART`, `JUMP` are automatically ignored if added! |
+| policy | `required` 	| two types of policies: `WAIT_ALL` (waits all actions to be terminated before continuing) ,  `WAIT_FIRST` (when first is completed go to the next action), `EXIT_TIMEOUT` (kills this entire group when timeout occurs)|
 
 ---
 
 ### Single Selection Menu Action
-Defines the next action.
-One between `additional_colors` and `repeat_colors_if_needed` has to been defined, the second one is optional (on default is setted on **false**).
-`wrong_choice` is the action to do when a wrong button is pushed.
+A menu which makes people choose between different options. When one is selected its actions are executed!
+
+Options **MUST** contain as many options as dots are in the system!
 
 ``` json
 {
 	"parseIdentifier": "SINGLE_CHOICE_MENU",
+	"timeout": 10,
 	"attributes": {
-		"option": {
-				"action" : {},
-
+		"options": [
+			{
+				"actions" : [],
 				"color" : {
 					"red" : "25",
 					"green" : "25",
 					"blue" : "25"
 				}
-			},
-		"additional_colors" : [
+			}
 			{
-					"red" : "100",
-					"green" : "100",
-					"blue" : "100"
-				},
-				{
-					"red" : "44",
-					"green" : "44",
-					"blue" : "44"
+				"actions" : [],
+				"color" : {
+					"red" : "25",
+					"green" : "25",
+					"blue" : "25"
 				}
+			}
+			{
+				"actions" : [],
+				"color" : {
+					"red" : "25",
+					"green" : "25",
+					"blue" : "25"
+				}
+			}
+			{
+				"actions" : [],
+				"color" : {
+					"red" : "25",
+					"green" : "25",
+					"blue" : "25"
+				}
+			}
 		],
-		"repeat_colors_if_needed" : false,
-		"wrong_choice_action" : {}
+		"timeout_actions": []
+			
 	}
 }
 ```
 
 | Parameter 	| Type       	| Description 	|
 |-----------	|------------	|-------------	|
-| actions | `required` 	| actions to be executed together. Actions such as `DYNAMIC_LOAD`, `END`, `START`, `RESTART`, `JUMP` are automatically ignored if added! |
-| policy | `required` 	| two types of policies: `WAIT_ALL` (waits all actions to be terminated before continuing) ,  `WAIT_FIRST` (when first is completed go to the next action), `EXIT_TIMEOUT` (kills this entire group when timeout occurs)|
-| option | `required` 	| actions to be executed  |
-| additional_colors | `required` *one*	| extra colors to be used on other dot  |
-| repeat_colors_if_needed | `optional` *one* 	| if `true` the colors of the dot can be repeated if there are not enough color  |
-| wrong_choice | `required`	| action used when the selected color is not the correct one   |
-
+| options | `required` 	| options available: `actions` is an array of action objects, `color` is the color associated with that action! Options **MUST** contain as many options as dots are in the system!  |
+| timeout_actions | `required` | action object array to be executed after a timeout |
 
 ---
 
