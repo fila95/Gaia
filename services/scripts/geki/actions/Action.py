@@ -75,6 +75,7 @@ class Action(ABC):
 	def _deactivate(self):
 		self.state = ActionState.ENDED
 		self._game = None
+		self._stopTimer()
 		self.deactivate()
 		self.speakerManager = None
 		self.dotManager = None

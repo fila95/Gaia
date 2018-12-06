@@ -291,3 +291,39 @@ Defines multiple action to be executed together.
 |-----------	|------------	|-------------	|
 | actions | `required` 	| actions to be executed together. Actions such as `DYNAMIC_LOAD`, `END`, `START`, `RESTART`, `JUMP` are automatically ignored if added! |
 | policy | `required` 	| two types of policies: `WAIT_ALL` (waits all actions to be terminated before continuing) ,  `WAIT_FIRST` (when first is completed go to the next action), `EXIT_TIMEOUT` (kills this entire group when timeout occurs)|
+
+
+---
+
+#### Multiple Choice Menu Action 
+Defines a menu with different options and when one sequence is correctly inserted than it triggers its actions, otherwise it triggers a wrong choices defined action!
+
+Options **MUST** contain as many options as dots are in the system!
+
+``` json
+{
+	"parseIdentifier": "MULTIPLE_CHOICE_MENU",
+	"attributes": {
+		"options": [
+			{ "red": 255, "green": 255, "blue": 255 }
+			{ "red": 255, "green": 255, "blue": 255 }
+			{ "red": 255, "green": 255, "blue": 255 }
+			{ "red": 255, "green": 255, "blue": 255 }
+		],
+		"allowed_sequences": [
+			{ 
+				"actions": [],
+				"chosen_options": [0, 3]
+			}
+		],
+		"wrong_sequence_actions": []
+	}
+}
+```
+
+###### Available Attributes
+| Parameter 	| Type       	| Description 	|
+|-----------	|------------	|-------------	|
+| options | `required` 	| contains an array of colors that will be shown on the dots as choices. The number of options **MUST** be equal to the number of dots! |
+| allowed_sequences | `required` | array of items containing a list of actions to be executed when whose options are selected!, `chosen_options` should be an array of integers which reflects the `options` described above. **Remember**: order matters! |
+| wrong_sequence_actions | `required` | Sequence of actions that are executed if no choice is provided (and timeout triggers) or when a not allowed sequence if inserted! |
