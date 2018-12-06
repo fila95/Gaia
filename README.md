@@ -303,6 +303,7 @@ Options **MUST** contain as many options as dots are in the system!
 ``` json
 {
 	"parseIdentifier": "MULTIPLE_CHOICE_MENU",
+	"timeout": 10,
 	"attributes": {
 		"options": [
 			{ "red": 255, "green": 255, "blue": 255 }
@@ -316,7 +317,9 @@ Options **MUST** contain as many options as dots are in the system!
 				"chosen_options": [0, 3]
 			}
 		],
-		"wrong_sequence_actions": []
+		"wrong_sequence_actions": [],
+		"abort_actions": [],
+		"time_between_choices": 1
 	}
 }
 ```
@@ -326,4 +329,6 @@ Options **MUST** contain as many options as dots are in the system!
 |-----------	|------------	|-------------	|
 | options | `required` 	| contains an array of colors that will be shown on the dots as choices. The number of options **MUST** be equal to the number of dots! |
 | allowed_sequences | `required` | array of items containing a list of actions to be executed when whose options are selected!, `chosen_options` should be an array of integers which reflects the `options` described above. **Remember**: order matters! |
-| wrong_sequence_actions | `required` | Sequence of actions that are executed if no choice is provided (and timeout triggers) or when a not allowed sequence if inserted! |
+| wrong_sequence_actions | `required` | Sequence of actions that are executed if a not allowed sequence if inserted! |
+| abort_actions | `required` | Sequence of actions that are executed when timeout fires and no choice is taken! |
+| time_between_choices | `optional` | Maximum time allowed between each tap on dots! if timeout fires up than it checks the inserted sequence and does its things according to the correctness of it. |
