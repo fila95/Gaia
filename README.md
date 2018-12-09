@@ -383,9 +383,9 @@ Options **MUST** contain as many options as dots are in the system!
 	"timeout": 10,
 	"attributes": {
 		"options": [
-			{ "red": 255, "green": 255, "blue": 255 }
-			{ "red": 255, "green": 255, "blue": 255 }
-			{ "red": 255, "green": 255, "blue": 255 }
+			{ "red": 255, "green": 255, "blue": 255 },
+			{ "red": 255, "green": 255, "blue": 255 },
+			{ "red": 255, "green": 255, "blue": 255 },
 			{ "red": 255, "green": 255, "blue": 255 }
 		],
 		"allowed_sequences": [

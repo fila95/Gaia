@@ -4,6 +4,38 @@
 		"attributes": {}
 	},
 	{
+		"parseIdentifier": "MULTIPLE_CHOICE_MENU",
+		"timeout": 10,
+		"attributes": {
+			"options": [
+				{ "red": 255, "green": 255, "blue": 255 },
+				{ "red": 255, "green": 255, "blue": 255 },
+				{ "red": 255, "green": 255, "blue": 255 },
+				{ "red": 255, "green": 255, "blue": 255 }
+			],
+			"allowed_sequences": [
+				{ 
+					"actions": [
+						{
+							"parseIdentifier": "PLAY_AUDIO",
+							"attributes": {
+								"path": "config/assets/audio/1_1_mono.wav"
+							}
+						}
+					],
+					"chosen_options": [0]
+				},
+				{ 
+					"actions": [],
+					"chosen_options": [0, 1]
+				}
+			],
+			"wrong_sequence_actions": [],
+			"abort_actions": [],
+			"time_between_choices": 1
+		}
+	},
+	{
 		"parseIdentifier": "END",
 		"attributes": {}
 	}

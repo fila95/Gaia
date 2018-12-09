@@ -46,3 +46,14 @@ sudo pip3 install asyncio
 # sudo mv cmdline.txt /boot/cmdline.txt
 
 sudo reboot
+
+
+# # Enable SSH via USB
+# dtoverlay=dwc2
+
+# # Speaker Config
+# dtoverlay=pwm,pin=19,func=4
+
+# # Adjust SPI
+# core_freq=250
+# dtparam=spi=on
