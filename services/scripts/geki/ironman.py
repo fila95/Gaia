@@ -1,7 +1,7 @@
-from geki.dots import DotManager
-from geki.dots import DotAnimation
-from geki.dots import DotColor, Colors
-from geki.dots import Dot
+from dots import DotManager
+from dots import DotAnimation
+from dots import DotColor, Colors
+from dots import Dot
 
 import asyncio
 import sys

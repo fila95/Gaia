@@ -1,14 +1,14 @@
 from abc import ABC, abstractmethod
 import logging
 import uuid
-import enum
+from enum import Enum
 import threading
 
 
-class ActionState(enum):
+class ActionState(Enum):
 	IDLE="idle"
-	STARTED = "started"
-	ENDED = "ended"
+	STARTED="started"
+	ENDED="ended"
 
 class Action(ABC):
 
@@ -24,7 +24,6 @@ class Action(ABC):
 
 		## Timer Management
 		self.timer = None
-		print("Done!")
 
 
 
@@ -67,8 +66,8 @@ class Action(ABC):
 	### Not Overridable
 	def _activate(self, game, optionalParams=None):
 		self._game = game
-		self.dotManager = game.dotManager
-		self.speakerManager = game.speakerManager
+		self.dotManager = game.leds
+		self.speakerManager = game.speakers
 		self.state = ActionState.STARTED
 		self.startAction(optionalParams=optionalParams)
 

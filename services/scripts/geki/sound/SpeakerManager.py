@@ -1,6 +1,9 @@
 import threading
 import time
 from queue import Queue
+from .SpeakerWorker import SpeakerWorker
+
+import logging
 
 import pygame
 from pygame import mixer
@@ -16,8 +19,14 @@ class SpeakerManager:
 		self.__finishPlayingCallback = finishPlayingCallback
 		self.__speaker.init()
 		self.setVolume(1.0)
-		self.queue = Queue()
-		self.interrupt_event = threading.Event()
+
+		self.__queue = Queue()
+		self.__interrupt_event = threading.Event()
+		self.__stop_event = threading.Event()
+
+		self.__worker = SpeakerWorker(logging, self.__queue, self.__stop_event, self.__interrupt_event)
+		self.__worker.start()
+
 		self.callsCallbackWhenInterrupted = False
 
 
@@ -26,18 +35,19 @@ class SpeakerManager:
 
 	def stop(self):
 		self.__speaker.music.stop()
-		self.interrupt_event.set()
+		self.__interrupt_event.set()
 
 	def pause(self):
 		self.__speaker.music.pause()
-		self.interrupt_event.set()
+		self.__interrupt_event.set()
 
 	def resume(self):
 		self.__speaker.music.unpause()
 		self.__handle_async(self.__checkPlaying, False)
 
 	def playAudio(self, path):
-		if self.isPlaying:
+		print("Playing audio file at path {}".format(path))
+		if self.isPlaying():
 			self.stop()
 
 		self.__speaker.music.load(path)
@@ -54,15 +64,21 @@ class SpeakerManager:
 
 	def __handle_async(self, lfunc, interrupt=True):
 		# ql = self.queue.qsize()
-		if (interrupt == True and not self.queue.empty() and not self.interrupt_event.isSet()):
-			self.interrupt_event.set()
-		self.queue.put(lfunc)
+		if (interrupt == True and not self.__queue.empty() and not self.__interrupt_event.isSet()):
+			self.__interrupt_event.set()
+		self.__queue.put(lfunc)
 
 	def __checkPlaying(self):
 		interrupt = False
-		while self.isPlaying() and not interrupt:
-			interrupt = self.interrupt_event.isSet()
+		print("checking")
+		while self.__speaker.music.get_busy() and not interrupt:
+			interrupt = self.__interrupt_event.isSet()
 			time.sleep(0.1)
-
+		print("checked")
 		if not interrupt or self.callsCallbackWhenInterrupted:
-			self.__finishPlayingCallback()
+			self.__playingFinished()
+
+
+	def __playingFinished(self):
+		print("SpeakerManager finished playing!")
+		self.__finishPlayingCallback()

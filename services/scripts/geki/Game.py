@@ -16,9 +16,9 @@ class Game():
 		self.speakers = SpeakerManager(finishPlayingCallback=self.__musicDidFinishPlaying)
 		print("SpeakerManager Loaded!")
 
-		self.currentAction: Action = None
+		self.currentAction = None
 		self.currentActionIndex = 0
-		self.availableActions = Action.actionParser().parse()
+		self.availableActions = Action.actionParser().parse(filename="config/Actions.json")
 		
 
 	def start(self):
@@ -40,6 +40,7 @@ class Game():
 		self.currentActionIndex += 1
 		self.__deactivateCurrentAction()
 		self.currentAction = self.availableActions[self.currentActionIndex]
+		print("Starting Action \"{}\"".format(type(self.currentAction).__name__))
 		self.__activateCurrentAction(optionalParams=optionalParams)
 
 	def jumpToAction(self, id, optionalParams=None):
@@ -52,6 +53,7 @@ class Game():
 		if act is not None:
 			self.__deactivateCurrentAction()
 			self.currentAction = self.availableActions[self.currentActionIndex]
+			print("Jumping to Action \"{}\"".format(type(self.currentAction).__name__))
 			self.__activateCurrentAction(optionalParams=optionalParams)
 
 
@@ -67,7 +69,7 @@ class Game():
 
 	def __activateCurrentAction(self, optionalParams=None):
 		if self.currentAction is not None:
-			self.currentAction._activate(optionalParams=optionalParams)
+			self.currentAction._activate(game=self, optionalParams=optionalParams)
 
 	# Dots:
 	def __dotWasTapped(self, index, dot):

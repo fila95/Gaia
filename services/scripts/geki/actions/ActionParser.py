@@ -1,6 +1,6 @@
 import json
 
-from .Action import Action
+from .Action import *
 from .all import *
 
 class ActionParser():
