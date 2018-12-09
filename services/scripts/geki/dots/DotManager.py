@@ -35,9 +35,9 @@ class DotManager:
 
 	def __init__(self, tapHandler = None):
 		self.__tapHandler = tapHandler
-		self.__dots_count = 2
+		self.__dots_count = 4
 		self.__led_count = self.__dots_count * Dot.LED_COUNT
-		self.__dot_pins = [23, 24, 25, 8, 7, 1]
+		self.__dot_pins = [14, 15, 23, 24]
 		
 
 		# Create NeoPixel object with appropriate configuration.	

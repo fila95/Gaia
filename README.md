@@ -1,8 +1,9 @@
 # GEKI
 Advanced User Interfaces Course Repository
 
-- [Advanced-User-Interfaces](#advanced-user-interfaces)
+- [GEKI](#geki)
   * [Configuration](#configuration)
+    + [Action Files:](#action-files-)
     + [Actions:](#actions-)
       - [StartAction](#startaction)
           + [Available Attributes](#available-attributes)
@@ -23,11 +24,28 @@ Advanced User Interfaces Course Repository
       - [Delay](#delay)
       - [Combined Action](#combined-action)
           + [Available Attributes](#available-attributes-7)
-    + [Single Selection Menu Action](#single-selection-menu-action)
+      - [Single Selection Menu Action](#single-selection-menu-action)
       - [Multiple Choice Menu Action](#multiple-choice-menu-action)
           + [Available Attributes](#available-attributes-8)
 
 ## Configuration
+
+### Action Files:
+Action Files **MUST** contain an array of actions configured as follows:
+
+Remember that the order matters!
+``` json
+[
+	{
+		"parseIdentifier": "START",
+		"attributes": {}
+	},
+	{
+		"parseIdentifier": "END",
+		"attributes": {}
+	},
+]
+```
 
 ### Actions:
 Actions are composed as follows:
@@ -297,7 +315,7 @@ Defines multiple action to be executed together.
 
 ---
 
-### Single Selection Menu Action
+#### Single Selection Menu Action
 A menu which makes people choose between different options. When one is selected its actions are executed!
 
 Options **MUST** contain as many options as dots are in the system!
