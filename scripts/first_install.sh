@@ -19,5 +19,7 @@ scp ../scripts/deploy.sh pi@raspberrypi.local:/var/srvcs/deploy.sh
 ssh -tt pi@raspberrypi.local <<'ENDSSH'
 chmod +x install.sh
 sudo ./install.sh
+cd /var/srvcs/
+./deploy.sh
 exit
 ENDSSH

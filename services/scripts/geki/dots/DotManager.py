@@ -1,7 +1,7 @@
 try:
 	from neopixel import *
 except ImportError as e:
-	from neopixel_mock import Adafruit_NeoPixel, Color
+	from .neopixel_mock import Adafruit_NeoPixel, Color
 
 from .Dot import Dot
 from .DotColor import DotColor
@@ -20,7 +20,8 @@ import asyncio
 class DotManager:
 
 	# GPIO pin connected to the pixels (18 uses PWM!).
-	_LED_PIN = 18
+	_LED_PIN = 10
+	# _LED_PIN = 18
 	# GPIO pin connected to the pixels (10 uses SPI /dev/spidev0.0).
 	#_LED_PIN = 10
 	# LED signal frequency in hertz (usually 800khz)
@@ -34,9 +35,9 @@ class DotManager:
 
 	def __init__(self, tapHandler = None):
 		self.__tapHandler = tapHandler
-		self.__dots_count = 2
+		self.__dots_count = 4
 		self.__led_count = self.__dots_count * Dot.LED_COUNT
-		self.__dot_pins = [23, 24, 25, 8, 7, 1]
+		self.__dot_pins = [23, 24, 25, 12]
 		
 
 		# Create NeoPixel object with appropriate configuration.	
@@ -100,11 +101,15 @@ class DotManager:
 
 	def setColors(self, colors, fade=True):
 		self.__stopAnimationIfNeeded()
-		if len(colors) == self.__dots_count:
-			for i in range(0, self.__dots_count):
-				self.__dots[i].setColor(colors[i], fade=fade)
-		else:
-			logging.error("colors should be same length as dots")
+
+		clrs = colors
+		diff = len(clrs) - self.__dots_count
+		if diff < 0:
+			for i in range(0, abs(diff)):
+				clrs.append(Colors.OFF)
+
+		for i in range(0, self.__dots_count):
+			self.__dots[i].setColor(clrs[i], fade=fade)
 
 	def turnAllOff(self):
 		self.__stopAnimationIfNeeded()

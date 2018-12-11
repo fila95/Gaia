@@ -1,7 +1,7 @@
-from .DotManager import DotManager
-from .DotAnimation import DotAnimation
-from .DotColor import DotColor
-from .DotColor import Colors
-from .Dot import Dot
+from dots.DotManager import DotManager
+from dots.DotAnimation import DotAnimation
+from dots.DotColor import DotColor
+from dots.DotColor import Colors
+from dots.Dot import Dot
 
 __all__ = ["DotManager", "Dot", "DotColor", "Colors", "DotAnimation"]
