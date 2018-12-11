@@ -24,12 +24,6 @@
 							}
 						},
 						{
-							"parseIdentifier": "PLAY_AUDIO",
-							"attributes": {
-								"path": "config/assets/audio/jingle.wav"
-							}
-						},
-						{
 							"parseIdentifier": "SHOW_COLOR",
 							"attributes": {
 								"fade": true,
@@ -52,6 +46,12 @@
 									}
 								]
 							}
+						},
+						{
+							"parseIdentifier": "PLAY_AUDIO",
+							"attributes": {
+								"path": "config/assets/audio/jingle.wav"
+							}
 						}
 					]
 				},
@@ -62,12 +62,6 @@
 							"parseIdentifier": "PLAY_AUDIO",
 							"attributes": {
 								"path": "config/assets/audio/1_2_mono.wav"
-							}
-						},
-						{
-							"parseIdentifier": "PLAY_AUDIO",
-							"attributes": {
-								"path": "config/assets/audio/jingle.wav"
 							}
 						},
 						{
@@ -93,6 +87,12 @@
 									}
 								]
 							}
+						},
+						{
+							"parseIdentifier": "PLAY_AUDIO",
+							"attributes": {
+								"path": "config/assets/audio/jingle.wav"
+							}
 						}
 					]
 				},
@@ -106,16 +106,16 @@
 							}
 						},
 						{
-							"parseIdentifier": "PLAY_AUDIO",
-							"attributes": {
-								"path": "config/assets/audio/jingle.wav"
-							}
-						},
-						{
 							"parseIdentifier": "SHOW_COLOR",
 							"attributes": {
 								"fade": true,
 								"color": { "red": 255, "green": 255, "blue": 255 }
+							}
+						},
+						{
+							"parseIdentifier": "PLAY_AUDIO",
+							"attributes": {
+								"path": "config/assets/audio/jingle.wav"
 							}
 						}
 					]

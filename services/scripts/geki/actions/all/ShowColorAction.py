@@ -27,11 +27,10 @@ class ShowColorAction(Action):
 
 		if "colors" in data:
 			for colors in data["colors"]:
-				self.colors.append(DotColor(colors["red"], colors["green"], colors["blue"]))
+				self.colors.append(DotColor(colors["color"]["red"], colors["color"]["green"], colors["color"]["blue"]))
 				self.indexes.append(colors["index"])
-
 		else:
-			self.color = DotColor(data["color"]["red"], data["color"]["green"], data["color"]["blue"])
+			self.color = DotColor(red=data["color"]["red"], green=data["color"]["green"], blue=data["color"]["blue"])
 
 
 	def startAction(self, optionalParams=None):

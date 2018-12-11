@@ -5,20 +5,16 @@ from .SpeakerWorker import SpeakerWorker
 
 import logging
 
-import pygame
-from pygame import mixer
+from omxplayer import OMXPlayer
 
 
 class SpeakerManager:
-
-	__speaker = mixer
 
 	def __init__(self, finishPlayingCallback):
 
 		# initialize the speaker
 		self.__finishPlayingCallback = finishPlayingCallback
-		self.__speaker.init()
-		self.setVolume(1.0)
+		self.player = None
 
 		self.__queue = Queue()
 		self.__interrupt_event = threading.Event()
@@ -31,35 +27,41 @@ class SpeakerManager:
 
 
 	def deinit(self):
-		self.__speaker.quit()
+		self.stop()
 
 	def stop(self):
-		self.__speaker.music.stop()
-		self.__interrupt_event.set()
-
-	def pause(self):
-		self.__speaker.music.pause()
-		self.__interrupt_event.set()
-
-	def resume(self):
-		self.__speaker.music.unpause()
-		self.__handle_async(self.__checkPlaying, False)
+		if self.player is not None or self.isPlaying():
+			try:
+				self.player.quit()
+			except:
+				pass
+		self.player = None
 
 	def playAudio(self, path):
 		print("Playing audio file at path {}".format(path))
 		if self.isPlaying():
 			self.stop()
-
-		self.__speaker.music.load(path)
-		self.__speaker.music.play()
+		
+		self.player = OMXPlayer(source=path, dbus_name='com.geki.omxplayer1', args=['-o', 'local'])
+		self.player.stopEvent += lambda event: self.__playingFinished()
+		self.player.play()
 		self.__handle_async(self.__checkPlaying, False)
 
+
 	def setVolume(self, volume):
-		if type(volume) is float:
-			self.__speaker.music.set_volume(volume)
+		pass
 
 	def isPlaying(self):
-		return self.__speaker.music.get_busy()
+		if self.player is None:
+			return False
+
+		playing = False
+		try:
+			playing = self.player.playback_status() == "Playing"
+		except:
+			playing = False
+
+		return playing
 
 
 	def __handle_async(self, lfunc, interrupt=True):
@@ -70,15 +72,16 @@ class SpeakerManager:
 
 	def __checkPlaying(self):
 		interrupt = False
-		print("checking")
-		while self.__speaker.music.get_busy() and not interrupt:
+		# print("checking")
+		while self.isPlaying() and not interrupt:
 			interrupt = self.__interrupt_event.isSet()
 			time.sleep(0.1)
-		print("checked")
+		# print("checked")
 		if not interrupt or self.callsCallbackWhenInterrupted:
 			self.__playingFinished()
 
 
 	def __playingFinished(self):
 		print("SpeakerManager finished playing!")
+		self.stop()
 		self.__finishPlayingCallback()
