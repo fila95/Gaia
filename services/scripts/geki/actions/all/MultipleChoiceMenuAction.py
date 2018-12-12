@@ -20,8 +20,9 @@ class MultipleChoiceMenuAction(Action):
 		from dots.DotColor import DotColor
 		self.options = []
 		for opt in data["options"]:
-			self.options.append(DotColor(red=int(opt["red"]), green=int(opt["green"]), blue=int(opt["blue"])))
-			print("Multiple Choice Colors: ", int(opt["red"]), int(opt["green"]), int(opt["blue"]))
+			col = DotColor(red=int(opt["red"]), green=int(opt["green"]), blue=int(opt["blue"]))
+			self.options.append(col)
+			print("Multiple Choice Colors: ", col.red, col.green, col.blue)
 
 		self.allowedSequences = data["allowed_sequences"]
 		self.wrongSequenceActions = self.parseActionsFromJson(data["wrong_sequence_actions"])
@@ -48,6 +49,7 @@ class MultipleChoiceMenuAction(Action):
 		pass
 
 	def dotWasTapped(self, index, dot):
+		print("Multiple", index, dot.red, dot.green, dot.blue, len(self.selectedIndexes))
 		self.choiceState = ChoiceMenuState.FIRST_CHOICE_TAKEN
 		self.selectedIndexes.append(index)
 		self.scheduleTimer(self.timeBetweenChoices)
@@ -58,6 +60,7 @@ class MultipleChoiceMenuAction(Action):
 		for c in self.allowedSequences:
 			if self.__checkItems(c["chosen_options"], self.selectedIndexes):
 				found = True
+				print("Check OK")
 				actions = self.parseActionsFromJson(c["actions"])
 				break
 
@@ -75,6 +78,7 @@ class MultipleChoiceMenuAction(Action):
 		for i in range(0, len(a)-1):
 			if not(a[i] == b[i]):
 				return False
+		print ("CHECK TRUE")
 		return True
 
 
