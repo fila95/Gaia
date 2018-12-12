@@ -20,7 +20,8 @@ class MultipleChoiceMenuAction(Action):
 		from dots.DotColor import DotColor
 		self.options = []
 		for opt in data["options"]:
-			self.options.append(DotColor(red=opt["red"], green=opt["green"], blue=opt["blue"]))
+			self.options.append(DotColor(red=int(opt["red"]), green=int(opt["green"]), blue=int(opt["blue"])))
+			print("Multiple Choice Colors: ", int(opt["red"]), int(opt["green"]), int(opt["blue"]))
 
 		self.allowedSequences = data["allowed_sequences"]
 		self.wrongSequenceActions = self.parseActionsFromJson(data["wrong_sequence_actions"])
@@ -41,7 +42,7 @@ class MultipleChoiceMenuAction(Action):
 
 
 	def deactivate(self):
-		pass
+		self.selectedIndexes.clear()
 
 	def audioDidFinishPlaying(self):
 		pass
@@ -71,12 +72,10 @@ class MultipleChoiceMenuAction(Action):
 		if not (len(a) == len(b)):
 			return False
 
-		same = True
 		for i in range(0, len(a)-1):
 			if not(a[i] == b[i]):
-				same = False
-				break
-		return same
+				return False
+		return True
 
 
 

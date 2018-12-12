@@ -27,7 +27,8 @@ class ShowColorAction(Action):
 
 		if "colors" in data:
 			for colors in data["colors"]:
-				self.colors.append(DotColor(colors["color"]["red"], colors["color"]["green"], colors["color"]["blue"]))
+				self.colors.append(DotColor(red=colors["color"]["red"], green=colors["color"]["green"], blue=colors["color"]["blue"]))
+				print("Show Colors: ", int(colors["color"]["red"]), int(colors["color"]["green"]), int(colors["color"]["blue"]))
 				self.indexes.append(colors["index"])
 		else:
 			self.color = DotColor(red=data["color"]["red"], green=data["color"]["green"], blue=data["color"]["blue"])
@@ -40,7 +41,6 @@ class ShowColorAction(Action):
 		else:
 			for ind in range(0, len(self.indexes)):
 				self.dotManager.setColorAtIndex(idx=self.indexes[ind], color=self.colors[ind], fade=self.fade)
-
 
 		if self.timeout is not None:
 			self.scheduleTimer(duration=self.timeout)
