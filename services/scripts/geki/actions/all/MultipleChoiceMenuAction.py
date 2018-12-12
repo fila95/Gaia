@@ -36,7 +36,6 @@ class MultipleChoiceMenuAction(Action):
 	def startAction(self, optionalParams=None):
 		self.dotManager.setColors(colors=self.options, fade=True)
 
-
 		if self.timeout is not None:
 			self.scheduleTimer(self.timeout)
 
@@ -73,7 +72,7 @@ class MultipleChoiceMenuAction(Action):
 			return False
 
 		same = True
-		for i in range(len(a)-1):
+		for i in range(0, len(a)-1):
 			if not(a[i] == b[i]):
 				same = False
 				break

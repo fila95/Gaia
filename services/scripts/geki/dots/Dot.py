@@ -36,7 +36,7 @@ class Dot:
 		cb = pigpio.pi()
 		cb.callback(self.__button_pin, edge=0, func=self.__callback)
 		cb.set_glitch_filter(self.__button_pin, steady=150)
-		# self.__showColor(self.__targetColor)
+		self.__showColor(self.__targetColor)
 
 	def getColor(self):
 		return self.__targetColor
