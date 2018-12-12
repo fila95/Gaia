@@ -100,16 +100,12 @@ class DotManager:
 			self.__dots[i].setBrightness(brightness, fade=fade)
 
 	def setColors(self, colors, fade=True):
+		if len(colors) != self.__dots_count:
+			return
+	
 		self.__stopAnimationIfNeeded()
-
-		clrs = colors
-		diff = len(clrs) - self.__dots_count
-		if diff < 0:
-			for i in range(0, abs(diff)):
-				clrs.append(Colors.OFF)
-
-		for i in range(0, self.__dots_count):
-			self.__dots[i].setColor(clrs[i], fade=fade)
+		for i in range(self.__dots_count):
+			self.__dots[i].setColor(colors[i], fade=fade)
 
 	def turnAllOff(self):
 		self.__stopAnimationIfNeeded()

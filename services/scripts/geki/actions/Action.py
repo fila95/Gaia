@@ -21,6 +21,7 @@ class Action(ABC):
 		self.timeout = None
 		self.state = ActionState.IDLE
 		self._excludedInCombinedActions = False
+		self._finishCallback = None
 
 		## Timer Management
 		self.timer = None
@@ -78,6 +79,8 @@ class Action(ABC):
 		self.deactivate()
 		self.speakerManager = None
 		self.dotManager = None
+		if self._finishCallback is not None:
+			self._finishCallback()
 
 	### Conveniences
 	def parseActionsFromFile(self, filename):

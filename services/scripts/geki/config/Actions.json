@@ -8,10 +8,10 @@
 		"timeout": 10,
 		"attributes": {
 			"options": [
-				{ "red": 0, "green": 213, "blue": 42 },
-				{ "red": 241, "green": 177, "blue": 67 },
-				{ "red": 119, "green": 175, "blue": 84 },
-				{ "red": 54, "green": 135, "blue": 199 }
+				{ "red": 60, "green": 195, "blue": 0 },
+				{ "red": 0, "green": 255, "blue": 255 },
+				{ "red": 255, "green": 0, "blue": 255 },
+				{ "red": 125, "green": 0, "blue": 125 }
 			],
 			"allowed_sequences": [
 				{

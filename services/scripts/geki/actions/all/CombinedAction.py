@@ -29,6 +29,7 @@ class CombinedAction(Action):
         else:
             for a in self.actions:
                 a._activate(game=self._game)
+                a._finishCallback = self.__check
             self.__check()
 
     def deactivate(self):

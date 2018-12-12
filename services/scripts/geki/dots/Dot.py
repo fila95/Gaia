@@ -33,9 +33,11 @@ class Dot:
 		self._worker = DotWorker(logging, self.__strip, self.queue, self.stop_event, self.interrupt_event)
 		self._worker.start()
 
+		self.__animating = False
+
 		cb = pigpio.pi()
 		cb.callback(self.__button_pin, edge=0, func=self.__callback)
-		cb.set_glitch_filter(self.__button_pin, steady=150)
+		cb.set_glitch_filter(self.__button_pin, steady=250)
 		self.__showColor(self.__targetColor)
 
 	def getColor(self):
@@ -49,9 +51,9 @@ class Dot:
 			self.__stopAnimationTrigger()
 
 		if fade:
-			self.__clearQueue(interrupt=False)
+			self.__clearQueue()
 		
-		logging.info("Setting color of dot:{:d} to r: {:d}, g: {:d}, b: {:d}.".format(self.__led_start_index, color.red, color.green, color.blue))
+		# logging.info("Setting color of dot:{:d} to r: {:d}, g: {:d}, b: {:d}.".format(self.__led_start_index, color.red, color.green, color.blue))
 		self.__targetColor = color
 		self.__showColor(color, fade=fade)
 
@@ -61,9 +63,9 @@ class Dot:
 			self.__stopAnimationTrigger()
 		
 		if fade:
-			self.__clearQueue(interrupt=False)
+			self.__clearQueue()
 		
-		logging.info("Setting brightness of dot:{:d} to {:d}.".format(self.__led_start_index, brightness))
+		# logging.info("Setting brightness of dot:{:d} to {:d}.".format(self.__led_start_index, brightness))
 		self.__brightness = max(0, min(brightness, 255))
 		if self.__targetColor is not None:
 			self.setColor(self.__targetColor, fade=fade)
@@ -93,6 +95,7 @@ class Dot:
 		self.queue.put(lfunc)
 
 	def __run_fade_animation(self):
+		self.__animating = True
 		lfunc = self.__fade
 		self.__handle_async(lfunc, True)
 	
@@ -107,26 +110,43 @@ class Dot:
 
 	def __fade(self, wait_ms=10, iterations=10):
 		"""Fade Colors."""
+		# if self.__led_start_index == 0:
+		# 	print(self.__targetBrightnessedColor.red, self.__targetBrightnessedColor.green, self.__targetBrightnessedColor.blue)
+		# 	print("fade_start")
+
+		col = self.__currentColor
+		r_diff =  int((self.__targetBrightnessedColor.red - col.red)/iterations)
+		g_diff = int((self.__targetBrightnessedColor.green - col.green)/iterations)
+		b_diff = int((self.__targetBrightnessedColor.blue - col.blue)/iterations)
 
 		for j in range(iterations):
-			if self.interrupt_event.isSet():
-				break
 
 			col = self.__currentColor
-			r_diff =  self.__targetBrightnessedColor.red - col.red
-			g_diff = self.__targetBrightnessedColor.green - col.green
-			b_diff = self.__targetBrightnessedColor.blue - col.blue
-
-			red = col.red + int(r_diff/iterations)
-			green = col.green + int(g_diff/iterations)
-			blue = col.blue + int(b_diff/iterations)
+			red = col.red + r_diff
+			green = col.green + g_diff
+			blue = col.blue + b_diff
 
 			self.__currentColor = DotColor(red=red, green=green, blue=blue)
 			for i in range(self.__led_start_index, self.__led_start_index+self.LED_COUNT):
 				self.__strip.setPixelColor(i, Color(self.__currentColor.red, self.__currentColor.green, self.__currentColor.blue))
 			self.__strip.show()
 
+			# if self.__led_start_index == 0:
+			# 	print(red, green, blue)
+
 			time.sleep(wait_ms/1000.0)
+
+		
+		# Fix last color
+		time.sleep(wait_ms/1000.0)
+		self.__currentColor = self.__targetBrightnessedColor
+		for i in range(self.__led_start_index, self.__led_start_index+self.LED_COUNT):
+			self.__strip.setPixelColor(i, Color(self.__currentColor.red, self.__currentColor.green, self.__currentColor.blue))
+		self.__strip.show()
+
+		# if self.__led_start_index == 0:
+		# 	print("fade_end")
+		self.__animating = False
 
 	
 	def __close(self):
@@ -136,12 +156,12 @@ class Dot:
 		self.stop_event.set()
 		# self.__strip.__del__()
 
-	def __clearQueue(self, interrupt=False):
+	def __clearQueue(self):
 		#consume items first
 		while not self.queue.empty():
 			self.queue.get()
 		#then interrupt thead
-		if(interrupt == True):
+		if(self.__animating == True):
 			self.interrupt_event.set()
 
 	def __callback(self, gpio, newLevel, tick):
