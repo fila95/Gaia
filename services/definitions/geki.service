@@ -1,5 +1,5 @@
 [Unit]
-Description=Geki Game
+Description=GekiGame
 After=multi-user.target
  
 [Service]
@@ -7,6 +7,6 @@ Type=idle
 ExecStart=/usr/bin/python3 /var/srvcs/services/scripts/geki/start.py
 Restart=on-failure
 
- 
+
 [Install]
 WantedBy=multi-user.target

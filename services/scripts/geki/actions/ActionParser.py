@@ -1,4 +1,6 @@
 import json
+import os
+import logging
 
 from .Action import *
 from .all import *
@@ -12,7 +14,9 @@ class ActionParser():
 		return { cls.parseIdentifier(): cls for cls in Action.__subclasses__() }
 
 	def parse(self, filename):
-		with open(filename) as json_file:
+		from config.variables import Variables
+		path = Variables.BASE_DIR+filename
+		with open(path) as json_file:
 			data = json.load(json_file)
 		return self.__parse(data)
 
