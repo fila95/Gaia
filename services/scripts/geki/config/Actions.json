@@ -8,117 +8,177 @@
 		"timeout": 10,
 		"attributes": {
 			"options": [
-				{ "red": 60, "green": 195, "blue": 0 },
+				{ "red": 255, "green": 255, "blue": 0 },
 				{ "red": 0, "green": 0, "blue": 255 },
 				{ "red": 255, "green": 0, "blue": 0 },
 				{ "red": 0, "green": 255, "blue": 0 }
 			],
 			"allowed_sequences": [
 				{
-					"chosen_options": [0],
-					"actions": [
-						{
-							"parseIdentifier": "PLAY_AUDIO",
-							"attributes": {
-								"path": "config/assets/audio/1_1_mono.wav"
-							}
-						},
-						{
-							"parseIdentifier": "SHOW_COLOR",
-							"attributes": {
-								"fade": true,
-								"colors": [
-									{
-										"index": 0,
-										"color": { "red": 60, "green": 195, "blue": 0}
-									},
-									{
-										"index": 1,
-										"color": { "red": 255, "green": 0, "blue": 0  }
-									},
-									{
-										"index": 2,
-										"color": { "red": 0, "green": 0, "blue": 0 }
-									},
-									{
-										"index": 3,
-										"color": { "red": 0, "green": 0, "blue": 0 }
-									}
-								]
-							}
-						},
-						{
-							"parseIdentifier": "PLAY_AUDIO",
-							"attributes": {
-								"path": "config/assets/audio/jingle.wav"
-							}
-						}
-					]
+          "chosen_options": [ 0 ],
+          "actions": [
+            {
+              "parseIdentifier": "PLAY_ANIMATION",
+              "attributes": {
+                "animation": "RAINBOW_CYCLE",
+                "animation_affect_dots": false,
+                "stops_at_end": false
+              }
+            },
+            {
+              "parseIdentifier": "PLAY_AUDIO",
+              "attributes": {
+                "path": "config/assets/audio/1_1_mono.wav"
+              }
+            },
+            {
+              "parseIdentifier": "SHOW_COLOR",
+              "attributes": {
+                "fade": true,
+                "colors": [
+                  {
+                    "index": 0,
+                    "color": {
+                      "red": 255,
+                      "green": 255,
+                      "blue": 0
+                    }
+                  },
+                  {
+                    "index": 1,
+                    "color": {
+                      "red": 255,
+                      "green": 0,
+                      "blue": 0
+                    }
+                  },
+                  {
+                    "index": 2,
+                    "color": {
+                      "red": 0,
+                      "green": 0,
+                      "blue": 0
+                    }
+                  },
+                  {
+                    "index": 3,
+                    "color": {
+                      "red": 0,
+                      "green": 0,
+                      "blue": 0
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "parseIdentifier": "PLAY_AUDIO",
+              "attributes": {
+                "path": "config/assets/audio/jingle.wav"
+              }
+            }
+          ]
 				},
 				{
 					"chosen_options": [0, 1],
-					"actions": [
-						{
-							"parseIdentifier": "PLAY_AUDIO",
-							"attributes": {
-								"path": "config/assets/audio/1_2_mono.wav"
-							}
-						},
-						{
-							"parseIdentifier": "SHOW_COLOR",
-							"attributes": {
-								"fade": true,
-								"colors": [
-									{
-										"index": 0,
-										"color": { "red": 60, "green": 195, "blue": 0 }
-									},
-									{
-										"index": 1,
-										"color": { "red": 255, "green": 0, "blue": 0}
-									},
-									{
-										"index": 2,
-										"color": { "red": 0, "green": 0, "blue": 0 }
-									},
-									{
-										"index": 3,
-										"color": { "red": 0, "green": 255, "blue": 0 }
-									}
-								]
-							}
-						},
-						{
-							"parseIdentifier": "PLAY_AUDIO",
-							"attributes": {
-								"path": "config/assets/audio/jingle.wav"
-							}
-						}
-					]
+          "actions": [
+            {
+              "parseIdentifier": "PLAY_ANIMATION",
+              "attributes": {
+                "animation": "RAINBOW_CYCLE",
+                "animation_affect_dots": false,
+                "stops_at_end": false
+              }
+            },
+            {
+              "parseIdentifier": "PLAY_AUDIO",
+              "attributes": {
+                "path": "config/assets/audio/1_2_mono.wav"
+              }
+            },
+            {
+              "parseIdentifier": "SHOW_COLOR",
+              "attributes": {
+                "fade": true,
+                "colors": [
+                  {
+                    "index": 0,
+                    "color": {
+                      "red": 255,
+                      "green": 255,
+                      "blue": 0
+                    }
+                  },
+                  {
+                    "index": 1,
+                    "color": {
+                      "red": 255,
+                      "green": 0,
+                      "blue": 0
+                    }
+                  },
+                  {
+                    "index": 2,
+                    "color": {
+                      "red": 0,
+                      "green": 0,
+                      "blue": 0
+                    }
+                  },
+                  {
+                    "index": 3,
+                    "color": {
+                      "red": 0,
+                      "green": 255,
+                      "blue": 0
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "parseIdentifier": "PLAY_AUDIO",
+              "attributes": {
+                "path": "config/assets/audio/jingle.wav"
+              }
+            }
+          ]
 				},
 				{
 					"chosen_options": [0, 1, 3],
-					"actions": [
-						{
-							"parseIdentifier": "PLAY_AUDIO",
-							"attributes": {
-								"path": "config/assets/audio/1_3_mono.wav"
-							}
-						},
-						{
-							"parseIdentifier": "SHOW_COLOR",
-							"attributes": {
-								"fade": true,
-								"color": { "red": 255, "green": 255, "blue": 255 }
-							}
-						},
-						{
-							"parseIdentifier": "PLAY_AUDIO",
-							"attributes": {
-								"path": "config/assets/audio/jingle.wav"
-							}
-						}
-					]
+          "actions": [
+            {
+              "parseIdentifier": "PLAY_ANIMATION",
+              "attributes": {
+                "animation": "RAINBOW_CYCLE",
+                "animation_affect_dots": false,
+                "stops_at_end": false
+              }
+            },
+            {
+              "parseIdentifier": "PLAY_AUDIO",
+              "attributes": {
+                "path": "config/assets/audio/1_3_mono.wav"
+              }
+            },
+            {
+              "parseIdentifier": "SHOW_COLOR",
+              "attributes": {
+                "fade": true,
+                "color": {
+                  "red": 255,
+                  "green": 255,
+                  "blue": 255
+                }
+              }
+            },
+            {
+              "parseIdentifier": "PLAY_AUDIO",
+              "attributes": {
+                "path": "config/assets/audio/jingle.wav"
+              }
+            }
+          ]
 				}
 			],
 			"wrong_sequence_actions": [],
