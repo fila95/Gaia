@@ -1,10 +1,10 @@
 [Unit]
-Description=Geki Game (For debug purposes just set hello.py and test it manually!)
+Description=Geki Game
 After=multi-user.target
  
 [Service]
 Type=idle
-ExecStart=/usr/bin/python3 /var/srvcs/services/scripts/hello.py
+ExecStart=/usr/bin/python3 /var/srvcs/services/scripts/geki/start.py
 Restart=on-failure
 
  
