@@ -18,10 +18,10 @@ class Game():
 
 		self.currentAction = None
 		self.currentActionIndex = 0
-		self.availableActions = Action.actionParser().parse(filename="config/Actions.json")
 		
 
 	def start(self):
+		self.availableActions = Action.actionParser().parse(filename="config/Actions.json")
 		self.currentActionIndex = -1
 		self.nextAction()
 
