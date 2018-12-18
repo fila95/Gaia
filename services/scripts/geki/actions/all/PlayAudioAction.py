@@ -12,12 +12,14 @@ class PlayAudioAction(Action):
 		super().__init__(data)
 		## Parse attributes
 		if "path" in data:
-			self.path = os.path.abspath(data["path"])
+			from config.variables import Variables
+			self.path = Variables.BASE_DIR + data["path"]
 
 	def startAction(self, optionalParams=None):
 		if optionalParams is not None:
 			if "path" in  optionalParams:
-				self.path = os.path.abspath(optionalParams["path"])
+				from config.variables import Variables
+				self.path = Variables.BASE_DIR + optionalParams["path"]
 
 		if self.path is not None:
 			self.speakerManager.playAudio(self.path)

@@ -4,7 +4,6 @@ import uuid
 from enum import Enum
 import threading
 
-
 class ActionState(Enum):
 	IDLE="idle"
 	STARTED="started"

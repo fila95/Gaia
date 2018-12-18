@@ -29,7 +29,7 @@ sudo pip3 install asyncio
 sudo apt-get install omxplayer -y
 
 sudo apt-get update && sudo apt-get install -y libdbus-1{,-dev}
-pip3 install omxplayer-wrapper
+sudo pip3 install omxplayer-wrapper
 
 # cd
 # pip3 install dbus
