@@ -1,7 +1,7 @@
-# GEKI
+# GAIA
 Advanced User Interfaces Course Repository
 
-- [GEKI](#geki)
+- [GAIA](#gaia)
   * [Configuration](#configuration)
     + [Action Files:](#action-files-)
     + [Actions:](#actions-)
