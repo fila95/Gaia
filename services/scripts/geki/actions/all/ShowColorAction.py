@@ -31,7 +31,8 @@ class ShowColorAction(Action):
 				# print("Show Colors: ", int(colors["color"]["red"]), int(colors["color"]["green"]), int(colors["color"]["blue"]))
 				self.indexes.append(colors["index"])
 		else:
-			self.color = DotColor(red=data["color"]["red"], green=data["color"]["green"], blue=data["color"]["blue"])
+			# print("Show Color: ", int(data["color"]["red"]), int(data["color"]["green"]), int(data["color"]["blue"]))
+			self.color = DotColor(red=int(data["color"]["red"]), green=int(data["color"]["green"]), blue=int(data["color"]["blue"]))
 
 
 	def startAction(self, optionalParams=None):

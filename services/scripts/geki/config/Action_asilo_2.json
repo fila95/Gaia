@@ -1,0 +1,201 @@
+[
+	{
+		"parseIdentifier": "SHOW_COLOR",
+		"attributes": {
+		  "fade": true,
+		  "color": {
+			"red": 0,
+			"green": 0,
+			"blue": 0
+		  }
+		}
+	},
+	{
+		"parseIdentifier": "WAIT_INPUT",
+		"attributes": {
+			"available_dot_indexes": [
+				0,
+				1,
+				2,
+				3
+			]
+		}
+	},
+	{
+		"parseIdentifier": "PLAY_ANIMATION",
+		"attributes": {
+		  "animation": "RAINBOW_CYCLE",
+		  "animation_affect_dots": false,
+		  "stops_at_end": false
+		}
+	},
+	{
+		"parseIdentifier": "PLAY_AUDIO",
+		"attributes": {
+		  "path": "config/assets/audio/ask_color_mono.wav"
+		}
+	},
+	{
+		"parseIdentifier": "SINGLE_CHOICE_MENU",
+		"timeout": 10,
+		"attributes": {
+			"options": [
+				{
+					"actions" : [
+						{
+							"parseIdentifier": "SHOW_COLOR",
+							"attributes": {
+							  "fade": true,
+							  "color": {
+								"red": 255,
+								"green": 255,
+								"blue": 0
+							  }
+							}
+						},
+						{
+							"parseIdentifier": "PLAY_AUDIO",
+							"attributes": {
+							  "path": "config/assets/audio/wrong_color_mono.wav"
+							}
+						}
+					],
+					"color" : {
+						"red" : 255,
+						"green" : 0,
+						"blue" : 0
+					}
+				},
+				{
+					"actions" : [
+						{
+							"parseIdentifier": "PLAY_ANIMATION",
+							"attributes": {
+							  "animation": "RAINBOW_CYCLE",
+							  "animation_affect_dots": false,
+							  "stops_at_end": false
+							}
+						},
+						{
+							"parseIdentifier": "PLAY_AUDIO",
+							"attributes": {
+							  "path": "config/assets/audio/1_2_mono.wav"
+							}
+						},
+						{
+							"parseIdentifier": "SHOW_COLOR",
+							"attributes": {
+							  "fade": true,
+							  "color": {
+								"red": 0,
+								"green": 255,
+								"blue": 255
+							  }
+							}
+						},
+						{
+							"parseIdentifier": "PLAY_AUDIO",
+							"attributes": {
+							  "path": "config/assets/audio/show_color_mono.wav"
+							}
+						},
+						{
+							"parseIdentifier": "WAIT_INPUT",
+							"attributes": {
+								"available_dot_indexes": [
+									0,
+									1,
+									2,
+									3
+								]
+							}
+						},
+						{
+							"parseIdentifier": "PLAY_ANIMATION",
+							"attributes": {
+							  "animation": "RAINBOW_CYCLE",
+							  "animation_affect_dots": false,
+							  "stops_at_end": false
+							}
+						},
+						{
+							"parseIdentifier": "PLAY_AUDIO",
+							"attributes": {
+							  "path": "config/assets/audio/tree_bareggio_2_mono.wav"
+							}
+						},
+						{
+							"parseIdentifier": "PLAY_AUDIO",
+							"attributes": {
+								"path": "config/assets/audio/outro_1_mono.wav"
+							}
+						}
+					],
+					"color" : {
+						"red" : 255,
+						"green" : 255,
+						"blue" : 0
+					}
+				},
+				{
+					"actions" : [
+						{
+							"parseIdentifier": "SHOW_COLOR",
+							"attributes": {
+							  "fade": true,
+							  "color": {
+								"red": 255,
+								"green": 255,
+								"blue": 0
+							  }
+							}
+						},
+						{
+							"parseIdentifier": "PLAY_AUDIO",
+							"attributes": {
+							  "path": "config/assets/audio/wrong_color_mono.wav"
+							}
+						}
+					],
+					"color" : {
+						"red" : 0,
+						"green" : 255,
+						"blue" : 0
+					}
+				},
+				{
+					"actions" : [
+						{
+							"parseIdentifier": "SHOW_COLOR",
+							"attributes": {
+							  "fade": true,
+							  "color": {
+								"red": 255,
+								"green": 255,
+								"blue": 0
+							  }
+							}
+						},
+						{
+							"parseIdentifier": "PLAY_AUDIO",
+							"attributes": {
+							  "path": "config/assets/audio/wrong_color_mono.wav"
+							}
+						}
+					],
+					"color" : {
+						"red" : 0,
+						"green" : 0,
+						"blue" : 255
+					}
+				}
+			],
+			"timeout_actions": []
+				
+		}
+	},
+	{
+		"parseIdentifier": "END",
+		"attributes": {}
+	}
+]

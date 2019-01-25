@@ -11,7 +11,6 @@ class WaitInputAction(Action):
 		super().__init__(data)
 		## Parse attributes
 
-		self.paths = data["paths"]
 		self.availableIndexes = []
 		if "available_dot_indexes" in data:
 			self.availableIndexes = data["available_dot_indexes"]

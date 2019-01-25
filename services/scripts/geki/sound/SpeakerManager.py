@@ -42,7 +42,7 @@ class SpeakerManager:
 		if self.isPlaying():
 			self.stop()
 		
-		self.player = OMXPlayer(source=path, dbus_name='com.geki.omxplayer1', args=['-o', 'local'])
+		self.player = OMXPlayer(source=path, args=['-o', 'local'])
 		self.player.stopEvent += lambda event: self.__playingFinished()
 		self.player.play()
 		self.__handle_async(self.__checkPlaying, False)
