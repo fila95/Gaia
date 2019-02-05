@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Setup
-ssh -tt pi@raspberrypi.local <<'ENDSSH'
+ssh -tt pi@gaia2.local <<'ENDSSH'
 cd /var
 sudo mkdir srvcs/
 sudo mkdir srvcs/services/
@@ -11,8 +11,8 @@ exit
 ENDSSH
 
 # Clean Previous
-scp ../scripts/cleanup.sh pi@raspberrypi.local:/var/srvcs/cleanup.sh
-ssh -tt pi@raspberrypi.local <<'ENDSSH'
+scp ../scripts/cleanup.sh pi@gaia2.local:/var/srvcs/cleanup.sh
+ssh -tt pi@gaia2.local <<'ENDSSH'
 cd /var/srvcs/
 sudo chmod 777 cleanup.sh
 sudo ./cleanup.sh
@@ -21,11 +21,11 @@ ENDSSH
 
 
 ### Copy Data
-scp -rp ../services/* pi@raspberrypi.local:/var/srvcs/services
-scp ../scripts/deploy.sh pi@raspberrypi.local:/var/srvcs/deploy.sh
+scp -rp ../services/* pi@gaia2.local:/var/srvcs/services
+scp ../scripts/deploy.sh pi@gaia2.local:/var/srvcs/deploy.sh
 
 # Start
-ssh -tt pi@raspberrypi.local <<'ENDSSH'
+ssh -tt pi@gaia2.local <<'ENDSSH'
 cd /var/srvcs/
 sudo chmod 777 services/*
 sudo ./deploy.sh

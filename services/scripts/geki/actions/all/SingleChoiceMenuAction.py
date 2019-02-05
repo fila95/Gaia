@@ -36,7 +36,7 @@ class SingleChoiceMenuAction(Action):
         pass
 
     def dotWasTapped(self, index, dot):
-        self.produceActions(self.actions[index])
+        self.produceActions(self.parseActionsFromJson(self.actions[index]))
         self.nextAction()
 
     def timerFired(self):

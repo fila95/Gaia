@@ -22,7 +22,7 @@ class Game():
 		
 
 	def start(self):
-		self.availableActions = Action.actionParser().parse(filename="config/Actions.json")
+		self.availableActions = Action.actionParser().parse(filename="config/Action_elementari_2.json")
 		self.currentActionIndex = -1
 		self.nextAction()
 
