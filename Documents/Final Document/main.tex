@@ -13,6 +13,9 @@
 
 \usepackage[nottoc, numbib]{tocbibind}
 
+\usepackage{multicol}
+\setlength{\columnsep}{0.5cm}
+
 \usepackage{titlesec}
 \usepackage{hyperref}
 \hypersetup{
@@ -79,33 +82,34 @@ story.
 \end{titlepage}
 
 \chapter{The team}
-\begin{wrapfigure}{R}{0.3\textwidth}
-    \includegraphics[width=1.2in,height=1in,clip,keepaspectratio]{images/Filaferro.jpeg}
-\end{wrapfigure}\par
-\\~\\~\par\textbf{Giovanni Filaferro}\par
-email: giovanni.filaferro@mail.polimi.it\par
-mobile number: 347 4338241
-\\~\\~\par
-\begin{wrapfigure}{R}{0.3\textwidth} 
-    \includegraphics[width=1.2in,height=1.2in,clip,keepaspectratio]{images/Gennaioli.jpeg}
-\end{wrapfigure}\par
-\\~\par\textbf{Michele Gennaioli}\par
-email: michele.gennaioli@mail.polimi.it\par
-mobile number: 331 9747877
-\\~\\~\\~\par
-\begin{wrapfigure}{R}{0.3\textwidth} 
-    \includegraphics[width=1.2in,height=1.2in,clip,keepaspectratio]{images/Manzi.jpeg}
-\end{wrapfigure}\
-\par\textbf{Giuseppe Manzi}\par
-email: giuseppe1.manzi@mail.polimi.it\par
-mobile number: 320 9260703
-\\~\\~\par
-\begin{wrapfigure}{R}{0.3\textwidth} 
-    \includegraphics[width=1.2in,height=1.2in,clip,keepaspectratio]{images/Menabue.jpeg}
-\end{wrapfigure}\par
-\\~\\~\\~\\~\par\textbf{Valentina Menabue}\par
-email: valentina.menabue@gmail.com\par
-mobile number: 331 2759404
+\begin{multicols}{2}
+
+    \includegraphics[width=1.2in,height=1.2in,clip,keepaspectratio]{images/Filaferro.jpg}
+    \vskip0.1in
+    \includegraphics[width=1.2in,height=1.2in,clip,keepaspectratio]{images/Gennaioli.jpg}
+    \vskip0.1in
+    \includegraphics[width=1.2in,height=1.2in,clip,keepaspectratio]{images/Manzi.jpg}
+    \vskip0.1in
+    \includegraphics[width=1.2in,height=1.2in,clip,keepaspectratio]{images/Menabue.jpg}
+    \columnbreak
+    \vskip2in
+    \textbf{Giovanni Filaferro}\par
+    email: giovanni.filaferro@mail.polimi.it\par
+    mobile number: 347 4338241\par
+    \vskip0.7in
+    \textbf{Michele Gennaioli}\par
+    email: michele.gennaioli@mail.polimi.it\par
+    mobile number: 331 9747877\par
+    \vskip0.73in
+    \textbf{Giuseppe Manzi}\par
+    email: giuseppe1.manzi@mail.polimi.it\par
+    mobile number: 320 9260703\par
+    \vskip0.7in
+    \textbf{Valentina Menabue}\par
+    email: valentina.menabue@gmail.com\par
+    mobile number: 331 2759404\par
+\end{multicols}
+
 %%%% Inserisce la tavola dei contanuti che va a popolare in fase di compilazione (sono richiesteste almeno due compilazioni, una per generare i riferimenti e una perincluderli) %%%%
 \tableofcontents
 
@@ -309,13 +313,14 @@ This document has presented the design of the GAIA interactive game as a mean to
 We included in the project the most versatile and user-friendly interaction enabled by a smart object, those that could attract more a child: the touch, the view and the listening. This has led to a \textbf{really adaptable device}, that has been designed to be permanently set in a park, but has features that make it useful as a \textbf{support in many other outdoors and indoor activities}. That’s the reason why \textbf{the greatest feature of GAIA is its adaptability}.\par
 It is possible to find some similar devices and competitors on the market, but our original product differs from others not only for the shape but also for the contents. Indeed, \textbf{there are no similar objects that correlate playing activities with educative ones and that, in addition, encourage people to play outdoors}. Moreover it is difficult to find \textbf{such an high degree of flexibility to different contexts} in other solutions available on the market.
 \chapter{Future work}
-GAIA is still in a prototype version. So far our work has especially concentrated on designing the interactive service and on analyzing its acceptability by kids and its feasibility by means of state-of-art technologies and the interviews with the teachers. Some refinements have to be applied to exploit all its functionalities. From a structural point of view, since it is a device supposed to be used outside, GAIA must become waterproof and more resistant to weather events. At the same time, substituting the normal buttons with capacitive fabric would be a good idea to exploit the whole surface of the band. From the implementation point of view, the configuration file and the algorithm can be improved. In this first prototype we didn’t want to stress and test extensively this aspect, as we were more interested in evaluating the validity of the overall concept as a tool for outdoor exploration and learning. Improving the configurability enables the implementation and the installation on the device of different kind of games or activities.
-It is possible to improve the game of the “treasure hunt” using RFID cards representing characters, settings, or other elements of the story. These kind of instruments make possible the recognition of a story, thus the possibility to have different types of stories. In addition, children would be happy to collect and exchange them.
-Another issue to take into consideration is that the devices (the trees) are not linked. It is planned to connect them through wireless mesh WiFi. 
+GAIA is still in a prototype version. So far our work has especially concentrated on designing the interactive service and on analyzing its acceptability by kids and its feasibility by means of state-of-art technologies and the interviews with the teachers. Some refinements have to be applied to exploit all its functionalities.\par
+From a structural point of view, since it is a device supposed to be used outside, GAIA must become waterproof and more resistant to weather events. At the same time, substituting the normal buttons with capacitive fabric would be a good idea to exploit the whole surface of the band. From the implementation point of view, the configuration file and the algorithm can be improved. In this first prototype we didn’t want to stress and test extensively this aspect, as we were more interested in evaluating the validity of the overall concept as a tool for outdoor exploration and learning. Improving the configurability enables the implementation and the installation on the device of different kind of games or activities.\par
+It is possible to improve the game of the “treasure hunt” using RFID cards representing characters, settings, or other elements of the story. These kind of instruments make possible the recognition of a story, thus the possibility to have different types of stories. In addition, children would be happy to collect and exchange them.\par
+Another issue to take into consideration is that the devices (the trees) are not linked. It is planned to connect them through wireless mesh WiFi.\par
 Moreover to stimulate more the users during the play it can be possible to make an interaction between GAIA and other smart objects (e.g., ABBOT). 
 
 \section{GAIA in different contexts}
-As mentioned before, GAIA is a smart object thoughts to encourage children to play outdoors. However, the potential of this device can go beyond this function and may be used in different situations. It can be useful also in a therapeutic environment allowing people with disabilities to make some activities. Another possibility is to use GAIA in a didactic context as a support to learning activities.
+As mentioned before, GAIA is a smart object thoughts to encourage children to play outdoors. However, the potential of this device can go beyond this function and may be used in different situations. It can be useful also in a therapeutic environment allowing people with disabilities to make some activities. Another possibility is to use GAIA in a didactic context as a support to learning activities.\par
 Each situation may require different modifications on the configurable file, depending on the specific aim. However, GAIA is so generic that it can be easily adapted to many different context.
 
 \bibliographystyle{IEEEtran}
@@ -323,12 +328,11 @@ Each situation may require different modifications on the configurable file, dep
 
 
 \chapter{Annexes}
-(optional):anyadditionalrelevantmaterial(e.g.usermanual,rowdatatablesabouttheempirical evaluation, ...)
 \section{Execution flow}
 \subsection{Note preliminari}
 \begin{itemize}
 	\item \lbrack audio1, audio2\rbrack ~means the execution of the two audio files in sequence
-	\item The audio file content description is in section 11.2
+	\item The audio file content description is in section \lbrack 11.2\rbrack
 \end{itemize}
 tree 1:
 \begin{itemize}
